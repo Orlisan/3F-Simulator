@@ -7,7 +7,6 @@ import java.io.File;
 public class Prof1Lezione {
 
 	public static JButton manoAlzata;
-	public static boolean eccolezion;
 	
 	static JPanel panLezione = new JPanel();
 	
@@ -27,6 +26,11 @@ public class Prof1Lezione {
 	    profAllaLavagna.setOpaque(false);
 	    panLezione.add(profAllaLavagna);
 	    
+	    JLabel lavagna = new JLabel(new ImageIcon("Texture\\lavagna.png"));
+	    lavagna.setBounds(350, 70, 439, 345);
+	    lavagna.setOpaque(false);
+	    panLezione.add(lavagna);
+	    
 	    ImageIcon labelMano = new ImageIcon("Texture\\alza_mano.png");
 	    manoAlzata = new JButton(labelMano);
 	    manoAlzata.setBounds(100, 400, 200, 84);
@@ -34,8 +38,9 @@ public class Prof1Lezione {
 	    panLezione.add(manoAlzata);
 	    
 	    panLezione.setComponentZOrder(profAllaLavagna, 0);
-	    panLezione.setComponentZOrder(manoAlzata, 2);// DAVANTI
-	    panLezione.setComponentZOrder(sfondoLez, 2);       // Sfondo DIETRO (Z-Order 1)
+	    panLezione.setComponentZOrder(manoAlzata, 1);
+	    panLezione.setComponentZOrder(lavagna, 2);// DAVANTI
+	    panLezione.setComponentZOrder(sfondoLez, 3);       // Sfondo DIETRO (Z-Order 1)
 	    
 	
 	    Main.finestra.add(panLezione);

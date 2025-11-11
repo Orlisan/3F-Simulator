@@ -439,7 +439,7 @@ public class Main { // ✅ "Main" con la M maiuscola!
     	
         mappaClasse.revalidate();
     	mappaClasse.repaint();
-    	Timer timer = new Timer(1000, e -> {
+    	Timer timer = new Timer(500, e -> {
             sfondoDestro.setIcon(new ImageIcon(icon2));
             mappaClasse.revalidate();
             mappaClasse.repaint();
@@ -462,7 +462,7 @@ public class Main { // ✅ "Main" con la M maiuscola!
             mappaClasse.revalidate();
             mappaClasse.repaint();
             
-            Timer timer = new Timer(1000, e -> {
+            Timer timer = new Timer(500, e -> {
                 sfondoSinistro.setIcon(new ImageIcon(icon3));
                 sfondoDestro.setIcon(new ImageIcon(icon4));
                 mappaClasse.revalidate();
