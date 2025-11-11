@@ -175,13 +175,22 @@ public class Main { // ✅ "Main" con la M maiuscola!
         
 	    	try {
 			FileWriter writer = new FileWriter(salvataggio);
-			writer.write("Orlando\n");
-			writer.append("Sangiovanni\n");
-			writer.append(12 + "\n");
-			writer.append(728 + "\n");
-			writer.append(44 + "\n");
-			writer.append(100 + "\n");
-			writer.append(100 + "\n");
+			String nome = MetodiUtili.cripta("Orlando");
+			String cognome = MetodiUtili.cripta("Sangiovanni");
+			String età = MetodiUtili.cripta(String.valueOf(12));
+			String posX = MetodiUtili.cripta(String.valueOf(728));
+			String posY = MetodiUtili.cripta(String.valueOf(44));
+			String oro = MetodiUtili.cripta(String.valueOf(100));
+			String vita = MetodiUtili.cripta(String.valueOf(100));
+			
+			
+			writer.write( nome +"\n");
+			writer.append(cognome +"\n");
+			writer.append(età + "\n");
+			writer.append(posX + "\n");
+			writer.append(posY + "\n");
+			writer.append(oro + "\n");
+			writer.append(vita + "\n");
 			
 			writer.close();
 	    	} catch (IOException e) {
