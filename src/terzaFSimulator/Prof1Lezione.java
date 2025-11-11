@@ -36,7 +36,7 @@ public class Prof1Lezione {
 	    manoAlzata.setBounds(100, 400, 200, 84);
 	    manoAlzata.setOpaque(false);
 	    panLezione.add(manoAlzata);
-	    
+	     
 	    panLezione.setComponentZOrder(profAllaLavagna, 0);
 	    panLezione.setComponentZOrder(manoAlzata, 1);
 	    panLezione.setComponentZOrder(lavagna, 2);// DAVANTI
