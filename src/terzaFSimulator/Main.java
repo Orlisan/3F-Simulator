@@ -168,6 +168,7 @@ public class Main { // ✅ "Main" con la M maiuscola!
         JLabel profLabel = new JLabel(iconaProf);
         profLabel.setBounds(100, 100, 50, 50);
         profLabel.setOpaque(false);
+      
         salvataggio = new File("salvataggio.txt");
         // ✅ Crea la persona e aggiungila alla lista
         if(salvataggio.length() == 0) {
@@ -226,7 +227,6 @@ public class Main { // ✅ "Main" con la M maiuscola!
         		);
         
         prof = new Prof1("Mario", "Arenga", profLabel, 728, 44, 200 );
-        mappaClasse.setComponentZOrder(prof.icona, 0);
         
         personaggi.add(orlando);
         
@@ -255,42 +255,14 @@ public class Main { // ✅ "Main" con la M maiuscola!
         configuraTasti();
         
        
-        Thread thread = new Thread(() -> {
-            
-            while(true) {
-                if(!cèProf) {
-                    int numero = 1;
-                    if(numero == 1) {
-                        cèProf = true;
-                        
-                        // Fase 1: Aggiungi prof e anima l'entrata
-                        SwingUtilities.invokeLater(() -> {
-                            System.out.print(numero);
-                            prof.entraInAula("Texture\\prof.png", "Texture\\prof_camminante.png");
-                            mappaClasse.add(prof.icona);
-                            mappaClasse.revalidate();
-                            mappaClasse.repaint();
-                        });
-                        
-}
-                    }
-                
-                
-                // Aspetta 0.5 secondi tra un controllo e l'altro
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-        thread.start();
+      
+                            
+                          
+                  
         
         
         		
-        if ((personaggioSelezionato.posizioneX == 15) && (personaggioSelezionato.posizioneY == 15)) {
-        	mappaClasse.add(bot1);
-        }
+        
         // ✅ Aggiungi i personaggi alla mappa
         for (Persona persona : personaggi) {
             mappaClasse.add(persona.icona);
@@ -336,6 +308,7 @@ public class Main { // ✅ "Main" con la M maiuscola!
                     case KeyEvent.VK_7: muoviPersonaggio(0, 30);break;
                     case KeyEvent.VK_6: muoviPersonaggio(0, -30);break;
                     case KeyEvent.VK_S: salvataggio(); break;
+                    case KeyEvent.VK_V: viaProf(); break;
                     case KeyEvent.VK_SHIFT:  
                         if(personaggioSelezionato.posizioneX > 574 && personaggioSelezionato.posizioneX < 632 && personaggioSelezionato.posizioneY > -7 && personaggioSelezionato.posizioneY < 101 && !èAperta) {
                             
@@ -557,6 +530,16 @@ public class Main { // ✅ "Main" con la M maiuscola!
     	
     }
 
-       
+      static void viaProf() {
+    	  if(!cèProf) {
+    		  cèProf =true;
+    		  prof.entraInAula("Texture\\prof.png", "Texture\\prof_camminante.png");
+              mappaClasse.add(prof.icona);
+              mappaClasse.setComponentZOrder(prof.icona, 0);
+              mappaClasse.revalidate();
+              mappaClasse.repaint();
+    	  }
+      }
 }
+
 

@@ -7,7 +7,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import java.awt.*;
 
-public class Prof1 extends Professore implements profSerio{
+public class Prof1 extends Professore{
 
 	enum UmoriProf {ESTASIATO, CONTENTO, LUSINGATO, CALMO, IRRITATO, ARRABBIATO, INDEMONIATO, OMICIDA};
 	
@@ -106,11 +106,7 @@ public class Prof1 extends Professore implements profSerio{
 	
 	
 
-	@Override
-	public void iniziaBoss() {
-	    //Qui ci andrà l'animazione del prof che sbatte il gomito e gli occhi che diventano rossi
 	
-	}
 	
 	@Override
 	void aprePorta(String iconProf, String portaSemiDes, String portaSemiDesP2, String portaRottaDes, String portaRottaDesP2, String portaSemiSin, String portaSemiSinP2, String portaRottaSin, String portaRottaSinP2) {
@@ -183,11 +179,7 @@ public class Prof1 extends Professore implements profSerio{
 		}
 	}
 
-	@Override
-	public void siIncavola() {
-		// TODO Auto-generated method stub
-		
-	}
+	
 	@Override
 	void vaAllaCattedra(String profCam1, String profCam2, String profSeduto) {
 	    super.vaAllaCattedra(profCam1, profCam2, profSeduto);
