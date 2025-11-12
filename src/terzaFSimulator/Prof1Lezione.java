@@ -22,18 +22,18 @@ public class Prof1Lezione {
 	    panLezione.add(sfondoLez);
 	    
 	    JLabel profAllaLavagna = new JLabel(new ImageIcon("Texture\\prof_lavagna.png"));
-	    profAllaLavagna.setBounds(50, 100, 200, 200);
+	    profAllaLavagna.setBounds(200, 100, 200, 200);
 	    profAllaLavagna.setOpaque(false);
 	    panLezione.add(profAllaLavagna);
 	    
 	    JLabel lavagna = new JLabel(new ImageIcon("Texture\\lavagna.png"));
-	    lavagna.setBounds(350, 70, 439, 345);
+	    lavagna.setBounds(250, 50, 439, 345);
 	    lavagna.setOpaque(false);
 	    panLezione.add(lavagna);
 	    
 	    ImageIcon labelMano = new ImageIcon("Texture\\alza_mano.png");
 	    manoAlzata = new JButton(labelMano);
-	    manoAlzata.setBounds(100, 400, 200, 84);
+	    manoAlzata.setBounds(90, 450, 200, 84);
 	    manoAlzata.setOpaque(false);
 	    panLezione.add(manoAlzata);
 	     
