@@ -309,9 +309,13 @@ public class Main { // ✅ "Main" con la M maiuscola!
                 
                 switch(e.getKeyCode()) {
                     case KeyEvent.VK_UP: if(nonToccaSu) { muoviPersonaggio(0, -1); facciata = Direzione.SU; personaggioSelezionato.icona.setIcon(new ImageIcon("Texture\\personaggio_su.png")); break; }
+                   
                     case KeyEvent.VK_DOWN: if(nonToccaGiù) {muoviPersonaggio(0, 1); facciata = Direzione.GIU;personaggioSelezionato.icona.setIcon(new ImageIcon("Texture\\personaggio.png")); break;}
+                   
                     case KeyEvent.VK_LEFT: if(nonToccaASinistra) muoviPersonaggio(-1, 0); facciata = Direzione.SINISTRA; personaggioSelezionato.icona.setIcon(new ImageIcon("Texture\\personaggio_sinistra.png")); break;
+                    
                     case KeyEvent.VK_RIGHT: if(nonToccaADestra) { muoviPersonaggio(1, 0); facciata = Direzione.DESTRA; personaggioSelezionato.icona.setIcon(new ImageIcon("Texture\\personaggio_destra.png"));break;}
+                    
                     case KeyEvent.VK_9: muoviPersonaggio(30, 0); break;
                     case KeyEvent.VK_8: muoviPersonaggio(-30, 0);break;
                     case KeyEvent.VK_7: muoviPersonaggio(0, 30);break;

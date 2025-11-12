@@ -61,7 +61,7 @@ public class Prof1 extends Professore{
 			            
 			            // ✅ "Pausa" senza bloccare EDT
 			            try {
-			                Thread.sleep(20); // Questo è OK perché in thread separato!
+			                Thread.sleep(5); // Questo è OK perché in thread separato!
 			            } catch (InterruptedException e1) {
 			                e1.printStackTrace();
 			            }
@@ -71,7 +71,7 @@ public class Prof1 extends Professore{
 			timer1.setRepeats(false);
 			timer1.start();
 		
-			Timer timerFinale = new Timer(20000, e -> {
+			Timer timerFinale = new Timer(5000, e -> {
 				new Thread (() -> {
 					JLabel inizioLez = new JLabel(new ImageIcon("Texture\\inizio.png"));
 					inizioLez.setBounds(0,0,880, 671);

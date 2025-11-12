@@ -67,19 +67,36 @@ public class Professore {
 			
 			Main.finestra.repaint();
 			try {
-				Thread.sleep(3000);
+				Thread.sleep(500);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			SwingUtilities.invokeLater(() -> {
-                this.aprePorta("Texture\\prof_spaccante.png","Texture\\porta_semi_rotta_des.png",
-                    "Texture\\porta_semi_rotta_des_porta2.png","Texture\\porta_rotta_des.png",
-                    "Texture\\porta_rotta_des_porta2.png", "Texture\\porta_semi_rotta_sin.png",
-                    "Texture\\porta_semi_rotta_sin_porta2.png", "Texture\\porta_rotta_sin.png",
-                    "Texture\\porta_rotta_sin_porta2.png");
-                	
-            });
+			if(Main.èAperta) { //Verificato
+				SwingUtilities.invokeLater(() -> {
+					this.vaAllaCattedra("Texture\\prof.png", "Texture\\prof_camminante.png", "Texture\\prof_seduto.png");
+				});
+			} else if(Main.èAperta2 && !Main.èAperta) {
+				SwingUtilities.invokeLater(() -> {
+					 String porta1 = MetodiUtili.forseAperta("Texture\\mappaclasse_porta1_semiaperta.png", "Texture\\mappaclasse_porta1_semiaperta_porta2.png", Main.èAperta2);
+	                 String porta2 = MetodiUtili.forseAperta("Texture\\mappaclasse_porta1_aperta.png", "Texture\\mappaclasse_porta1_aperta_porta2.png", Main.èAperta2);
+	                 Main.apriPorta(porta1, porta2);
+	                 Main.èAperta = true;
+	                 SwingUtilities.invokeLater(() -> {
+	 					this.vaAllaCattedra("Texture\\prof.png", "Texture\\prof_camminante.png", "Texture\\prof_seduto.png");
+	 				});
+				});
+			}else if(!Main.èAperta && !Main.èAperta2) { //Verificato
+				SwingUtilities.invokeLater(() -> {
+	                this.aprePorta("Texture\\prof_spaccante.png","Texture\\porta_semi_rotta_des.png",
+	                    "Texture\\porta_semi_rotta_des_porta2.png","Texture\\porta_rotta_des.png",
+	                    "Texture\\porta_rotta_des_porta2.png", "Texture\\porta_semi_rotta_sin.png",
+	                    "Texture\\porta_semi_rotta_sin_porta2.png", "Texture\\porta_rotta_sin.png",
+	                    "Texture\\porta_rotta_sin_porta2.png");
+	                	
+	            });
+			}
+			
 	        // FERMA il timer quando arriva alla porta
 	       
 	    });
