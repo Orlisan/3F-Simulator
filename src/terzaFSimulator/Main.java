@@ -137,15 +137,10 @@ public class Main {
 	        
 	        	
 	        	if(saiSkip && i > 100 && (i % 5) == 0)  {
-	        		if(cèSkip) {
-	        			inizioSimulator.remove(puoiSkippare);
-	        			cèSkip = false;
-	        		}else {
-	        			inizioSimulator.add(puoiSkippare);
-	        			cèSkip = true;
-	        		}
-	        		inizioSimulator.revalidate();
-	        		inizioSimulator.repaint();
+	        	    puoiSkippare.setVisible(!cèSkip);
+	        	    cèSkip = !cèSkip;
+	        	    inizioSimulator.revalidate();
+	        	    inizioSimulator.repaint();
 	        	}
 		         try {
 		        Thread.sleep(100);
