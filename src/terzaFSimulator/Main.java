@@ -107,7 +107,7 @@ public class Main { // ✅ "Main" con la M maiuscola!
 	        int larghezza = 250;
 	        int lunghezza = 40;
 	        
-	        for(int i = 0; i < 300 && !skippa; i++) {
+	        for(int i = 0; i < 1000 && !skippa; i++) {
 		        larghezza++;
 		        lunghezza++;
 	        	if(skippa) break;
