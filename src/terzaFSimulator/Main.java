@@ -94,9 +94,14 @@ public class Main { // ✅ "Main" con la M maiuscola!
 	        JLabel labelInizio = new JLabel(inizio);
 	        labelInizio.setOpaque(false);
 	        
-	        JLabel scrittaInizio = new JLabel ("3F SIMULATOR");
+	        JLabel scrittaInizio = new JLabel("3F SIMULATOR");
+	        JLabel puoiSkippare = new JLabel("(Premi ENTER per skippare)");
+	        
 	        
 	        scrittaInizio.setForeground(Color.RED);
+	        puoiSkippare.setForeground(Color.LIGHT_GRAY);
+	       
+	        puoiSkippare.setBounds(320, 100, 170, 30);
 	        
 	        labelInizio.setBounds(0, 0, 880, 671);
 	        inizioSimulator.add(scrittaInizio);
@@ -118,7 +123,11 @@ public class Main { // ✅ "Main" con la M maiuscola!
 	        	scrittaInizio.setBounds(340, 135, larghezza * 2, lunghezza);
 	        	scrittaInizio.setFont(new Font("Arial", Font.BOLD, 10 + i));
 	        	
-	        	
+	        	if(i == 100) {
+	        		inizioSimulator.add(puoiSkippare);
+	        		inizioSimulator.setComponentZOrder(puoiSkippare, 0);
+	        		inizioSimulator.repaint();
+	        	}
 		         try {
 		        Thread.sleep(100);
 		         }

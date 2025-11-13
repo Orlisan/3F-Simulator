@@ -31,8 +31,11 @@ public class Prof1Lezione {
 	    lavagna.setOpaque(false);
 	    panLezione.add(lavagna);
 	    
-	    JLabel coseDette = new JLabel("");
+	    JLabel coseDette = new JLabel("prova");
+	    coseDette.setBounds(110, 80, 100, 100);
 	    coseDette.setFont(new Font("Serif", Font.BOLD, 20));
+	    coseDette.setForeground(Color.WHITE);
+	    panLezione.add(coseDette);
 	    
 	    ImageIcon labelMano = new ImageIcon("Texture\\alza_mano.png");
 	    manoAlzata = new JButton(labelMano);
@@ -40,10 +43,11 @@ public class Prof1Lezione {
 	    manoAlzata.setOpaque(false);
 	    panLezione.add(manoAlzata);
 	     
-	    panLezione.setComponentZOrder(profAllaLavagna, 0);
-	    panLezione.setComponentZOrder(manoAlzata, 1);
-	    panLezione.setComponentZOrder(lavagna, 2);// DAVANTI
-	    panLezione.setComponentZOrder(sfondoLez, 3);       // Sfondo DIETRO (Z-Order 1)
+	    panLezione.setComponentZOrder(coseDette, 0);
+	    panLezione.setComponentZOrder(profAllaLavagna, 1);
+	    panLezione.setComponentZOrder(manoAlzata,2 );
+	    panLezione.setComponentZOrder(lavagna, 3);// DAVANTI
+	    panLezione.setComponentZOrder(sfondoLez, 4);       // Sfondo DIETRO (Z-Order 1)
 	    
 	
 	    Main.finestra.add(panLezione);
