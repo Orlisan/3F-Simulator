@@ -32,6 +32,7 @@ public class Prof1Lezione {
 	    panLezione.add(lavagna);
 	    
 	    JLabel coseDette = new JLabel("");
+	    coseDette.setFont(new Font("Serif", Font.BOLD, 20));
 	    
 	    ImageIcon labelMano = new ImageIcon("Texture\\alza_mano.png");
 	    manoAlzata = new JButton(labelMano);
