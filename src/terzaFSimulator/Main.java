@@ -126,7 +126,7 @@ public class Main {
 	        	scrittaInizio.setBounds(340, 135, larghezza * 2, lunghezza);
 	        	scrittaInizio.setFont(new Font("Arial", Font.BOLD, 10 + i));
 	        	
-	        	if(i == 100) {
+	        	if(i == 500) {
 	        		inizioSimulator.add(puoiSkippare);
 	        		inizioSimulator.setComponentZOrder(puoiSkippare, 0);
 	        		inizioSimulator.repaint();
@@ -136,7 +136,7 @@ public class Main {
 	        	}
 	        
 	        	
-	        	if(saiSkip && i > 100 && (i % 5) == 0)  {
+	        	if(saiSkip && i > 500 && (i % 5) == 0)  {
 	        	    puoiSkippare.setVisible(!cèSkip);
 	        	    cèSkip = !cèSkip;
 	        	    inizioSimulator.revalidate();
