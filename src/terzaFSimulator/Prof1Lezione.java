@@ -31,6 +31,8 @@ public class Prof1Lezione {
 	    lavagna.setOpaque(false);
 	    panLezione.add(lavagna);
 	    
+	    JLabel coseDette = new JLabel("");
+	    
 	    ImageIcon labelMano = new ImageIcon("Texture\\alza_mano.png");
 	    manoAlzata = new JButton(labelMano);
 	    manoAlzata.setBounds(90, 450, 200, 84);
@@ -49,5 +51,9 @@ public class Prof1Lezione {
 	    Main.finestra.repaint();
 	}
 	
-}
+
 	
+	public static void introLez() {
+		
+	}
+}
