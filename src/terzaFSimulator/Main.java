@@ -36,6 +36,7 @@ public class Main {
     static String riga6;
     static String riga7;
     static String riga8;
+    static String riga9;
     
     static Persona personaggioSelezionato;
     static Prof1 prof;
@@ -49,11 +50,14 @@ public class Main {
     static volatile boolean portaRotta = false;
     public static boolean saiSkip = false;
     public static boolean cèSkip = false;
+    public static boolean presoOro;
     
     public static boolean nonToccaSu = true;
     public static boolean nonToccaGiù = true;
     public static boolean nonToccaASinistra = true;
     public static boolean nonToccaADestra = true;
+    
+    public static int oroInPiù = 0;
    
     public static File salvataggio;
 	
@@ -67,7 +71,7 @@ public class Main {
     
     public static void main(String[] args) {
         // Questo è il progetto di 3F SIMULATOR	(il gioco più bello al mondo)
-        JButton bot1 = new JButton("Prova");
+    	JButton bot1 = new JButton("Prova");
         bot1.setBounds(15, 15, 100 , 100);
     	
     	finestra = new JFrame("3F Simulator");
@@ -81,6 +85,44 @@ public class Main {
         
         mappaClasse.setLayout(null);
         mappaClasse.setOpaque(false);
+        
+    	try {
+    	salvataggio = new File(userHome + "\\AppData\\Local\\salvataggio.txt");
+    	presoOro = seOroPreso();
+    	
+    	if(salvataggio.length() == 0) {
+            
+	    	try {
+			FileWriter writer = new FileWriter(salvataggio);
+			String nome = MetodiUtili.cripta("Orlando");
+			String cognome = MetodiUtili.cripta("Sangiovanni");
+			String età = MetodiUtili.cripta(String.valueOf(12));
+			String posX = MetodiUtili.cripta(String.valueOf(728));
+			String posY = MetodiUtili.cripta(String.valueOf(44));
+			String oro = MetodiUtili.cripta(String.valueOf(100));
+			String vita = MetodiUtili.cripta(String.valueOf(100));
+			String bolOro = MetodiUtili.cripta(String.valueOf(presoOro));
+			 
+			
+			writer.write( nome +"\n");
+			writer.append(cognome +"\n");
+			writer.append(età + "\n");
+			writer.append(posX + "\n");
+			writer.append(posY + "\n");
+			writer.append(oro + "\n");
+			writer.append(vita + "\n");
+			writer.append(bolOro + "\n");
+			
+			writer.close();
+	    	} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
+        }
+    	}catch(Exception ec) {
+    		System.out.println("File non trovato. Chi se ne frega");
+    	}
+    	
         
         configuraTasti();
         
@@ -104,7 +146,7 @@ public class Main {
 	        scrittaInizio.setForeground(Color.RED);
 	        puoiSkippare.setForeground(Color.LIGHT_GRAY);
 	       
-	        puoiSkippare.setBounds(320, 100, 170, 30);
+	        puoiSkippare.setBounds(320, 100, 320, 30);
 	        
 	        labelInizio.setBounds(0, 0, 880, 671);
 	        inizioSimulator.add(scrittaInizio);
@@ -126,6 +168,8 @@ public class Main {
 	        	scrittaInizio.setBounds(340, 135, larghezza * 2, lunghezza);
 	        	scrittaInizio.setFont(new Font("Arial", Font.BOLD, 10 + i));
 	        	
+	        	int tempoDaAspettare = 5;
+	        	
 	        	if(i == 500) {
 	        		inizioSimulator.add(puoiSkippare);
 	        		inizioSimulator.setComponentZOrder(puoiSkippare, 0);
@@ -136,12 +180,20 @@ public class Main {
 	        	}
 	        
 	        	
-	        	if(saiSkip && i > 500 && (i % 5) == 0)  {
+	        	if(saiSkip && i > 500 && (i % tempoDaAspettare) == 0)  {
 	        	    puoiSkippare.setVisible(!cèSkip);
 	        	    cèSkip = !cèSkip;
 	        	    inizioSimulator.revalidate();
 	        	    inizioSimulator.repaint();
 	        	}
+	        	if(i == 600) {tempoDaAspettare = 4;}
+	        	if(i == 700) {tempoDaAspettare = 3;}
+	        	if(i == 800) {tempoDaAspettare = 2;}
+	        	if(i == 900) {if(!presoOro) {puoiSkippare.setText("Complimenti!! Sei Arrivato fino a questo punto! +100 Oro"); oroInPiù += 100;
+	        	   puoiSkippare.setVisible(true); saiSkip = false; presoOro = true;}}
+	        	
+	        	
+	        		
 		         try {
 		        Thread.sleep(100);
 		         }
@@ -194,34 +246,10 @@ public class Main {
         profLabel.setBounds(100, 100, 50, 50);
         profLabel.setOpaque(false);
       
-        salvataggio = new File(userHome + "\\AppData\\Local\\salvataggio.txt");
-        if(salvataggio.length() == 0) {
         
-	    	try {
-			FileWriter writer = new FileWriter(salvataggio);
-			String nome = MetodiUtili.cripta("Orlando");
-			String cognome = MetodiUtili.cripta("Sangiovanni");
-			String età = MetodiUtili.cripta(String.valueOf(12));
-			String posX = MetodiUtili.cripta(String.valueOf(728));
-			String posY = MetodiUtili.cripta(String.valueOf(44));
-			String oro = MetodiUtili.cripta(String.valueOf(100));
-			String vita = MetodiUtili.cripta(String.valueOf(100));
-			
-			
-			writer.write( nome +"\n");
-			writer.append(cognome +"\n");
-			writer.append(età + "\n");
-			writer.append(posX + "\n");
-			writer.append(posY + "\n");
-			writer.append(oro + "\n");
-			writer.append(vita + "\n");
-			
-			writer.close();
-	    	} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} 
-        }
+       
+        // valORI di default
+        
         try {
 			BufferedReader reader = new BufferedReader(new FileReader(salvataggio));
 		
@@ -234,8 +262,9 @@ public class Main {
 		        riga6 = reader.readLine();
 		        riga7 = reader.readLine();
 		        riga8 = reader.readLine();
+		        riga9 = reader.readLine();
 		        
-		        String[] righe = {riga1, riga2, riga3, riga5, riga6, riga7, riga8};
+		        String[] righe = {riga1, riga2, riga3, riga5, riga6, riga7, riga8, riga9};
 		        
 		      
 		        for(String riga : righe) {
@@ -256,7 +285,7 @@ public class Main {
 			e.printStackTrace();
 		}
         
-        Persona orlando = new Persona(righeCript.get(0), righeCript.get(1), Integer.parseInt(righeCript.get(2)), orlandoLabel,  Integer.parseInt(righeCript.get(3)),  Integer.parseInt(righeCript.get(4)), Integer.parseInt(righeCript.get(5)), Integer.parseInt(righeCript.get(6))
+        Persona orlando = new Persona(righeCript.get(0), righeCript.get(1), Integer.parseInt(righeCript.get(2)), orlandoLabel,  Integer.parseInt(righeCript.get(3)),  Integer.parseInt(righeCript.get(4)), Integer.parseInt(righeCript.get(5)) + oroInPiù, Integer.parseInt(righeCript.get(6))
         		);
         
         prof = new Prof1("Mario", "Arenga", profLabel, 728, 44, 200 );
@@ -545,6 +574,7 @@ public class Main {
 		String posY = MetodiUtili.cripta(String.valueOf(personaggioSelezionato.posizioneY));
 		String oro = MetodiUtili.cripta(String.valueOf(personaggioSelezionato.oro));
 		String vita = MetodiUtili.cripta(String.valueOf(personaggioSelezionato.vita));
+		String bolOro = MetodiUtili.cripta(String.valueOf(presoOro));
 		
 		writer.write(nome + "\n");
 		writer.append(cognome+ "\n");
@@ -553,6 +583,7 @@ public class Main {
 		writer.append(posY + "\n");
 		writer.append(oro+ "\n");
 		writer.append(vita + "\n");
+		writer.append(bolOro + "\n");
 		
 		writer.close();
     	
@@ -580,6 +611,33 @@ public class Main {
               mappaClasse.repaint();
     	  }
       }
+      static boolean seOroPreso() {
+    	  if(salvataggio != null) {
+    		  try {
+				BufferedReader reader = new BufferedReader(new FileReader(salvataggio));
+					
+				String riga1 = reader.readLine();
+				String riga2 = reader.readLine();
+				String riga3 = reader.readLine();
+				String riga4 = reader.readLine();
+				String riga5 = reader.readLine();
+				String riga6 = reader.readLine();
+				String riga7 = reader.readLine();
+				String riga8 = reader.readLine();
+    		  
+				return Boolean.parseBoolean(MetodiUtili.decripta(riga8));
+    		  
+    		 } catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return false;
+			  }
+    	  }else {
+    		  return false;
+    	  }
+    	  
+      }
 }
+
 
 
