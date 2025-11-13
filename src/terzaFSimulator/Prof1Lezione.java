@@ -9,6 +9,8 @@ public class Prof1Lezione {
 	public static JButton manoAlzata;
 	
 	static JPanel panLezione = new JPanel();
+	static JLabel coseDette;
+	
 	
 	static void creaAmbiente() {
 		Main.finestra.remove(Main.mappaClasse);
@@ -31,8 +33,8 @@ public class Prof1Lezione {
 	    lavagna.setOpaque(false);
 	    panLezione.add(lavagna);
 	    
-	    JLabel coseDette = new JLabel("prova");
-	    coseDette.setBounds(110, 80, 100, 100);
+	    coseDette = new JLabel("");
+	    coseDette.setBounds(110, 70, 100, 100);
 	    coseDette.setFont(new Font("Serif", Font.BOLD, 20));
 	    coseDette.setForeground(Color.WHITE);
 	    panLezione.add(coseDette);
@@ -54,11 +56,30 @@ public class Prof1Lezione {
 	    Main.finestra.setComponentZOrder(panLezione, 0);
 	    Main.finestra.revalidate();
 	    Main.finestra.repaint();
+	    
+	    introLez();
 	}
 	
 
 	
 	public static void introLez() {
+		Thread threadScrivProf = new Thread(() -> {
+		String messaggio = "Oggi Faremo lezione di Trigonometria, il nuovo semplicissimo argomento";
+		String messaggioFinOra = null;
+		char[] messaggioDaDire = messaggio.toCharArray();
+             
+		for(char ilMessaggio: messaggioDaDire) {
+            	 messaggioFinOra = messaggioFinOra + ilMessaggio;
+            	 coseDette.setText(messaggioFinOra);
+            	 try {
+					Thread.sleep(50);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+             }
 		
+		});
+		threadScrivProf.start();
 	}
 }
