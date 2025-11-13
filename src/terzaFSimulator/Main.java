@@ -15,9 +15,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Random;
 
-public class Main { // ✅ "Main" con la M maiuscola!
+public class Main {
     
-    static ArrayList<Persona> personaggi = new ArrayList<>(); // ✅ Inizializza l'ArrayList!
+    static ArrayList<Persona> personaggi = new ArrayList<>();
     static ArrayList<String> righeCript = new ArrayList<>();
     
     static JPanel mappaClasse; 
@@ -47,11 +47,14 @@ public class Main { // ✅ "Main" con la M maiuscola!
     static boolean èAperta2 = false;
     static volatile boolean cèProf = false;
     static volatile boolean portaRotta = false;
+    public static boolean saiSkip = false;
+    public static boolean cèSkip = false;
     
     public static boolean nonToccaSu = true;
     public static boolean nonToccaGiù = true;
     public static boolean nonToccaASinistra = true;
     public static boolean nonToccaADestra = true;
+   
     public static File salvataggio;
 	
     public static JFrame finestra;
@@ -63,7 +66,7 @@ public class Main { // ✅ "Main" con la M maiuscola!
     enum Direzione{SU, GIU, SINISTRA, DESTRA};
     
     public static void main(String[] args) {
-        // Questo è il progetto di 3F SIMULATOR	
+        // Questo è il progetto di 3F SIMULATOR	(il gioco più bello al mondo)
         JButton bot1 = new JButton("Prova");
         bot1.setBounds(15, 15, 100 , 100);
     	
@@ -72,7 +75,7 @@ public class Main { // ✅ "Main" con la M maiuscola!
         finestra.setSize(880, 671);
         finestra.setResizable(false);
         finestra.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        finestra.setLayout(new BorderLayout()); // ✅ Layout manager
+        finestra.setLayout(new BorderLayout());
         finestra.setVisible(true);
         mappaClasse = new JPanel();
         
@@ -127,6 +130,22 @@ public class Main { // ✅ "Main" con la M maiuscola!
 	        		inizioSimulator.add(puoiSkippare);
 	        		inizioSimulator.setComponentZOrder(puoiSkippare, 0);
 	        		inizioSimulator.repaint();
+	        		saiSkip = true;
+	        		cèSkip = true;
+	        		
+	        	}
+	        
+	        	
+	        	if(saiSkip && i > 100 && (i % 5) == 0)  {
+	        		if(cèSkip) {
+	        			inizioSimulator.remove(puoiSkippare);
+	        			cèSkip = false;
+	        		}else {
+	        			inizioSimulator.add(puoiSkippare);
+	        			cèSkip = true;
+	        		}
+	        		inizioSimulator.revalidate();
+	        		inizioSimulator.repaint();
 	        	}
 		         try {
 		        Thread.sleep(100);
@@ -157,7 +176,7 @@ public class Main { // ✅ "Main" con la M maiuscola!
 	        break;
         }
         
-        
+        // ti mette le variabili delle immagini dello sfondo
         iconaSfondoSinistro = new ImageIcon("Texture\\mappaclasse_sinistra.png");
         sfondoSinistro = new JLabel(iconaSfondoSinistro);
         
