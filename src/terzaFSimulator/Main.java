@@ -23,6 +23,8 @@ public class Main { // ✅ "Main" con la M maiuscola!
     static JPanel mappaClasse; 
     static JPanel inizioSimulator;
     static JLabel oro;
+    
+   static  String userHome = System.getProperty("user.home");
    
     static ImageIcon iconaProf;
     static ImageIcon inizio = new ImageIcon("Texture\\inizio.png");
@@ -169,8 +171,7 @@ public class Main { // ✅ "Main" con la M maiuscola!
         profLabel.setBounds(100, 100, 50, 50);
         profLabel.setOpaque(false);
       
-        salvataggio = new File("salvataggio.txt");
-        // ✅ Crea la persona e aggiungila alla lista
+        salvataggio = new File(userHome + "\\AppData\\Local\\salvataggio.txt");
         if(salvataggio.length() == 0) {
         
 	    	try {
@@ -507,7 +508,10 @@ public class Main { // ✅ "Main" con la M maiuscola!
     
     
     static void salvataggio() {
-    	salvataggio = new File("salvataggio.txt");
+    	String userHome = System.getProperty("user.home");
+    	salvataggio = new File(userHome + "\\AppData\\Local\\salvataggio.txt");
+    	salvataggio.mkdir();
+ 
     	try {
 		FileWriter writer = new FileWriter(salvataggio);
 		
