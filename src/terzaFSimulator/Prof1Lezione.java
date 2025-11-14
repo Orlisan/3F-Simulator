@@ -1,6 +1,9 @@
 package terzaFSimulator;
 
 import javax.swing.*;
+
+import terzaFSimulator.Prof1.UmoriProf;
+
 import java.awt.*;
 import java.io.File;
 
@@ -9,7 +12,9 @@ public class Prof1Lezione {
 	public static JButton manoAlzata;
 	
 	static JPanel panLezione = new JPanel();
+	
 	static JLabel coseDette;
+	static JLabel titoloLav;
 	
 	
 	static void creaAmbiente() {
@@ -44,20 +49,27 @@ public class Prof1Lezione {
 	    manoAlzata.setBounds(90, 450, 200, 84);
 	    manoAlzata.setOpaque(false);
 	    panLezione.add(manoAlzata);
+	    
+	    titoloLav = new JLabel("prova");
+		titoloLav.setBounds(280, 80, 120, 40);
+		titoloLav.setFont(new Font("Serif", Font.BOLD, 40));
+		panLezione.add(titoloLav);
 	     
 	    panLezione.setComponentZOrder(coseDette, 0);
 	    panLezione.setComponentZOrder(profAllaLavagna, 1);
 	    panLezione.setComponentZOrder(manoAlzata,2 );
-	    panLezione.setComponentZOrder(lavagna, 3);// DAVANTI
-	    panLezione.setComponentZOrder(sfondoLez, 4);       // Sfondo DIETRO (Z-Order 1)
+	    panLezione.setComponentZOrder(titoloLav, 3); //Dev'essere davanti alla lavagna
+	    panLezione.setComponentZOrder(lavagna, 4);
+	    panLezione.setComponentZOrder(sfondoLez, 5);      //lo sfondo dev'essere sempre ultimo
 	    
-	
+	    
 	    Main.finestra.add(panLezione);
 	    Main.finestra.setComponentZOrder(panLezione, 0);
 	    Main.finestra.revalidate();
 	    Main.finestra.repaint();
 	    
 	    introLez();
+	    
 	}
 	
 
@@ -110,8 +122,14 @@ public class Prof1Lezione {
 		messaggioFinOra.setLength(0);
 		messaggioFinOra.append("<html>");
 		stampa.stampa(messaggio.toCharArray());
-		
+		spiega(1);
 		});
 		threadScrivProf.start();
 	}
+		
+		static void spiega(int argomento) {
+			UmoriProf umore = UmoriProf.CALMO;
+		    titoloLav.setForeground(MetodiUtili.qualeUmore(umore));
+		    
+		}
 }

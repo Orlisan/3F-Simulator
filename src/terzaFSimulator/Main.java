@@ -57,6 +57,8 @@ public class Main {
     public static boolean nonToccaASinistra = true;
     public static boolean nonToccaADestra = true;
     
+    public static Font determinationFont;
+
     public static int oroInPiù = 0;
    
     public static File salvataggio;
@@ -69,9 +71,11 @@ public class Main {
     
     enum Direzione{SU, GIU, SINISTRA, DESTRA};
     
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FontFormatException, IOException {
         // Questo è il progetto di 3F SIMULATOR	(il gioco più bello al mondo)
-    	JButton bot1 = new JButton("Prova");
+    	
+    	
+        JButton bot1 = new JButton("Prova");
         bot1.setBounds(15, 15, 100 , 100);
     	
     	finestra = new JFrame("3F Simulator");
@@ -166,7 +170,7 @@ public class Main {
 		        
 		        
 	        	scrittaInizio.setBounds(340, 135, larghezza * 2, lunghezza);
-	        	scrittaInizio.setFont(new Font("Arial", Font.BOLD, 10 + i));
+	        	scrittaInizio.setFont(new Font("Serif", Font.BOLD, 10 + i));
 	        	
 	        	int tempoDaAspettare = 5;
 	        	
