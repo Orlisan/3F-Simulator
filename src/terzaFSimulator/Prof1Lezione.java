@@ -41,7 +41,7 @@ public class Prof1Lezione {
 	    coseDette = new JLabel("");
 	    coseDette.setBounds(75, 70,200, 200);
 	    coseDette.setFont(new Font("Serif", Font.BOLD, 20));
-	    coseDette.setForeground(Color.WHITE);
+	    coseDette.setForeground(MetodiUtili.qualeUmore(Prof1.umore));
 	    panLezione.add(coseDette);
 	    
 	    ImageIcon labelMano = new ImageIcon("Texture\\alza_mano.png");
@@ -51,7 +51,7 @@ public class Prof1Lezione {
 	    panLezione.add(manoAlzata);
 	    
 	    titoloLav = new JLabel("prova");
-		titoloLav.setBounds(280, 80, 120, 40);
+		titoloLav.setBounds(450, 110, 120, 40);
 		titoloLav.setFont(new Font("Serif", Font.BOLD, 40));
 		panLezione.add(titoloLav);
 	     
@@ -77,10 +77,9 @@ public class Prof1Lezione {
 	public static void introLez() {
 		
 		Thread threadScrivProf = new Thread(() -> {
-		String messaggio = "Oggi Faremo <br> lezione di <br> Trigonometria, <br> il nuovo <br> semplicissimo <br> argomento";
-		StringBuilder messaggioFinOra = new StringBuilder("<html>");
-             
-		class stampa {
+		
+        stampa("Oggi Faremo <br> lezione di <br> Trigonometria, <br> il nuovo <br> semplicissimo <br> argomento", coseDette);
+		/*class stampa {
 			void stampa(char[] messaggioDaDire) {
 				for(char ilMessaggio: messaggioDaDire) {
 		            	 messaggioFinOra.append(ilMessaggio);
@@ -96,40 +95,48 @@ public class Prof1Lezione {
 		
 		}
 		
-		stampa stampa = new stampa(); //Guarda come sono sofisticato
-		stampa.stampa(messaggio.toCharArray());
-		try {Thread.sleep(500);} catch (InterruptedException e) {e.printStackTrace();}
-		
-		messaggio = "A proposito,<br> dopodomani <br>avremo la <br> verifica di <br> questo argomento";
-		messaggioFinOra.setLength(0);
-		messaggioFinOra.append("<html>");
-		
-		stampa.stampa(messaggio.toCharArray());
-		try {Thread.sleep(500);} catch (InterruptedException e) {e.printStackTrace();}
-		messaggio = "Ma non <br> preuccupatevi, <br>la verifica <br>durerà ben <br>5 minuti e <br>avrà solamente <br>100 domande!";
-		messaggioFinOra.setLength(0);
-		messaggioFinOra.append("<html>");
-		stampa.stampa(messaggio.toCharArray());
+		stampa stampa = new stampa(); //Guarda come sono sofisticato*/
 		
 		try {Thread.sleep(500);} catch (InterruptedException e) {e.printStackTrace();}
-		messaggio = "Più facile di <br>così allora <br>potreste <br>prendere 6,<br> che è dopo <br>il massimo ☺ ";
-		messaggioFinOra.setLength(0);
-		messaggioFinOra.append("<html>");
-		stampa.stampa(messaggio.toCharArray());
+		
+		
+		stampa("A proposito,<br> dopodomani <br>avremo la <br> verifica di <br> questo argomento", coseDette);
+		try {Thread.sleep(500);} catch (InterruptedException e) {e.printStackTrace();}
+	
+		stampa("Ma non <br> preuccupatevi, <br>la verifica <br>durerà ben <br>5 minuti e <br>avrà solamente <br>100 domande!", coseDette);
 		
 		try {Thread.sleep(500);} catch (InterruptedException e) {e.printStackTrace();}
-		messaggio = "Adesso inizio<br> a spiegare,<br> vi prometto che<br> userò un <br>linguaggio molto <br>complicato, <br>come volete voi";
-		messaggioFinOra.setLength(0);
-		messaggioFinOra.append("<html>");
-		stampa.stampa(messaggio.toCharArray());
+		
+		stampa("Più facile di <br>così allora <br>potreste <br>prendere 6,<br> che è dopo <br>il massimo ☺ ", coseDette);
+		
+		try {Thread.sleep(500);} catch (InterruptedException e) {e.printStackTrace();}
+		
+		stampa( "Adesso inizio<br> a spiegare,<br> vi prometto che<br> userò un <br>linguaggio molto <br>complicato, <br>come volete voi", coseDette);
 		spiega(1);
 		});
 		threadScrivProf.start();
 	}
 		
 		static void spiega(int argomento) {
-			UmoriProf umore = UmoriProf.CALMO;
-		    titoloLav.setForeground(MetodiUtili.qualeUmore(umore));
+		    titoloLav.setForeground(MetodiUtili.qualeUmore(Prof1.umore));
 		    
+		}
+		
+		static void stampa(String messaggio, JLabel labelDaMod) {
+			
+			StringBuilder messaggioFinOra = new StringBuilder("<html>");
+			char[] messaggioDaDire = messaggio.toCharArray();
+			
+			for(char ilMessaggio: messaggioDaDire) {
+	            	
+					messaggioFinOra.append(ilMessaggio);
+	            	 labelDaMod.setText(messaggioFinOra.toString() + "</html>");
+	            	 try {
+						Thread.sleep(50);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+	             }
 		}
 }

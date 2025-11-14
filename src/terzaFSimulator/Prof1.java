@@ -11,7 +11,7 @@ public class Prof1 extends Professore{
 
 	enum UmoriProf {ESTASIATO, CONTENTO, LUSINGATO, CALMO, IRRITATO, ARRABBIATO, INDEMONIATO, OMICIDA};
 	
-	public UmoriProf umore = UmoriProf.CALMO;
+	public static UmoriProf umore = UmoriProf.CALMO;
 
 	int i;
 	JLabel fraseProf;
