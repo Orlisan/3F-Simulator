@@ -6,6 +6,8 @@ import terzaFSimulator.Prof1.UmoriProf;
 
 import java.awt.*;
 import java.io.File;
+import java.util.Random;
+import java.lang.reflect.Method;
 
 public class Prof1Lezione {
 
@@ -15,6 +17,7 @@ public class Prof1Lezione {
 	
 	static JLabel coseDette;
 	static JLabel titoloLav;
+	static JLabel scrittaLav;
 	
 	
 	static void creaAmbiente() {
@@ -51,16 +54,22 @@ public class Prof1Lezione {
 	    panLezione.add(manoAlzata);
 	    
 	    titoloLav = new JLabel("prova");
-		titoloLav.setBounds(450, 110, 120, 40);
+		titoloLav.setBounds(415, 110, 120, 40);
 		titoloLav.setFont(new Font("Serif", Font.BOLD, 40));
 		panLezione.add(titoloLav);
+		
+		scrittaLav = new JLabel("<html>prova prova prova prova prova <br> prova prova prova prova prova <br> prova prova prova prova prova </html> ");
+	scrittaLav.setBounds(315, 130, 320, 240);//DISPONIBILI 29 CARATTERI PER RIGA!!!!!!!YAY
+		scrittaLav.setFont(new Font("Serif", Font.PLAIN, 25));
+		panLezione.add(scrittaLav);
 	     
 	    panLezione.setComponentZOrder(coseDette, 0);
 	    panLezione.setComponentZOrder(profAllaLavagna, 1);
 	    panLezione.setComponentZOrder(manoAlzata,2 );
-	    panLezione.setComponentZOrder(titoloLav, 3); //Dev'essere davanti alla lavagna
-	    panLezione.setComponentZOrder(lavagna, 4);
-	    panLezione.setComponentZOrder(sfondoLez, 5);      //lo sfondo dev'essere sempre ultimo
+	    panLezione.setComponentZOrder(scrittaLav, 3);
+	    panLezione.setComponentZOrder(titoloLav, 4); //Dev'essere davanti alla lavagna
+	    panLezione.setComponentZOrder(lavagna, 5);
+	    panLezione.setComponentZOrder(sfondoLez, 6);      //lo sfondo dev'essere sempre ultimo
 	    
 	    
 	    Main.finestra.add(panLezione);
@@ -79,23 +88,6 @@ public class Prof1Lezione {
 		Thread threadScrivProf = new Thread(() -> {
 		
         stampa("Oggi Faremo <br> lezione di <br> Trigonometria, <br> il nuovo <br> semplicissimo <br> argomento", coseDette);
-		/*class stampa {
-			void stampa(char[] messaggioDaDire) {
-				for(char ilMessaggio: messaggioDaDire) {
-		            	 messaggioFinOra.append(ilMessaggio);
-		            	 coseDette.setText(messaggioFinOra.toString() + "</html>");
-		            	 try {
-							Thread.sleep(50);
-						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-		             }
-			}
-		
-		}
-		
-		stampa stampa = new stampa(); //Guarda come sono sofisticato*/
 		
 		try {Thread.sleep(500);} catch (InterruptedException e) {e.printStackTrace();}
 		
@@ -112,15 +104,42 @@ public class Prof1Lezione {
 		try {Thread.sleep(500);} catch (InterruptedException e) {e.printStackTrace();}
 		
 		stampa( "Adesso inizio<br> a spiegare,<br> vi prometto che<br> userò un <br>linguaggio molto <br>complicato, <br>come volete voi", coseDette);
-		spiega(1);
+		spiegaQualcosa();
 		});
 		threadScrivProf.start();
 	}
 		
-		static void spiega(int argomento) {
-		    titoloLav.setForeground(MetodiUtili.qualeUmore(Prof1.umore));
-		    
+	
+		static void spiegaSeno() {
+			stampa("la lezione <br> di questi <br>3 minuti,<br> si tratterà<br> sulla funzione<br> sin()", coseDette);
+			
+			
 		}
+		
+		static void spiegaQualcosa() {
+			Random random = new Random();
+			
+			try {
+				Method[] metodiSpiega = {
+						 Prof1Lezione.class.getDeclaredMethod("spiegaSeno"),
+				};
+				
+				int indiceCasuale = random.nextInt(metodiSpiega.length);
+		        try {
+		            metodiSpiega[indiceCasuale].invoke(null); 
+		       
+		        } catch (Exception e) {
+		            e.printStackTrace();
+		        }
+			} catch (NoSuchMethodException | SecurityException  e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				System.out.println("Metodo Inesistente");
+			}
+			
+		}
+		
+		
 		
 		static void stampa(String messaggio, JLabel labelDaMod) {
 			
