@@ -105,6 +105,12 @@ public class Prof1Lezione {
 		messaggioFinOra.append("<html>");
 		stampa.stampa(messaggio.toCharArray());
 		
+		try {Thread.sleep(500);} catch (InterruptedException e) {e.printStackTrace();}
+		messaggio = "Adesso inizio<br> a spiegare,<br> vi prometto che<br> userò un <br>linguaggio molto <br>complicato, <br>come volete voi";
+		messaggioFinOra.setLength(0);
+		messaggioFinOra.append("<html>");
+		stampa.stampa(messaggio.toCharArray());
+		
 		});
 		threadScrivProf.start();
 	}
