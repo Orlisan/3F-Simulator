@@ -34,7 +34,7 @@ public class Prof1Lezione {
 	    panLezione.add(lavagna);
 	    
 	    coseDette = new JLabel("");
-	    coseDette.setBounds(110, 70, 100, 100);
+	    coseDette.setBounds(75, 70,200, 200);
 	    coseDette.setFont(new Font("Serif", Font.BOLD, 20));
 	    coseDette.setForeground(Color.WHITE);
 	    panLezione.add(coseDette);
@@ -63,21 +63,47 @@ public class Prof1Lezione {
 
 	
 	public static void introLez() {
+		
 		Thread threadScrivProf = new Thread(() -> {
-		String messaggio = "Oggi Faremo lezione di Trigonometria, il nuovo semplicissimo argomento";
-		String messaggioFinOra = null;
-		char[] messaggioDaDire = messaggio.toCharArray();
+		String messaggio = "Oggi Faremo <br> lezione di <br> Trigonometria, <br> il nuovo <br> semplicissimo <br> argomento";
+		StringBuilder messaggioFinOra = new StringBuilder("<html>");
              
-		for(char ilMessaggio: messaggioDaDire) {
-            	 messaggioFinOra = messaggioFinOra + ilMessaggio;
-            	 coseDette.setText(messaggioFinOra);
-            	 try {
-					Thread.sleep(50);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-             }
+		class stampa {
+			void stampa(char[] messaggioDaDire) {
+				for(char ilMessaggio: messaggioDaDire) {
+		            	 messaggioFinOra.append(ilMessaggio);
+		            	 coseDette.setText(messaggioFinOra.toString() + "</html>");
+		            	 try {
+							Thread.sleep(50);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+		             }
+			}
+		
+		}
+		
+		stampa stampa = new stampa(); //Guarda come sono sofisticato
+		stampa.stampa(messaggio.toCharArray());
+		try {Thread.sleep(500);} catch (InterruptedException e) {e.printStackTrace();}
+		
+		messaggio = "A proposito,<br> dopodomani <br>avremo la <br> verifica di <br> questo argomento";
+		messaggioFinOra.setLength(0);
+		messaggioFinOra.append("<html>");
+		
+		stampa.stampa(messaggio.toCharArray());
+		try {Thread.sleep(500);} catch (InterruptedException e) {e.printStackTrace();}
+		messaggio = "Ma non <br> preuccupatevi, <br>la verifica <br>durerà ben <br>5 minuti e <br>avrà solamente <br>100 domande!";
+		messaggioFinOra.setLength(0);
+		messaggioFinOra.append("<html>");
+		stampa.stampa(messaggio.toCharArray());
+		
+		try {Thread.sleep(500);} catch (InterruptedException e) {e.printStackTrace();}
+		messaggio = "Più facile di <br>così allora <br>potreste <br>prendere 6,<br> che è dopo <br>il massimo ☺ ";
+		messaggioFinOra.setLength(0);
+		messaggioFinOra.append("<html>");
+		stampa.stampa(messaggio.toCharArray());
 		
 		});
 		threadScrivProf.start();
