@@ -434,9 +434,15 @@ public class Main {
         	  @Override
         	    public void keyTyped(KeyEvent e) {
         		  char chara = e.getKeyChar();
-        		  testoScrivente.append(chara);
-        		  Prof1Lezione.labelIntervento.setText(testoScrivente.toString());
-        		  System.out.print("Sto scrivendo");
+        		 
+        		  if (Character.isISOControl(chara)) {
+        	            return;
+        	        }
+        		  
+        		  if(testoScrivente.length() <= 20) {
+	        		  testoScrivente.append(chara);
+	        		  Prof1Lezione.labelIntervento.setText(testoScrivente.toString());
+        		  }
         	  }
         	  @Override
         	    public void keyPressed(KeyEvent e) {
