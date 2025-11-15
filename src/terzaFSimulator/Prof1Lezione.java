@@ -50,7 +50,7 @@ public class Prof1Lezione {
 	    coseDette.setForeground(MetodiUtili.qualeUmore(Prof1.umore));
 	    panLezione.add(coseDette);
 	    
-	    ImageIcon labelMano = new ImageIcon("Texture\\alza_mano.png");
+	    ImageIcon labelMano = new ImageIcon("Texture\\alza_mano_grigia.png");
 	    manoAlzata = new JButton(labelMano);
 	    manoAlzata.setBounds(90, 450, 200, 84);
 	    manoAlzata.setOpaque(false);
@@ -192,6 +192,8 @@ public class Prof1Lezione {
 		}
 		
 		static void permettiInterazione() {
+			manoAlzata.setIcon(new ImageIcon("Texture\\alza_mano.png"));
+			
 			manoAlzata.addActionListener(e -> {
 				panLezione.setFocusable(true);
 				panLezione.requestFocus();
