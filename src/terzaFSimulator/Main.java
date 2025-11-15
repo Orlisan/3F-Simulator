@@ -439,7 +439,7 @@ public class Main {
         	            return;
         	        }
         		  
-        		  if(testoScrivente.length() <= 20) {
+        		  if(testoScrivente.length() <= 30) {
 	        		  testoScrivente.append(chara);
 	        		  Prof1Lezione.labelIntervento.setText(testoScrivente.toString());
         		  }

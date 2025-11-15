@@ -45,7 +45,7 @@ public class Prof1Lezione {
 	    panLezione.add(lavagna);
 	    
 	    coseDette = new JLabel("");
-	    coseDette.setBounds(75, 70,200, 200);
+	    coseDette.setBounds(75, 70, 200, 200);
 	    coseDette.setFont(new Font("Serif", Font.BOLD, 20));
 	    coseDette.setForeground(MetodiUtili.qualeUmore(Prof1.umore));
 	    panLezione.add(coseDette);
@@ -57,7 +57,7 @@ public class Prof1Lezione {
 	    panLezione.add(manoAlzata);
 	    
 	    labelIntervento = new JLabel("");
-	    labelIntervento.setBounds(460, 420, 300, 200);
+	    labelIntervento.setBounds(460, 420, 400, 200);
 	    labelIntervento.setFont(new Font("Serif", Font.ITALIC, 25));
 	    labelIntervento.setForeground(Color.WHITE);
 	    labelIntervento.setOpaque(false);
@@ -99,7 +99,7 @@ public class Prof1Lezione {
 		
 		Thread threadScrivProf = new Thread(() -> {
 		
-        stampa("Oggi Faremo <br> lezione di <br> Trigonometria, <br> il nuovo <br> semplicissimo <br> argomento", coseDette);
+      /*  stampa("Oggi Faremo <br> lezione di <br> Trigonometria, <br> il nuovo <br> semplicissimo <br> argomento", coseDette);
 		
 		try {Thread.sleep(500);} catch (InterruptedException e) {e.printStackTrace();}
 		
@@ -116,7 +116,7 @@ public class Prof1Lezione {
 		try {Thread.sleep(500);} catch (InterruptedException e) {e.printStackTrace();}
 		
 		stampa( "Adesso inizio<br> a spiegare,<br> vi prometto che<br> userò un <br>linguaggio molto <br>complicato, <br>come volete voi", coseDette);
-		spiegaQualcosa();
+		*/spiegaQualcosa();
 		});
 		threadScrivProf.start();
 	}
