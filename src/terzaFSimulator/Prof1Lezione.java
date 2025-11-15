@@ -53,14 +53,14 @@ public class Prof1Lezione {
 	    manoAlzata.setOpaque(false);
 	    panLezione.add(manoAlzata);
 	    
-	    titoloLav = new JLabel("prova");
+	    titoloLav = new JLabel("");
 		titoloLav.setBounds(415, 110, 120, 40);
 		titoloLav.setFont(new Font("Serif", Font.BOLD, 40));
 		panLezione.add(titoloLav);
 		
-		scrittaLav = new JLabel("<html>prova prova prova prova prova <br> prova prova prova prova prova <br> prova prova prova prova prova </html> ");
-	scrittaLav.setBounds(315, 130, 320, 240);//DISPONIBILI 29 CARATTERI PER RIGA!!!!!!!YAY
-		scrittaLav.setFont(new Font("Serif", Font.PLAIN, 25));
+		scrittaLav = new JLabel("");
+		scrittaLav.setBounds(315, 100, 320, 240);//DISPONIBILI 29 CARATTERI PER RIGA!!!!!!!YAY
+		scrittaLav.setFont(new Font("Serif", Font.PLAIN, 20));
 		panLezione.add(scrittaLav);
 	     
 	    panLezione.setComponentZOrder(coseDette, 0);
@@ -99,7 +99,7 @@ public class Prof1Lezione {
 		
 		try {Thread.sleep(500);} catch (InterruptedException e) {e.printStackTrace();}
 		
-		stampa("Più facile di <br>così allora <br>potreste <br>prendere 6,<br> che è dopo <br>il massimo ☺ ", coseDette);
+		stampa("Più facile di <br>così allora <br>potreste anche<br>prendere 6,<br> che è dopo <br>il massimo ☺ ", coseDette);
 		
 		try {Thread.sleep(500);} catch (InterruptedException e) {e.printStackTrace();}
 		
@@ -112,7 +112,14 @@ public class Prof1Lezione {
 	
 		static void spiegaSeno() {
 			stampa("la lezione <br> di questi <br>3 minuti,<br> si tratterà<br> sulla funzione<br> sin()", coseDette);
-			
+			try {Thread.sleep(500);} catch (InterruptedException e) {e.printStackTrace();}
+			titoloLav.setForeground(MetodiUtili.qualeUmore(Prof1.umore));
+			stampa("sin(x)", titoloLav);
+			try {Thread.sleep(400);} catch (InterruptedException e) {e.printStackTrace();}
+			muoviTitolo(titoloLav, true);
+			try {Thread.sleep(400);} catch (InterruptedException e) {e.printStackTrace();}
+			scrittaLav.setForeground(MetodiUtili.qualeUmore(Prof1.umore));
+			stampa("La funzione sin(), in trigonometria, è una delle <br>funzioni <br>principali e, in un triangolo <br>rettangolo, definisce il <br>rapporto tra il lato opposto <br>a un angolo dato e l'ipotenusa", scrittaLav);
 			
 		}
 		
@@ -157,5 +164,18 @@ public class Prof1Lezione {
 						e.printStackTrace();
 					}
 	             }
+		}
+		
+		static void muoviTitolo(JLabel titolo, boolean suOGiù) {
+			new Thread(() -> {
+					for(int i = 0; i < 50; i++) {
+						titolo.setBounds(titolo.getX(), titolo.getY() + (suOGiù ? -1 : 1), titolo.getWidth(), titolo.getHeight());
+						try {
+							Thread.sleep(100);
+						}catch(InterruptedException e){
+							e.printStackTrace();
+						}
+					} 
+			}).start();
 		}
 }
