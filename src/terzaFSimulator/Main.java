@@ -424,10 +424,41 @@ public class Main {
                     	
                 }}
         });
-        
-        mappaClasse.setFocusable(true);
-        mappaClasse.requestFocus();
+    	mappaClasse.setFocusable(true);
+    	mappaClasse.requestFocus();
+    	
+    	// ATTENTION PLEASE KEYLISTENER DI PANNNLEZIONE!!!
+        Prof1Lezione.panLezione.addKeyListener(new KeyAdapter() {
+        	private StringBuilder testoScrivente = new StringBuilder();
+        	
+        	  @Override
+        	    public void keyTyped(KeyEvent e) {
+        		  char chara = e.getKeyChar();
+        		  testoScrivente.append(chara);
+        		  Prof1Lezione.labelIntervento.setText(testoScrivente.toString());
+        		  System.out.print("Sto scrivendo");
+        	  }
+        	  @Override
+        	    public void keyPressed(KeyEvent e) {
+        	        switch(e.getKeyCode()) {
+        	        case KeyEvent.VK_BACK_SPACE: 
+        	        	if (testoScrivente.length() > 0) {
+                            testoScrivente.setLength(testoScrivente.length() - 1);
+                            Prof1Lezione.labelIntervento.setText(testoScrivente.toString());
+                        }
+                        break;
+        	        case KeyEvent.VK_ENTER: 
+        	        	if(testoScrivente.length() > 0) {
+        	        		Prof1Lezione.intervento = testoScrivente.toString();
+        	        		testoScrivente.setLength(0);
+                            Prof1Lezione.labelIntervento.setText(testoScrivente.toString());
+        	        	}
+        	        }
+        	  }
+        });
+   
     }
+    
     static void aggiornaOro() {
     	if (oro != null) { 
            oro.setText("Oro: " + personaggioSelezionato.oro);

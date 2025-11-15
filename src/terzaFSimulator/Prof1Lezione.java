@@ -18,7 +18,10 @@ public class Prof1Lezione {
 	static JLabel coseDette;
 	static JLabel titoloLav;
 	static JLabel scrittaLav;
+	public static JLabel labelIntervento;
 	
+	static String intervento = null;
+
 	
 	static void creaAmbiente() {
 		Main.finestra.remove(Main.mappaClasse);
@@ -53,6 +56,13 @@ public class Prof1Lezione {
 	    manoAlzata.setOpaque(false);
 	    panLezione.add(manoAlzata);
 	    
+	    labelIntervento = new JLabel("");
+	    labelIntervento.setBounds(460, 420, 300, 200);
+	    labelIntervento.setFont(new Font("Serif", Font.ITALIC, 25));
+	    labelIntervento.setForeground(Color.WHITE);
+	    labelIntervento.setOpaque(false);
+	    panLezione.add(labelIntervento);
+	    
 	    titoloLav = new JLabel("");
 		titoloLav.setBounds(415, 110, 120, 40);
 		titoloLav.setFont(new Font("Serif", Font.BOLD, 40));
@@ -63,13 +73,15 @@ public class Prof1Lezione {
 		scrittaLav.setFont(new Font("Serif", Font.PLAIN, 20));
 		panLezione.add(scrittaLav);
 	     
-	    panLezione.setComponentZOrder(coseDette, 0);
-	    panLezione.setComponentZOrder(profAllaLavagna, 1);
-	    panLezione.setComponentZOrder(manoAlzata,2 );
-	    panLezione.setComponentZOrder(scrittaLav, 3);
-	    panLezione.setComponentZOrder(titoloLav, 4); //Dev'essere davanti alla lavagna
-	    panLezione.setComponentZOrder(lavagna, 5);
-	    panLezione.setComponentZOrder(sfondoLez, 6);      //lo sfondo dev'essere sempre ultimo
+		
+		panLezione.setComponentZOrder(labelIntervento, 0);
+	    panLezione.setComponentZOrder(coseDette, 1 );
+	    panLezione.setComponentZOrder(profAllaLavagna, 2);
+	    panLezione.setComponentZOrder(manoAlzata, 3);
+	    panLezione.setComponentZOrder(scrittaLav, 4);
+	    panLezione.setComponentZOrder(titoloLav, 5); //Dev'essere davanti alla lavagna
+	    panLezione.setComponentZOrder(lavagna, 6);
+	    panLezione.setComponentZOrder(sfondoLez, 7);      //lo sfondo dev'essere sempre ultimo
 	    
 	    
 	    Main.finestra.add(panLezione);
@@ -120,7 +132,7 @@ public class Prof1Lezione {
 			try {Thread.sleep(400);} catch (InterruptedException e) {e.printStackTrace();}
 			scrittaLav.setForeground(MetodiUtili.qualeUmore(Prof1.umore));
 			stampa("La funzione sin(), in trigonometria, è una delle <br>funzioni <br>principali e, in un triangolo <br>rettangolo, definisce il <br>rapporto tra il lato opposto <br>a un angolo dato e l'ipotenusa", scrittaLav);
-			
+			permettiInterazione();
 		}
 		
 		static void spiegaQualcosa() {
@@ -178,4 +190,13 @@ public class Prof1Lezione {
 					} 
 			}).start();
 		}
+		
+		static void permettiInterazione() {
+			manoAlzata.addActionListener(e -> {
+				panLezione.setFocusable(true);
+				panLezione.requestFocus();
+				Main.configuraTasti();
+			});
+			}
+		
 }
