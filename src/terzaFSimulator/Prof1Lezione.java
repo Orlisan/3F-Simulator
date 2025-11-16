@@ -265,13 +265,7 @@ public class Prof1Lezione {
 							e1.printStackTrace();
 						}
 					}
-					sconfiguraTasti();
-					try {
-						metodoCorrente.invoke(null, "par2", true);
-					} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
+					
 				} else if(frisk.equals("continui a spiegare") || frisk.equals("spieghi pure")) {
 					sconfiguraTasti();
 					try {
@@ -281,28 +275,24 @@ public class Prof1Lezione {
 						e1.printStackTrace();
 					}
 				} else if(frisk.contains("sei stupido") || frisk.contains("è stupido")) {
+					System.out.println(Prof1.umore);
 					cambiaUmore(-100); 
+					System.out.println(Prof1.umore + " NUOVO");
 					coseDette.setForeground(MetodiUtili.qualeUmore(Prof1.umore));
 					stampa("COME OSI!!! +2000 NOTE, +400 4", coseDette);
 					Main.personaggioSelezionato.oro -= 100;
 					Main.aggiornaOro();
-					sconfiguraTasti();
-					try {
-						metodoCorrente.invoke(null, "par2", true);
-					} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
+					
 					
 				}
-	
+				Main.debugEnter = false;
 			}).start();
 		}
 		
 		static void cambiaUmore(int quantiPunti) {
 		    if(quantiPunti <= 50 && quantiPunti > 0) {
 		    	puntiInPiù = 50;
-		    } else if(quantiPunti <= -50 && quantiPunti > -100) {
+		    } else if(quantiPunti >= -50 && quantiPunti < 0) {
 		    	puntiInPiù = -50;
 		    }  else if(quantiPunti + puntiInPiù >= 100) {
 		        Prof1.umore = switch(Prof1.umore) {

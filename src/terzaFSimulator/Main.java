@@ -51,6 +51,7 @@ public class Main {
     public static boolean saiSkip = false;
     public static boolean cèSkip = false;
     public static boolean presoOro;
+    public static boolean debugEnter = false;
     
     public static boolean nonToccaSu = true;
     public static boolean nonToccaGiù = true;
@@ -454,12 +455,13 @@ public class Main {
                         }
                         break;
         	        case KeyEvent.VK_ENTER: 
-        	        	if(testoScrivente.length() > 0) {
+        	        	if(testoScrivente.length() > 0 && !debugEnter) {
         	        		Prof1Lezione.intervento = testoScrivente.toString();
         	        		testoScrivente.setLength(0);
                             Prof1Lezione.labelIntervento.setText(testoScrivente.toString());
                             Prof1Lezione.analizzaRisposta();
                             Prof1Lezione.manoAlzata.setIcon(new ImageIcon("Texture\\alza_mano_grigia.png"));
+                            debugEnter = true;
         	        	}
         	        }
         	  }
@@ -481,19 +483,10 @@ public class Main {
     
     
     static void muoviPersonaggio(int dx, int dy) {
-        if (personaggioSelezionato != null) {
-           
-            
-        	
-        	
+        if (personaggioSelezionato != null) {    	
         	// Aggiorna posizione
         	int vecchiaX = personaggioSelezionato.posizioneX;
             int vecchiaY = personaggioSelezionato.posizioneY;
-            
-            
-            
-            
-            // Prova a muovere
             personaggioSelezionato.posizioneX += dx;
             personaggioSelezionato.posizioneY += dy;
             
