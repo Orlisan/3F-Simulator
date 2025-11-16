@@ -27,6 +27,7 @@ public class Prof1Lezione {
 	
 	static boolean unoDue = true;
 	static int indiceCasuale;
+	static int puntiInPiù = 0;
 	
 	static Method metodoCorrente;
 	
@@ -220,31 +221,64 @@ public class Prof1Lezione {
 		
 		public static void analizzaRisposta() {
 			new Thread(() -> {
-			String frisk = intervento.toLowerCase().trim();
-			
-			if(frisk.equals("non ho capito")) {
-				ImageIcon brill1 = new ImageIcon("Texture\\prof_lavagna_brillante1.png");
-				ImageIcon brill2 = new ImageIcon("Texture\\prof_lavagna_brillante2.png");
+				String frisk = intervento.toLowerCase().trim();
 				
-				Timer timer = new Timer(300, e -> {
-					profAllaLavagna.setIcon(unoDue ? brill1 : brill2);
-					unoDue = !unoDue;
-				});
-				timer.setRepeats(true);
-				timer.start();
-				
-				stampa("BRAVO/A!!!<br> Ecco quello che <br>volevo sentire,<br> ti rispiego tutto<br> in modo che tu<br> capisca ancora di meno", coseDette);
-				try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
-				if(metodoCorrente != null) {
-					try {
-						metodoCorrente.invoke(null, parCorrente, true);
-					} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
+				if(frisk.equals("non ho capito")) {
+					ImageIcon brill1 = new ImageIcon("Texture\\prof_lavagna_brillante1.png");
+					ImageIcon brill2 = new ImageIcon("Texture\\prof_lavagna_brillante2.png");
+					
+					Timer timer = new Timer(300, e -> {
+						profAllaLavagna.setIcon(unoDue ? brill1 : brill2);
+						unoDue = !unoDue;
+					});
+					timer.setRepeats(true);
+					timer.start();
+					cambiaUmore(100);
+					cambiaUmore(100);
+					coseDette.setForeground(MetodiUtili.qualeUmore(Prof1.umore));
+					stampa("BRAVO/A!!!<br> Ecco quello che <br>volevo sentire,<br> ti rispiego tutto<br> in modo che tu<br> capisca ancora di meno", coseDette);
+					try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
+					if(metodoCorrente != null) {
+						try {
+							metodoCorrente.invoke(null, parCorrente, true);
+						} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
 					}
+					
 				}
-			}
 	
 			}).start();
+		}
+		
+		static void cambiaUmore(int quantiPunti) {
+		    if(quantiPunti <= 50 && quantiPunti > 0) {
+		    	puntiInPiù = 50;
+		    } else if(quantiPunti <= -50 && quantiPunti > -100) {
+		    	puntiInPiù = -50;
+		    }  else if(quantiPunti + puntiInPiù >= 100) {
+		        Prof1.umore = switch(Prof1.umore) {
+		            case OMICIDA -> UmoriProf.INDEMONIATO;
+		            case INDEMONIATO -> UmoriProf.ARRABBIATO;
+		            case ARRABBIATO -> UmoriProf.IRRITATO;
+		            case IRRITATO -> UmoriProf.CALMO;
+		            case CALMO -> UmoriProf.LUSINGATO;
+		            case LUSINGATO -> UmoriProf.CONTENTO;
+		            case CONTENTO, ESTASIATO -> UmoriProf.ESTASIATO;
+		        };
+		        puntiInPiù = 0;
+		    } else if(quantiPunti + puntiInPiù <= -100) {
+		    	Prof1.umore = switch(Prof1.umore) {
+	            case INDEMONIATO, OMICIDA -> UmoriProf.OMICIDA;
+	            case ARRABBIATO -> UmoriProf.INDEMONIATO;
+	            case IRRITATO -> UmoriProf.ARRABBIATO;
+	            case CALMO -> UmoriProf.IRRITATO;
+	            case LUSINGATO -> UmoriProf.CALMO;
+	            case CONTENTO -> UmoriProf.LUSINGATO;
+	            case ESTASIATO -> UmoriProf.CONTENTO;
+	        };
+	        puntiInPiù = 0;
+		    }
 		}
 }
