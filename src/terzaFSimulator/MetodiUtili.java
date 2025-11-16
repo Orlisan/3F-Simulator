@@ -27,8 +27,10 @@ public class MetodiUtili {
 	public static Color qualeUmore(UmoriProf umore) {
 		if(umore == UmoriProf.CALMO || umore == UmoriProf.LUSINGATO) {
 			return Color.YELLOW;
-		}else if(umore == UmoriProf.ESTASIATO || umore == UmoriProf.CONTENTO) {
+		}else if(umore == UmoriProf.ESTASIATO) {
 			return Color.GREEN;
+		}else if(umore == UmoriProf.CONTENTO) {
+			return Color.CYAN;
 		}else if(umore == UmoriProf.IRRITATO || umore == UmoriProf.ARRABBIATO) {
 			return Color.ORANGE;
 		}else if(umore == UmoriProf.INDEMONIATO) {

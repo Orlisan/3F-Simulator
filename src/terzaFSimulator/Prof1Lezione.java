@@ -20,6 +20,7 @@ public class Prof1Lezione {
 	static JLabel titoloLav;
 	static JLabel scrittaLav;
 	static JLabel profAllaLavagna;
+	static JLabel maclaurin;
 	public static JLabel labelIntervento;
 	
 	static String intervento = null;
@@ -58,6 +59,11 @@ public class Prof1Lezione {
 	    coseDette.setForeground(MetodiUtili.qualeUmore(Prof1.umore));
 	    panLezione.add(coseDette);
 	    
+	    maclaurin = new JLabel(new ImageIcon("Texture\\formula_sin().png"));
+		maclaurin.setBounds(330, 260, 206, 61);
+		maclaurin.setVisible(false);
+		panLezione.add(maclaurin);
+	    
 	    ImageIcon labelMano = new ImageIcon("Texture\\alza_mano_grigia.png");
 	    manoAlzata = new JButton(labelMano);
 	    manoAlzata.setBounds(90, 450, 200, 84);
@@ -87,9 +93,10 @@ public class Prof1Lezione {
 	    panLezione.setComponentZOrder(profAllaLavagna, 2);
 	    panLezione.setComponentZOrder(manoAlzata, 3);
 	    panLezione.setComponentZOrder(scrittaLav, 4);
-	    panLezione.setComponentZOrder(titoloLav, 5); //Dev'essere davanti alla lavagna
-	    panLezione.setComponentZOrder(lavagna, 6);
-	    panLezione.setComponentZOrder(sfondoLez, 7);      //lo sfondo dev'essere sempre ultimo
+	    panLezione.setComponentZOrder(titoloLav, 5);
+		panLezione.setComponentZOrder(maclaurin, 6);//Dev'essere davanti alla lavagna
+	    panLezione.setComponentZOrder(lavagna, 7);
+	    panLezione.setComponentZOrder(sfondoLez, 8);      //lo sfondo dev'essere sempre ultimo
 	    
 	    
 	    Main.finestra.add(panLezione);
@@ -145,6 +152,16 @@ public class Prof1Lezione {
 				scrittaLav.setForeground(MetodiUtili.qualeUmore(Prof1.umore));
 				stampa("La funzione sin(), in trigonometria, è una delle <br>funzioni <br>principali e, in un triangolo <br>rettangolo, definisce il <br>rapporto tra il lato opposto <br>a un angolo dato e l'ipotenusa", scrittaLav);
 				permettiInterazione();
+			}else if(paragrafo.equals("par2")) {
+				parCorrente = "par2";
+				maclaurin.setVisible(false);
+				try {Thread.sleep(400);} catch (InterruptedException e) {e.printStackTrace();}
+				scrittaLav.setForeground(MetodiUtili.qualeUmore(Prof1.umore));
+				stampa("Esso si può calcolare usando una formula chiamata<br> Serie di Maclaurin, una sommatoria infinita:<br><br><br>", scrittaLav);
+				try {Thread.sleep(400);} catch (InterruptedException e) {e.printStackTrace();}
+				maclaurin.setVisible(true);
+				permettiInterazione();
+	
 			}
 		}
 		
@@ -234,17 +251,47 @@ public class Prof1Lezione {
 					timer.setRepeats(true);
 					timer.start();
 					cambiaUmore(100);
-					cambiaUmore(100);
+					cambiaUmore(50);
 					coseDette.setForeground(MetodiUtili.qualeUmore(Prof1.umore));
 					stampa("BRAVO/A!!!<br> Ecco quello che <br>volevo sentire,<br> ti rispiego tutto<br> in modo che tu<br> capisca ancora di meno", coseDette);
 					try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
 					if(metodoCorrente != null) {
 						try {
 							metodoCorrente.invoke(null, parCorrente, true);
+							try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
+							
 						} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
+					}
+					sconfiguraTasti();
+					try {
+						metodoCorrente.invoke(null, "par2", true);
+					} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				} else if(frisk.equals("continui a spiegare") || frisk.equals("spieghi pure")) {
+					sconfiguraTasti();
+					try {
+						metodoCorrente.invoke(null, "par2", true);
+					} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				} else if(frisk.contains("sei stupido") || frisk.contains("è stupido")) {
+					cambiaUmore(-100); 
+					coseDette.setForeground(MetodiUtili.qualeUmore(Prof1.umore));
+					stampa("COME OSI!!! +2000 NOTE, +400 4", coseDette);
+					Main.personaggioSelezionato.oro -= 100;
+					Main.aggiornaOro();
+					sconfiguraTasti();
+					try {
+						metodoCorrente.invoke(null, "par2", true);
+					} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
 					}
 					
 				}
@@ -280,5 +327,11 @@ public class Prof1Lezione {
 	        };
 	        puntiInPiù = 0;
 		    }
+		    
+		   
 		}
+		static void sconfiguraTasti() {
+	    	panLezione.setFocusable(false);
+	    	manoAlzata.setIcon(new ImageIcon("Texture\\alza_mano_grigia.png"));
+	    }
 }
