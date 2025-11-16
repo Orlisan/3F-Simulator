@@ -18,10 +18,12 @@ public class Prof1Lezione {
 	static JLabel coseDette;
 	static JLabel titoloLav;
 	static JLabel scrittaLav;
+	static JLabel profAllaLavagna;
 	public static JLabel labelIntervento;
 	
 	static String intervento = null;
 
+	static boolean unoDue = true;
 	
 	static void creaAmbiente() {
 		Main.finestra.remove(Main.mappaClasse);
@@ -34,7 +36,7 @@ public class Prof1Lezione {
 	    sfondoLez.setBounds(0, 0, 880, 671);
 	    panLezione.add(sfondoLez);
 	    
-	    JLabel profAllaLavagna = new JLabel(new ImageIcon("Texture\\prof_lavagna.png"));
+	    profAllaLavagna = new JLabel(new ImageIcon("Texture\\prof_lavagna.png"));
 	    profAllaLavagna.setBounds(200, 100, 200, 200);
 	    profAllaLavagna.setOpaque(false);
 	    panLezione.add(profAllaLavagna);
@@ -197,8 +199,24 @@ public class Prof1Lezione {
 			manoAlzata.addActionListener(e -> {
 				panLezione.setFocusable(true);
 				panLezione.requestFocus();
-				Main.configuraTasti();
+				Main.configuraTasti(); 
 			});
 			}
 		
+		
+		public static void analizzaRisposta() {
+			String frisk = intervento.toLowerCase().trim();
+			
+			if(frisk.equals("non ho capito")) {
+				ImageIcon brill1 = new ImageIcon("Texture\\prof_lavagna_brillante1.png");
+				ImageIcon brill2 = new ImageIcon("Texture\\prof_lavagna_brillante2.png");
+				
+				Timer timer = new Timer(100, e -> {
+					profAllaLavagna.setIcon(unoDue ? brill1 : brill2);
+					unoDue = !unoDue;
+				});
+				timer.setRepeats(true);
+				timer.start();
+			}
+	}
 }

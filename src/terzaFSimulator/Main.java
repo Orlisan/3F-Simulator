@@ -458,6 +458,7 @@ public class Main {
         	        		Prof1Lezione.intervento = testoScrivente.toString();
         	        		testoScrivente.setLength(0);
                             Prof1Lezione.labelIntervento.setText(testoScrivente.toString());
+                            Prof1Lezione.analizzaRisposta();
         	        	}
         	        }
         	  }
