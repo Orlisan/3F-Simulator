@@ -7,6 +7,7 @@ import terzaFSimulator.Prof1.UmoriProf;
 import java.awt.*;
 import java.io.File;
 import java.util.Random;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 public class Prof1Lezione {
@@ -22,8 +23,12 @@ public class Prof1Lezione {
 	public static JLabel labelIntervento;
 	
 	static String intervento = null;
-
+	static String parCorrente = null;
+	
 	static boolean unoDue = true;
+	static int indiceCasuale;
+	
+	static Method metodoCorrente;
 	
 	static void creaAmbiente() {
 		Main.finestra.remove(Main.mappaClasse);
@@ -124,17 +129,22 @@ public class Prof1Lezione {
 	}
 		
 	
-		static void spiegaSeno() {
-			stampa("la lezione <br> di questi <br>3 minuti,<br> si tratterà<br> sulla funzione<br> sin()", coseDette);
-			try {Thread.sleep(500);} catch (InterruptedException e) {e.printStackTrace();}
-			titoloLav.setForeground(MetodiUtili.qualeUmore(Prof1.umore));
-			stampa("sin(x)", titoloLav);
-			try {Thread.sleep(400);} catch (InterruptedException e) {e.printStackTrace();}
-			muoviTitolo(titoloLav, true);
-			try {Thread.sleep(400);} catch (InterruptedException e) {e.printStackTrace();}
-			scrittaLav.setForeground(MetodiUtili.qualeUmore(Prof1.umore));
-			stampa("La funzione sin(), in trigonometria, è una delle <br>funzioni <br>principali e, in un triangolo <br>rettangolo, definisce il <br>rapporto tra il lato opposto <br>a un angolo dato e l'ipotenusa", scrittaLav);
-			permettiInterazione();
+		static void spiegaSeno(String paragrafo, boolean giàIntro) {
+			if(!giàIntro) {
+				stampa("la lezione <br> di questi <br>3 minuti,<br> si tratterà<br> sulla funzione<br> sin()", coseDette);
+				try {Thread.sleep(500);} catch (InterruptedException e) {e.printStackTrace();}
+				titoloLav.setForeground(MetodiUtili.qualeUmore(Prof1.umore));
+				stampa("sin(x)", titoloLav);
+				try {Thread.sleep(400);} catch (InterruptedException e) {e.printStackTrace();}
+				muoviTitolo(titoloLav, true);
+			}
+			if(paragrafo.equals("par1")) {
+				parCorrente = "par1";
+				try {Thread.sleep(400);} catch (InterruptedException e) {e.printStackTrace();}
+				scrittaLav.setForeground(MetodiUtili.qualeUmore(Prof1.umore));
+				stampa("La funzione sin(), in trigonometria, è una delle <br>funzioni <br>principali e, in un triangolo <br>rettangolo, definisce il <br>rapporto tra il lato opposto <br>a un angolo dato e l'ipotenusa", scrittaLav);
+				permettiInterazione();
+			}
 		}
 		
 		static void spiegaQualcosa() {
@@ -142,16 +152,20 @@ public class Prof1Lezione {
 			
 			try {
 				Method[] metodiSpiega = {
-						 Prof1Lezione.class.getDeclaredMethod("spiegaSeno"),
+						 Prof1Lezione.class.getDeclaredMethod("spiegaSeno", String.class, boolean.class),
 				};
 				
 				int indiceCasuale = random.nextInt(metodiSpiega.length);
-		        try {
-		            metodiSpiega[indiceCasuale].invoke(null); 
+				metodoCorrente = metodiSpiega[indiceCasuale];
+				try {
+		            metodiSpiega[indiceCasuale].invoke(null, "par1", false); 
 		       
 		        } catch (Exception e) {
 		            e.printStackTrace();
 		        }
+		        
+		        
+		        
 			} catch (NoSuchMethodException | SecurityException  e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -205,18 +219,32 @@ public class Prof1Lezione {
 		
 		
 		public static void analizzaRisposta() {
+			new Thread(() -> {
 			String frisk = intervento.toLowerCase().trim();
 			
 			if(frisk.equals("non ho capito")) {
 				ImageIcon brill1 = new ImageIcon("Texture\\prof_lavagna_brillante1.png");
 				ImageIcon brill2 = new ImageIcon("Texture\\prof_lavagna_brillante2.png");
 				
-				Timer timer = new Timer(100, e -> {
+				Timer timer = new Timer(300, e -> {
 					profAllaLavagna.setIcon(unoDue ? brill1 : brill2);
 					unoDue = !unoDue;
 				});
 				timer.setRepeats(true);
 				timer.start();
+				
+				stampa("BRAVO/A!!!<br> Ecco quello che <br>volevo sentire,<br> ti rispiego tutto<br> in modo che tu<br> capisca ancora di meno", coseDette);
+				try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
+				if(metodoCorrente != null) {
+					try {
+						metodoCorrente.invoke(null, parCorrente, true);
+					} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
 			}
-	}
+	
+			}).start();
+		}
 }

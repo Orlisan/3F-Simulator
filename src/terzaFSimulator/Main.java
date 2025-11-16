@@ -459,6 +459,7 @@ public class Main {
         	        		testoScrivente.setLength(0);
                             Prof1Lezione.labelIntervento.setText(testoScrivente.toString());
                             Prof1Lezione.analizzaRisposta();
+                            Prof1Lezione.manoAlzata.setIcon(new ImageIcon("Texture\\alza_mano_grigia.png"));
         	        	}
         	        }
         	  }
