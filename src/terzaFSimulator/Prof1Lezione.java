@@ -266,7 +266,7 @@ public class Prof1Lezione {
 						}
 					}
 					
-				} else if(frisk.equals("continui a spiegare") || frisk.equals("spieghi pure")) {
+				} else if(frisk.equals("continui a spiegare") || frisk.equals("spieghi pure") || (frisk.contains("continui") && frisk.contains("la lezione"))) {
 					sconfiguraTasti();
 					try {
 						metodoCorrente.invoke(null, "par2", true);
