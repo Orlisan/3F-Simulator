@@ -114,7 +114,7 @@ public class Prof1Lezione {
 		
 		Thread threadScrivProf = new Thread(() -> {
 		
-       stampa("Oggi Faremo <br> lezione di <br> Trigonometria, <br> il nuovo <br> semplicissimo <br> argomento", coseDette);
+    /*  stampa("Oggi Faremo <br> lezione di <br> Trigonometria, <br> il nuovo <br> semplicissimo <br> argomento", coseDette);
 		
 		try {Thread.sleep(500);} catch (InterruptedException e) {e.printStackTrace();}
 		
@@ -131,7 +131,7 @@ public class Prof1Lezione {
 		try {Thread.sleep(500);} catch (InterruptedException e) {e.printStackTrace();}
 		
 		stampa( "Adesso inizio<br> a spiegare,<br> vi prometto che<br> userò un <br>linguaggio molto <br>complicato, <br>come volete voi", coseDette);
-		spiegaQualcosa();
+		*/spiegaQualcosa();
 		});
 		threadScrivProf.start();
 	}
@@ -290,11 +290,8 @@ public class Prof1Lezione {
 		}
 		
 		static void cambiaUmore(int quantiPunti) {
-		    if(quantiPunti <= 50 && quantiPunti > 0) {
-		    	puntiInPiù += quantiPunti;
-		    } else if(quantiPunti >= -50 && quantiPunti < 0) {
-		    	puntiInPiù -= quantiPunti;
-		    }  else if(quantiPunti + puntiInPiù >= 100) {
+		    puntiInPiù += quantiPunti;
+		    if(quantiPunti + puntiInPiù >= 100) {
 		        Prof1.umore = switch(Prof1.umore) {
 		            case OMICIDA -> UmoriProf.INDEMONIATO;
 		            case INDEMONIATO -> UmoriProf.ARRABBIATO;
@@ -306,10 +303,11 @@ public class Prof1Lezione {
 		            
 		        };
 		        int puntiRimasti = (quantiPunti + puntiInPiù) - 100;
-	            if(puntiRimasti > 0) {
+		        puntiInPiù = 0;
+		        if(puntiRimasti > 0) {
 	            	cambiaUmore(puntiRimasti);
 	            }
-		        puntiInPiù -= 100;
+		        
 		    } else if(quantiPunti + puntiInPiù <= -100) {
 		    	Prof1.umore = switch(Prof1.umore) {
 	            case INDEMONIATO, OMICIDA -> UmoriProf.OMICIDA;
@@ -320,11 +318,12 @@ public class Prof1Lezione {
 	            case CONTENTO -> UmoriProf.LUSINGATO;
 	            case ESTASIATO -> UmoriProf.CONTENTO;
 	        };
-	        int puntiRimasti = (quantiPunti + puntiInPiù) - 100;
-            if(puntiRimasti > 0) {
+	        int puntiRimasti = (quantiPunti + puntiInPiù) + 100;
+	        puntiInPiù = 0;
+	        if(puntiRimasti < 0) {
             	cambiaUmore(puntiRimasti);
             }
-	        puntiInPiù -= 100;
+	        
 		    }
 		    
 		   
