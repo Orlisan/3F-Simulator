@@ -17,8 +17,8 @@ public class Persona {
 	String cognome;
 	int età;
 	JLabel icona;
-	 public int posizioneX;
-	 public int posizioneY;
+	public int posizioneX;
+	public int posizioneY;
 	public int oro;
 	public int vita;
 	
@@ -92,8 +92,18 @@ public class Persona {
     	}
     }
     
+    public int getOro() {
+    	return this.oro;
+    }
     
-    
-    
+    public void setOro(int newOro) {
+    	if(this.getOro() < 10) {
+    		this.oro = newOro + 50;
+    	}else if(this.getOro() > 1000000) {
+    		this.oro = newOro - 50;
+    	} else {
+    		this.oro = newOro;
+    	}
+    }
 
 }

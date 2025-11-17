@@ -253,7 +253,7 @@ public class Prof1Lezione {
 					cambiaUmore(60);
 					
 					coseDette.setForeground(MetodiUtili.qualeUmore(Prof1.umore));
-					stampa("BRAVO/A!!!<br> Ecco quello che <br>volevo sentire,<br> ti rispiego tutto<br> in modo che tu<br> capisca ancora di meno", coseDette);
+					stampa("AHHHHH!!!<br> Ecco quello che <br>volevo sentire,<br> ti rispiego tutto<br> in modo che tu<br> capisca ancora di meno", coseDette);
 					try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
 					if(metodoCorrente != null) {
 						try {
@@ -274,16 +274,22 @@ public class Prof1Lezione {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-				} else if(frisk.contains("sei stupido") || frisk.contains("è stupido")) {
+				} else if(frisk.contains("sei stupido") || frisk.contains("è stupido") || frisk.contains("fai schifo")) {
 					System.out.println(Prof1.umore);
 					cambiaUmore(-20); 
 					System.out.println(Prof1.umore + " NUOVO");
 					coseDette.setForeground(MetodiUtili.qualeUmore(Prof1.umore));
 					stampa("COME OSI!!! +2000 NOTE, +400 4", coseDette);
-					Main.personaggioSelezionato.oro -= 100;
+					Main.personaggioSelezionato.setOro(Main.personaggioSelezionato.getOro() - 100);
 					Main.aggiornaOro();
 					
-					
+				}else if(frisk.contains(MetodiUtili.decripta("rtrrt"))) {
+					cambiaUmore(-65); 
+					stampa("NON È AFFATTO DIVERTENTE!<br> SIAMO IN UN CONTESTO <br>DIDATTICO!!!", coseDette);
+					try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
+					stampa("NON VUOL DIRE<br> AFFATTO QUELLO!!!<br> CHE COMPORTAMENTO <br> VERGOGNOSO!", coseDette);
+					Main.personaggioSelezionato.setOro(Main.personaggioSelezionato.getOro() - 150);
+					Main.aggiornaOro();
 				}
 				Main.debugEnter = false;
 			}).start();
