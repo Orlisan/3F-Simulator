@@ -309,7 +309,7 @@ public class Prof1Lezione {
 	            if(puntiRimasti > 0) {
 	            	cambiaUmore(puntiRimasti);
 	            }
-		        puntiInPiù = 0;
+		        puntiInPiù -= 100;
 		    } else if(quantiPunti + puntiInPiù <= -100) {
 		    	Prof1.umore = switch(Prof1.umore) {
 	            case INDEMONIATO, OMICIDA -> UmoriProf.OMICIDA;
@@ -324,7 +324,7 @@ public class Prof1Lezione {
             if(puntiRimasti > 0) {
             	cambiaUmore(puntiRimasti);
             }
-	        puntiInPiù = 0;
+	        puntiInPiù -= 100;
 		    }
 		    
 		   
