@@ -114,7 +114,7 @@ public class Prof1Lezione {
 		
 		Thread threadScrivProf = new Thread(() -> {
 		
-      /*  stampa("Oggi Faremo <br> lezione di <br> Trigonometria, <br> il nuovo <br> semplicissimo <br> argomento", coseDette);
+       stampa("Oggi Faremo <br> lezione di <br> Trigonometria, <br> il nuovo <br> semplicissimo <br> argomento", coseDette);
 		
 		try {Thread.sleep(500);} catch (InterruptedException e) {e.printStackTrace();}
 		
@@ -131,7 +131,7 @@ public class Prof1Lezione {
 		try {Thread.sleep(500);} catch (InterruptedException e) {e.printStackTrace();}
 		
 		stampa( "Adesso inizio<br> a spiegare,<br> vi prometto che<br> userò un <br>linguaggio molto <br>complicato, <br>come volete voi", coseDette);
-		*/spiegaQualcosa();
+		spiegaQualcosa();
 		});
 		threadScrivProf.start();
 	}
@@ -250,8 +250,8 @@ public class Prof1Lezione {
 					});
 					timer.setRepeats(true);
 					timer.start();
-					cambiaUmore(100);
-					cambiaUmore(50);
+					cambiaUmore(60);
+					
 					coseDette.setForeground(MetodiUtili.qualeUmore(Prof1.umore));
 					stampa("BRAVO/A!!!<br> Ecco quello che <br>volevo sentire,<br> ti rispiego tutto<br> in modo che tu<br> capisca ancora di meno", coseDette);
 					try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
@@ -276,7 +276,7 @@ public class Prof1Lezione {
 					}
 				} else if(frisk.contains("sei stupido") || frisk.contains("è stupido")) {
 					System.out.println(Prof1.umore);
-					cambiaUmore(-100); 
+					cambiaUmore(-20); 
 					System.out.println(Prof1.umore + " NUOVO");
 					coseDette.setForeground(MetodiUtili.qualeUmore(Prof1.umore));
 					stampa("COME OSI!!! +2000 NOTE, +400 4", coseDette);
@@ -291,9 +291,9 @@ public class Prof1Lezione {
 		
 		static void cambiaUmore(int quantiPunti) {
 		    if(quantiPunti <= 50 && quantiPunti > 0) {
-		    	puntiInPiù = 50;
+		    	puntiInPiù += quantiPunti;
 		    } else if(quantiPunti >= -50 && quantiPunti < 0) {
-		    	puntiInPiù = -50;
+		    	puntiInPiù -= quantiPunti;
 		    }  else if(quantiPunti + puntiInPiù >= 100) {
 		        Prof1.umore = switch(Prof1.umore) {
 		            case OMICIDA -> UmoriProf.INDEMONIATO;
@@ -303,7 +303,12 @@ public class Prof1Lezione {
 		            case CALMO -> UmoriProf.LUSINGATO;
 		            case LUSINGATO -> UmoriProf.CONTENTO;
 		            case CONTENTO, ESTASIATO -> UmoriProf.ESTASIATO;
+		            
 		        };
+		        int puntiRimasti = (quantiPunti + puntiInPiù) - 100;
+	            if(puntiRimasti > 0) {
+	            	cambiaUmore(puntiRimasti);
+	            }
 		        puntiInPiù = 0;
 		    } else if(quantiPunti + puntiInPiù <= -100) {
 		    	Prof1.umore = switch(Prof1.umore) {
@@ -315,6 +320,10 @@ public class Prof1Lezione {
 	            case CONTENTO -> UmoriProf.LUSINGATO;
 	            case ESTASIATO -> UmoriProf.CONTENTO;
 	        };
+	        int puntiRimasti = (quantiPunti + puntiInPiù) - 100;
+            if(puntiRimasti > 0) {
+            	cambiaUmore(puntiRimasti);
+            }
 	        puntiInPiù = 0;
 		    }
 		    
