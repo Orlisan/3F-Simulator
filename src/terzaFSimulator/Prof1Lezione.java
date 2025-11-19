@@ -114,7 +114,7 @@ public class Prof1Lezione {
 		
 		Thread threadScrivProf = new Thread(() -> {
 		
-    /*  stampa("Oggi Faremo <br> lezione di <br> Trigonometria, <br> il nuovo <br> semplicissimo <br> argomento", coseDette);
+        stampa("Oggi Faremo <br> lezione di <br> Trigonometria, <br> il nuovo <br> semplicissimo <br> argomento", coseDette);
 		
 		try {Thread.sleep(500);} catch (InterruptedException e) {e.printStackTrace();}
 		
@@ -131,7 +131,7 @@ public class Prof1Lezione {
 		try {Thread.sleep(500);} catch (InterruptedException e) {e.printStackTrace();}
 		
 		stampa( "Adesso inizio<br> a spiegare,<br> vi prometto che<br> userò un <br>linguaggio molto <br>complicato, <br>come volete voi", coseDette);
-		*/spiegaQualcosa();
+		spiegaQualcosa();
 		});
 		threadScrivProf.start();
 	}
@@ -283,13 +283,16 @@ public class Prof1Lezione {
 					Main.personaggioSelezionato.setOro(Main.personaggioSelezionato.getOro() - 100);
 					Main.aggiornaOro();
 					
-				}else if(frisk.contains(MetodiUtili.decripta("rtrrt"))) {
+				}else if(frisk.contains(MetodiUtili.decripta("rtrrt")) || frisk.contains(MetodiUtili.decripta("PLZG"))) {
 					cambiaUmore(-65); 
 					stampa("NON È AFFATTO DIVERTENTE!<br> SIAMO IN UN CONTESTO <br>DIDATTICO!!!", coseDette);
 					try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
 					stampa("NON VUOL DIRE<br> AFFATTO QUELLO!!!<br> CHE COMPORTAMENTO <br> VERGOGNOSO!", coseDette);
 					Main.personaggioSelezionato.setOro(Main.personaggioSelezionato.getOro() - 150);
 					Main.aggiornaOro();
+				}else if(!frisk.contains("a") || !frisk.contains("e") || !frisk.contains("i")|| !frisk.contains("o")|| !frisk.contains("u")) {
+					cambiaUmore(-10);
+					stampa("Parla in italiano <br> idiota!", coseDette);
 				}
 				Main.debugEnter = false;
 			}).start();

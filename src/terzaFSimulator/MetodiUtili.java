@@ -36,7 +36,7 @@ public class MetodiUtili {
 		}else if(umore == UmoriProf.INDEMONIATO) {
 			return Color.RED;
 		}else if(umore == UmoriProf.OMICIDA) {
-			return Color.BLACK;
+			return Color.DARK_GRAY;
 		}else {
 			return Color.WHITE;
 		}
