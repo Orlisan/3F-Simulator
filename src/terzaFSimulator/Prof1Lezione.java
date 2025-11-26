@@ -293,11 +293,13 @@ public class Prof1Lezione {
 					try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
 					stampa("NON VUOL DIRE<br> AFFATTO QUELLO!!!<br> CHE COMPORTAMENTO <br> VERGOGNOSO!", coseDette);
 					Main.personaggioSelezionato.setOro(Main.personaggioSelezionato.getOro() - 150);
-					Main.aggiornaOro();try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
+					Main.aggiornaOro();
+					try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
 					conSpieg();
-				}else if(!frisk.contains("a") || !frisk.contains("e") || !frisk.contains("i")|| !frisk.contains("o")|| !frisk.contains("u")) {
+				}else if(!frisk.contains("a") && !frisk.contains("à") && !frisk.contains("e") && !frisk.contains("è") && !frisk.contains("é") && !frisk.contains("i")&&!frisk.contains("ì") && !frisk.contains("o")&& !frisk.contains("ò") && !frisk.contains("u") &&!frisk.contains("ù") ) {
 					cambiaUmore(-10);
-					stampa("Parla in italiano <br> idiota!", coseDette);try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
+					stampa("Parla in italiano <br> idiota!", coseDette);
+					try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
 					conSpieg();
 				}
 				Main.debugEnter = false;
@@ -306,8 +308,8 @@ public class Prof1Lezione {
 		}
 		
 		static void cambiaUmore(int quantiPunti) {
-		    puntiInPiù += quantiPunti;
-		    if(quantiPunti + puntiInPiù >= 100) {
+		    puntiInPiù += quantiPunti;  
+		    if(puntiInPiù >= 100) {
 		        Prof1.umore = switch(Prof1.umore) {
 		            case OMICIDA -> UmoriProf.INDEMONIATO;
 		            case INDEMONIATO -> UmoriProf.ARRABBIATO;
@@ -316,50 +318,63 @@ public class Prof1Lezione {
 		            case CALMO -> UmoriProf.LUSINGATO;
 		            case LUSINGATO -> UmoriProf.CONTENTO;
 		            case CONTENTO, ESTASIATO -> UmoriProf.ESTASIATO;
-		            
 		        };
-		        int puntiRimasti = (quantiPunti + puntiInPiù) - 100;
+		        int puntiRimasti = puntiInPiù - 100; 
 		        puntiInPiù = 0;
 		        if(puntiRimasti > 0) {
-	            	cambiaUmore(puntiRimasti);
-	            }
-		        
-		    } else if(quantiPunti + puntiInPiù <= -100) {
-		    	Prof1.umore = switch(Prof1.umore) {
-	            case INDEMONIATO, OMICIDA -> UmoriProf.OMICIDA;
-	            case ARRABBIATO -> UmoriProf.INDEMONIATO;
-	            case IRRITATO -> UmoriProf.ARRABBIATO;
-	            case CALMO -> UmoriProf.IRRITATO;
-	            case LUSINGATO -> UmoriProf.CALMO;
-	            case CONTENTO -> UmoriProf.LUSINGATO;
-	            case ESTASIATO -> UmoriProf.CONTENTO;
-	        };
-	        int puntiRimasti = (quantiPunti + puntiInPiù) + 100;
-	        puntiInPiù = 0;
-	        if(puntiRimasti < 0) {
-            	cambiaUmore(puntiRimasti);
-            }
-	        
+		            cambiaUmore(puntiRimasti);
+		        }
+		    } else if(puntiInPiù <= -100) { 
+		        Prof1.umore = switch(Prof1.umore) {
+		            case ESTASIATO -> UmoriProf.CONTENTO;
+		            case CONTENTO -> UmoriProf.LUSINGATO;
+		            case LUSINGATO -> UmoriProf.CALMO;
+		            case CALMO -> UmoriProf.IRRITATO;
+		            case IRRITATO -> UmoriProf.ARRABBIATO;
+		            case ARRABBIATO -> UmoriProf.INDEMONIATO;
+		            case INDEMONIATO, OMICIDA -> UmoriProf.OMICIDA;
+		        };
+		        int puntiRimasti = puntiInPiù + 100;  
+		        puntiInPiù = 0;
+		        if(puntiRimasti < 0) {
+		            cambiaUmore(puntiRimasti);
+		        }
 		    }
-		    
-		   
 		}
 		static void sconfiguraTasti() {
 	    	panLezione.setFocusable(false);
 	    	manoAlzata.setIcon(new ImageIcon("Texture\\alza_mano_grigia.png"));
 	    }
 		static void conSpieg() {
-			stampa("Continuo a spiegare?", coseDette);
-			if( intervento.toLowerCase().trim().equals("sì") || intervento.toLowerCase().trim().equals("si") ){
-				if (parCorrente.equals("par1")) {
-					sconfiguraTasti();
-					try {
-						metodoCorrente.invoke(null, "par2", true);
-					} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-				}
-			}
+		    stampa("Continuo a spiegare?", coseDette);
+		    
+		    intervento = null;
+		    labelIntervento.setText(""); 
+		    
+		    new Thread(() -> {
+		        try {
+		            while (intervento == null || intervento.trim().isEmpty()) {
+		                Thread.sleep(100); 
+		            }
+		       if(!intervento.trim().isEmpty()) {
+		            String risposta = intervento.toLowerCase().trim();
+		            if(risposta.equals("sì") || risposta.equals("si")) {
+		                if (parCorrente.equals("par1")) {
+		                    sconfiguraTasti();
+		                    try {
+		                        metodoCorrente.invoke(null, "par2", true);
+		                    } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e1) {
+		                        e1.printStackTrace();
+		                    }
+		                }
+		            } else {
+		                stampa("Ok, fammi tutte le domande che non vuoi", coseDette);
+		            }
+		       }
+		       } catch (InterruptedException e) {
+		            e.printStackTrace();
+		        }
+		        
+		    }).start();
 		}
 }
