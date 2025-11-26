@@ -265,6 +265,7 @@ public class Prof1Lezione {
 							e1.printStackTrace();
 						}
 					}
+					try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
 					conSpieg();
 				} else if(frisk.equals("continui a spiegare") || frisk.contains("spieghi") || (frisk.contains("continui") && frisk.contains("la lezione"))) {
 					sconfiguraTasti();
@@ -283,6 +284,8 @@ public class Prof1Lezione {
 					stampa("COME OSI!!! +2000 NOTE, +400 4", coseDette);
 					Main.personaggioSelezionato.setOro(Main.personaggioSelezionato.getOro() - 100);
 					Main.aggiornaOro();
+					
+					try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
 					conSpieg();
 				}else if(frisk.contains(MetodiUtili.decripta("rtrrt")) || frisk.contains(MetodiUtili.decripta("PLZG"))) {
 					cambiaUmore(-65); 
@@ -290,10 +293,12 @@ public class Prof1Lezione {
 					try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
 					stampa("NON VUOL DIRE<br> AFFATTO QUELLO!!!<br> CHE COMPORTAMENTO <br> VERGOGNOSO!", coseDette);
 					Main.personaggioSelezionato.setOro(Main.personaggioSelezionato.getOro() - 150);
-					Main.aggiornaOro();conSpieg();
+					Main.aggiornaOro();try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
+					conSpieg();
 				}else if(!frisk.contains("a") || !frisk.contains("e") || !frisk.contains("i")|| !frisk.contains("o")|| !frisk.contains("u")) {
 					cambiaUmore(-10);
-					stampa("Parla in italiano <br> idiota!", coseDette);conSpieg();
+					stampa("Parla in italiano <br> idiota!", coseDette);try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
+					conSpieg();
 				}
 				Main.debugEnter = false;
 				
