@@ -265,15 +265,16 @@ public class Prof1Lezione {
 							e1.printStackTrace();
 						}
 					}
-					
-				} else if(frisk.equals("continui a spiegare") || frisk.equals("spieghi pure") || (frisk.contains("continui") && frisk.contains("la lezione"))) {
+					conSpieg();
+				} else if(frisk.equals("continui a spiegare") || frisk.contains("spieghi") || (frisk.contains("continui") && frisk.contains("la lezione"))) {
 					sconfiguraTasti();
+					if(parCorrente.equals("par1")) {
 					try {
 						metodoCorrente.invoke(null, "par2", true);
 					} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
-					}
+					}}
 				} else if(frisk.contains("sei stupido") || frisk.contains("è stupido") || frisk.contains("fai schifo")) {
 					System.out.println(Prof1.umore);
 					cambiaUmore(-20); 
@@ -282,19 +283,20 @@ public class Prof1Lezione {
 					stampa("COME OSI!!! +2000 NOTE, +400 4", coseDette);
 					Main.personaggioSelezionato.setOro(Main.personaggioSelezionato.getOro() - 100);
 					Main.aggiornaOro();
-					
+					conSpieg();
 				}else if(frisk.contains(MetodiUtili.decripta("rtrrt")) || frisk.contains(MetodiUtili.decripta("PLZG"))) {
 					cambiaUmore(-65); 
 					stampa("NON È AFFATTO DIVERTENTE!<br> SIAMO IN UN CONTESTO <br>DIDATTICO!!!", coseDette);
 					try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
 					stampa("NON VUOL DIRE<br> AFFATTO QUELLO!!!<br> CHE COMPORTAMENTO <br> VERGOGNOSO!", coseDette);
 					Main.personaggioSelezionato.setOro(Main.personaggioSelezionato.getOro() - 150);
-					Main.aggiornaOro();
+					Main.aggiornaOro();conSpieg();
 				}else if(!frisk.contains("a") || !frisk.contains("e") || !frisk.contains("i")|| !frisk.contains("o")|| !frisk.contains("u")) {
 					cambiaUmore(-10);
-					stampa("Parla in italiano <br> idiota!", coseDette);
+					stampa("Parla in italiano <br> idiota!", coseDette);conSpieg();
 				}
 				Main.debugEnter = false;
+				
 			}).start();
 		}
 		
@@ -341,4 +343,18 @@ public class Prof1Lezione {
 	    	panLezione.setFocusable(false);
 	    	manoAlzata.setIcon(new ImageIcon("Texture\\alza_mano_grigia.png"));
 	    }
+		static void conSpieg() {
+			stampa("Continuo a spiegare?", coseDette);
+			if( intervento.toLowerCase().trim().equals("sì") || intervento.toLowerCase().trim().equals("si") ){
+				if (parCorrente.equals("par1")) {
+					sconfiguraTasti();
+					try {
+						metodoCorrente.invoke(null, "par2", true);
+					} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+			}
+		}
 }
