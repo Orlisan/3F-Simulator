@@ -520,27 +520,28 @@ public class Main {
     
     
     static void apriPorta(String icon1, String icon2) {
-    	ImageIcon iconaPorta1Semi = new ImageIcon(icon1);
-   
-    	sfondoDestro.setIcon(iconaPorta1Semi);
-    	sfondoDestro.setBounds(672, 0, 208, 671); 
-    	
-    	
-    	 // Rimuovi tutto
-       // Riaggiungi sinistra
-       
-    	
-        mappaClasse.revalidate();
-    	mappaClasse.repaint();
-    	Timer timer = new Timer(500, e -> {
-            sfondoDestro.setIcon(new ImageIcon(icon2));
-            mappaClasse.revalidate();
-            mappaClasse.repaint();
-            
-        });
-        timer.setRepeats(false); // Solo una volta
-        timer.start();
-        
+    	if(!portaRotta) {
+	    	ImageIcon iconaPorta1Semi = new ImageIcon(icon1);
+	   
+	    	sfondoDestro.setIcon(iconaPorta1Semi);
+	    	sfondoDestro.setBounds(672, 0, 208, 671); 
+	    	
+	    	
+	    	 // Rimuovi tutto
+	       // Riaggiungi sinistra
+	       
+	    	
+	        mappaClasse.revalidate();
+	    	mappaClasse.repaint();
+	    	Timer timer = new Timer(500, e -> {
+	            sfondoDestro.setIcon(new ImageIcon(icon2));
+	            mappaClasse.revalidate();
+	            mappaClasse.repaint();
+	            
+	        });
+	        timer.setRepeats(false); // Solo una volta
+	        timer.start();
+    	}
     }
     
     static void apriPorta2(String icon1, String icon2, String icon3, String icon4) {
