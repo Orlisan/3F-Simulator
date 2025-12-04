@@ -68,7 +68,7 @@ public class Prof1Lezione {
 		panLezione.add(maclaurin);
 	    
 		cirGon = new JLabel();
-		cirGon.setBounds(370,200, 340, 340);
+		cirGon.setBounds(430, 100, 340, 340);
 		cirGon.setVisible(false);
 		panLezione.add(cirGon);
 		
@@ -189,11 +189,11 @@ public class Prof1Lezione {
 				cirGon.setVisible(false);
 				try {Thread.sleep(400);} catch (InterruptedException e) {e.printStackTrace();}
 				scrittaLav.setForeground(MetodiUtili.qualeUmore(Prof1.umore));
-				stampa("In realtà il modo più corretto per calcolare queste formule sarebbe tramite questa circonferenza goniometrica: ", scrittaLav);
+				stampa("In realtà i<br>l modo più corretto <br>per calcolare <br>queste formule sarebbe<br> tramite questa<br> circonferenza <br>goniometrica: ", scrittaLav);
 				try {Thread.sleep(400);} catch (InterruptedException e) {e.printStackTrace();}
 				cirGon.setIcon(new ImageIcon("Texture\\cir_sin().png"));
 				cirGon.setVisible(true);
-				stampa("È la stessa roba di prima solo che il triangolo è \"incastrato\" tra 2 raggi di angolo x ", scrittaLav);
+				stampa("È la stessa roba<br> di prima solo che <br>il triangolo è \"incastrato\"<br> tra 2 raggi di angolo x ", scrittaLav);
 				permettiInterazione();
 			}
 		}
@@ -260,13 +260,23 @@ public class Prof1Lezione {
 				};
 				
 				  ArrayList<Method> metodiDisponibili = new ArrayList<>();
-			        for (Method m : metodiSpiega) {
+				  
+				  for (Method m : metodiSpiega) {
 			            if (!giàFatti.contains(m)) {
 			                metodiDisponibili.add(m);
 			            }
 			        }
-			    
+				  if(giàFatti.size() >= 2)  {
+					   giàFatti.clear();
+					   metodiDisponibili.clear();
+					   for (Method m : metodiSpiega) {
+				            if (!giàFatti.contains(m)) {
+				                metodiDisponibili.add(m);
+				            }
+				        }
+				   }
 			        
+			  
 			        int indiceCasuale = random.nextInt(metodiDisponibili.size());
 			        metodoCorrente = metodiDisponibili.get(indiceCasuale);
 			        metodiSpiegati.add(metodoCorrente);
@@ -478,7 +488,7 @@ public class Prof1Lezione {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
 							}
-							}
+							
 		                }else if(parCorrente.equals("par3")) {
 							try {
 								metodoCorrente.invoke(null, "par4", true, true);
@@ -493,6 +503,7 @@ public class Prof1Lezione {
 		                } else {
 		                stampa("Ok, fammi tutte le domande che non vuoi", coseDette);
 		            }
+		       }
 		       }
 		       } catch (InterruptedException e) {
 		            e.printStackTrace();
