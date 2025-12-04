@@ -10,7 +10,7 @@ import java.util.Random;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-
+import static terzaFSimulator.MetodiUtili.*;
 public class Prof1Lezione {
 
 	public static JButton manoAlzata;
@@ -22,11 +22,13 @@ public class Prof1Lezione {
 	static JLabel scrittaLav;
 	static JLabel profAllaLavagna;
 	static JLabel maclaurin;
+	static JLabel cirGon;
 	public static JLabel labelIntervento;
 	
 	static String intervento = null;
 	static String parCorrente = null;
 	
+	static boolean spiegazioneInCorso = false;
 	static boolean unoDue = true;
 	static int indiceCasuale;
 	static int puntiInPiù = 0;
@@ -60,11 +62,16 @@ public class Prof1Lezione {
 	    coseDette.setForeground(MetodiUtili.qualeUmore(Prof1.umore));
 	    panLezione.add(coseDette);
 	    
-	    maclaurin = new JLabel(new ImageIcon("Texture\\formula_sin().png"));
+	    maclaurin = new JLabel();
 		maclaurin.setBounds(330, 260, 206, 61);
 		maclaurin.setVisible(false);
 		panLezione.add(maclaurin);
 	    
+		cirGon = new JLabel();
+		cirGon.setBounds(370,200, 340, 340);
+		cirGon.setVisible(false);
+		panLezione.add(cirGon);
+		
 	    ImageIcon labelMano = new ImageIcon("Texture\\alza_mano_grigia.png");
 	    manoAlzata = new JButton(labelMano);
 	    manoAlzata.setBounds(90, 450, 200, 84);
@@ -95,9 +102,10 @@ public class Prof1Lezione {
 	    panLezione.setComponentZOrder(manoAlzata, 3);
 	    panLezione.setComponentZOrder(scrittaLav, 4);
 	    panLezione.setComponentZOrder(titoloLav, 5);
-		panLezione.setComponentZOrder(maclaurin, 6);//Dev'essere davanti alla lavagna
-	    panLezione.setComponentZOrder(lavagna, 7);
-	    panLezione.setComponentZOrder(sfondoLez, 8);      //lo sfondo dev'essere sempre ultimo
+		panLezione.setComponentZOrder(maclaurin, 6);
+		panLezione.setComponentZOrder(cirGon, 7);//Dev'essere davanti alla lavagna
+	    panLezione.setComponentZOrder(lavagna, 8);
+	    panLezione.setComponentZOrder(sfondoLez, 9);      //lo sfondo dev'essere sempre ultimo
 	    
 	    
 	    Main.finestra.add(panLezione);
@@ -114,7 +122,8 @@ public class Prof1Lezione {
 	public static void introLez() {
 		
 		Thread threadScrivProf = new Thread(() -> {
-		
+			//
+		 
      /*   stampa("Oggi Faremo <br> lezione di <br> Trigonometria, <br> il nuovo <br> semplicissimo <br> argomento", coseDette);
 		
 		try {Thread.sleep(500);} catch (InterruptedException e) {e.printStackTrace();}
@@ -139,7 +148,9 @@ public class Prof1Lezione {
 		
 	
 		static void spiegaSeno(String paragrafo, boolean giàIntro, boolean giàSin) {
+			spiegazioneInCorso = true;
 			if(!giàIntro) {
+				giàSin = true;
 				stampa("la lezione <br> di questi <br>3 minuti,<br> si tratterà<br> sulla funzione<br> sin()", coseDette);
 				try {Thread.sleep(500);} catch (InterruptedException e) {e.printStackTrace();}
 				titoloLav.setForeground(MetodiUtili.qualeUmore(Prof1.umore));
@@ -148,7 +159,7 @@ public class Prof1Lezione {
 				muoviTitolo(titoloLav, true);
 			}
 			if(!giàSin) {
-				stampa("Dato che la semplicissima lezione precedente è terminata adesso faremo il coseno", coseDette);
+				stampa("Dato che la semplicissima lezione precedente è terminata adesso impareremo la formula sin()", coseDette);
 			}
 			if(paragrafo.equals("par1")) {
 				parCorrente = "par1";
@@ -163,19 +174,32 @@ public class Prof1Lezione {
 				scrittaLav.setForeground(MetodiUtili.qualeUmore(Prof1.umore));
 				stampa("Esso si può calcolare usando una formula chiamata<br> Serie di Maclaurin, una sommatoria infinita:<br><br><br>", scrittaLav);
 				try {Thread.sleep(400);} catch (InterruptedException e) {e.printStackTrace();}
+				maclaurin.setIcon(new ImageIcon("Texture\\formula_sin().png"));
 				maclaurin.setVisible(true);
-				permettiInterazione();
-	
+				permettiInterazione();	
 			}else if(paragrafo.equals("par3")) {
 				parCorrente = "par3";
 				try {Thread.sleep(400);} catch (InterruptedException e) {e.printStackTrace();}
 				scrittaLav.setForeground(MetodiUtili.qualeUmore(Prof1.umore));
 				stampa("Si deve sommare il risultato dell'espressione <br>fino all'\"infinito\" aumentando ad ogni <br>somma n di 1; più volte sommi, più è accurato il risultato<br><br><br>", scrittaLav);
-				
+				permettiInterazione();
+			}else if(paragrafo.equals("par4")) {
+				parCorrente = "par4";
+				maclaurin.setVisible(false);
+				cirGon.setVisible(false);
+				try {Thread.sleep(400);} catch (InterruptedException e) {e.printStackTrace();}
+				scrittaLav.setForeground(MetodiUtili.qualeUmore(Prof1.umore));
+				stampa("In realtà il modo più corretto per calcolare queste formule sarebbe tramite questa circonferenza goniometrica: ", scrittaLav);
+				try {Thread.sleep(400);} catch (InterruptedException e) {e.printStackTrace();}
+				cirGon.setIcon(new ImageIcon("Texture\\cir_sin().png"));
+				cirGon.setVisible(true);
+				stampa("È la stessa roba di prima solo che il triangolo è \"incastrato\" tra 2 raggi di angolo x ", scrittaLav);
+				permettiInterazione();
 			}
 		}
 		
 		static void spiegaCoseno(String paragrafo, boolean giàIntro, boolean giàCos) {
+			spiegazioneInCorso = true;
 			if(!giàIntro) {
 				giàCos = true;
 				stampa("la lezione <br> di questi <br>3 minuti,<br> si tratterà<br> sulla funzione<br> cos()", coseDette);
@@ -186,14 +210,14 @@ public class Prof1Lezione {
 				muoviTitolo(titoloLav, true);
 			}
 			if(!giàCos) {
-				stampa("Dato che la semplicissima lezione precedente è terminata adesso faremo il coseno", coseDette);
+				stampa("Dato che la semplicissima lezione precedente è terminata adesso impareremo il coseno", coseDette);
 			}
 			
 		if(paragrafo.equals("par1")) {
 			parCorrente = "par1";
 			try {Thread.sleep(400);} catch (InterruptedException e) {e.printStackTrace();}
 			scrittaLav.setForeground(MetodiUtili.qualeUmore(Prof1.umore));
-			stampa("La funzione sin(), in trigonometria, è una delle <br>funzioni <br>principali e, in un triangolo <br>rettangolo, definisce il <br>rapporto tra il lato opposto <br>a un angolo dato e l'ipotenusa", scrittaLav);
+			stampa("La funzione cos(), in trigonometria, è una delle <br>funzioni <br>principali e, in un triangolo <br>rettangolo, definisce il <br>rapporto tra il lato adiacente <br>a un angolo dato e l'ipotenusa", scrittaLav);
 			permettiInterazione();
 		}else if(paragrafo.equals("par2")) {
 			parCorrente = "par2";
@@ -202,6 +226,7 @@ public class Prof1Lezione {
 			scrittaLav.setForeground(MetodiUtili.qualeUmore(Prof1.umore));
 			stampa("Esso si può calcolare usando una formula chiamata<br> Serie di Maclaurin, una sommatoria infinita:<br><br><br>", scrittaLav);
 			try {Thread.sleep(400);} catch (InterruptedException e) {e.printStackTrace();}
+			maclaurin.setIcon(new ImageIcon("Texture\\formula_cos().png"));
 			maclaurin.setVisible(true);
 			permettiInterazione();
 
@@ -210,6 +235,19 @@ public class Prof1Lezione {
 			try {Thread.sleep(400);} catch (InterruptedException e) {e.printStackTrace();}
 			scrittaLav.setForeground(MetodiUtili.qualeUmore(Prof1.umore));
 			stampa("Si deve sommare il risultato dell'espressione <br>fino all'\"infinito\" aumentando ad ogni <br>somma n di 1; più volte sommi, più è accurato il risultato<br><br><br>", scrittaLav);
+			permettiInterazione();
+		}else if(paragrafo.equals("par4")) {
+			parCorrente = "par4";
+			maclaurin.setVisible(false);
+			cirGon.setVisible(false);
+			try {Thread.sleep(400);} catch (InterruptedException e) {e.printStackTrace();}
+			scrittaLav.setForeground(MetodiUtili.qualeUmore(Prof1.umore));
+			stampa("In realtà il modo<br> più corretto per<br> calcolare queste<br> formule sarebbe<br> tramite questa <br>circonferenza <br>goniometrica: ", scrittaLav);
+			try {Thread.sleep(400);} catch (InterruptedException e) {e.printStackTrace();}
+			cirGon.setIcon(new ImageIcon("Texture\\cir_cos().png"));
+			cirGon.setVisible(true);
+			stampa("È la stessa roba<br> di prima solo <br>che il triangolo<br> è \"incastrato\"<br> tra 2 raggi <br>di angolo x ", scrittaLav);
+			permettiInterazione();
 		}
 		}
 		static void spiegaQualcosa(ArrayList<Method> giàFatti,boolean giàIntro) {
@@ -231,6 +269,8 @@ public class Prof1Lezione {
 			        
 			        int indiceCasuale = random.nextInt(metodiDisponibili.size());
 			        metodoCorrente = metodiDisponibili.get(indiceCasuale);
+			        metodiSpiegati.add(metodoCorrente);
+			        
 				try {
 		            metodoCorrente.invoke(null, "par1", giàIntro, false); 
 		       
@@ -295,7 +335,7 @@ public class Prof1Lezione {
 		public static void analizzaRisposta() {
 			new Thread(() -> {
 				String frisk = intervento.toLowerCase().trim();
-				
+				spiegazioneInCorso = false;
 				if(frisk.equals("non ho capito")) {
 					ImageIcon brill1 = new ImageIcon("Texture\\prof_lavagna_brillante1.png");
 					ImageIcon brill2 = new ImageIcon("Texture\\prof_lavagna_brillante2.png");
@@ -313,7 +353,7 @@ public class Prof1Lezione {
 					try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
 					if(metodoCorrente != null) {
 						try {
-							metodoCorrente.invoke(null, parCorrente, true);
+							metodoCorrente.invoke(null, parCorrente, true, true);
 							try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
 							
 						} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e1) {
@@ -407,7 +447,11 @@ public class Prof1Lezione {
 	    	manoAlzata.setIcon(new ImageIcon("Texture\\alza_mano_grigia.png"));
 	    }
 		static void conSpieg() {
-		    stampa("Continuo a spiegare?", coseDette);
+			 if (spiegazioneInCorso || coseDette.getText().contains("Continuo a spiegare")) {
+			        return;
+			    }
+			try {Thread.sleep(s(4));} catch (InterruptedException e) {e.printStackTrace();}
+			stampa("Continuo a spiegare?", coseDette);
 		    
 		    intervento = null;
 		    labelIntervento.setText(""); 
@@ -436,7 +480,14 @@ public class Prof1Lezione {
 							}
 							}
 		                }else if(parCorrente.equals("par3")) {
-							metodiSpiegati.add(metodoCorrente);
+							try {
+								metodoCorrente.invoke(null, "par4", true, true);
+							} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+							
+		                }else if(parCorrente.equals("par4")) {
 		                	spiegaQualcosa(metodiSpiegati, true);
 						
 		                } else {

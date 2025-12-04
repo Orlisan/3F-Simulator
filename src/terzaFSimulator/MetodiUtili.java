@@ -206,4 +206,9 @@ public class MetodiUtili {
 		
 		return paroladeCript.toString();
 }
+	static int s(double ms) {
+		return (int) ms*1000;
+		
+	}
+	
 }
