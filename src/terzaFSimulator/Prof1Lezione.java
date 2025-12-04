@@ -9,6 +9,7 @@ import java.io.File;
 import java.util.Random;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 
 public class Prof1Lezione {
 
@@ -32,9 +33,9 @@ public class Prof1Lezione {
 	
 	static Method metodoCorrente;
 	
+	static ArrayList<Method> metodiSpiegati = new ArrayList<Method>();
 	static void creaAmbiente() {
 		Main.finestra.remove(Main.mappaClasse);
-		
 		
 	    panLezione.setBounds(0, 0, 880, 671);
 	    panLezione.setLayout(null);
@@ -114,7 +115,7 @@ public class Prof1Lezione {
 		
 		Thread threadScrivProf = new Thread(() -> {
 		
-        stampa("Oggi Faremo <br> lezione di <br> Trigonometria, <br> il nuovo <br> semplicissimo <br> argomento", coseDette);
+     /*   stampa("Oggi Faremo <br> lezione di <br> Trigonometria, <br> il nuovo <br> semplicissimo <br> argomento", coseDette);
 		
 		try {Thread.sleep(500);} catch (InterruptedException e) {e.printStackTrace();}
 		
@@ -131,13 +132,13 @@ public class Prof1Lezione {
 		try {Thread.sleep(500);} catch (InterruptedException e) {e.printStackTrace();}
 		
 		stampa( "Adesso inizio<br> a spiegare,<br> vi prometto che<br> userò un <br>linguaggio molto <br>complicato, <br>come volete voi", coseDette);
-		spiegaQualcosa();
+		*/spiegaQualcosa(metodiSpiegati, false);
 		});
 		threadScrivProf.start();
 	}
 		
 	
-		static void spiegaSeno(String paragrafo, boolean giàIntro) {
+		static void spiegaSeno(String paragrafo, boolean giàIntro, boolean giàSin) {
 			if(!giàIntro) {
 				stampa("la lezione <br> di questi <br>3 minuti,<br> si tratterà<br> sulla funzione<br> sin()", coseDette);
 				try {Thread.sleep(500);} catch (InterruptedException e) {e.printStackTrace();}
@@ -145,6 +146,9 @@ public class Prof1Lezione {
 				stampa("sin(x)", titoloLav);
 				try {Thread.sleep(400);} catch (InterruptedException e) {e.printStackTrace();}
 				muoviTitolo(titoloLav, true);
+			}
+			if(!giàSin) {
+				stampa("Dato che la semplicissima lezione precedente è terminata adesso faremo il coseno", coseDette);
 			}
 			if(paragrafo.equals("par1")) {
 				parCorrente = "par1";
@@ -162,21 +166,73 @@ public class Prof1Lezione {
 				maclaurin.setVisible(true);
 				permettiInterazione();
 	
+			}else if(paragrafo.equals("par3")) {
+				parCorrente = "par3";
+				try {Thread.sleep(400);} catch (InterruptedException e) {e.printStackTrace();}
+				scrittaLav.setForeground(MetodiUtili.qualeUmore(Prof1.umore));
+				stampa("Si deve sommare il risultato dell'espressione <br>fino all'\"infinito\" aumentando ad ogni <br>somma n di 1; più volte sommi, più è accurato il risultato<br><br><br>", scrittaLav);
+				
 			}
 		}
 		
-		static void spiegaQualcosa() {
+		static void spiegaCoseno(String paragrafo, boolean giàIntro, boolean giàCos) {
+			if(!giàIntro) {
+				giàCos = true;
+				stampa("la lezione <br> di questi <br>3 minuti,<br> si tratterà<br> sulla funzione<br> cos()", coseDette);
+				try {Thread.sleep(500);} catch (InterruptedException e) {e.printStackTrace();}
+				titoloLav.setForeground(MetodiUtili.qualeUmore(Prof1.umore));
+				stampa("cos(x)", titoloLav);
+				try {Thread.sleep(400);} catch (InterruptedException e) {e.printStackTrace();}
+				muoviTitolo(titoloLav, true);
+			}
+			if(!giàCos) {
+				stampa("Dato che la semplicissima lezione precedente è terminata adesso faremo il coseno", coseDette);
+			}
+			
+		if(paragrafo.equals("par1")) {
+			parCorrente = "par1";
+			try {Thread.sleep(400);} catch (InterruptedException e) {e.printStackTrace();}
+			scrittaLav.setForeground(MetodiUtili.qualeUmore(Prof1.umore));
+			stampa("La funzione sin(), in trigonometria, è una delle <br>funzioni <br>principali e, in un triangolo <br>rettangolo, definisce il <br>rapporto tra il lato opposto <br>a un angolo dato e l'ipotenusa", scrittaLav);
+			permettiInterazione();
+		}else if(paragrafo.equals("par2")) {
+			parCorrente = "par2";
+			maclaurin.setVisible(false);
+			try {Thread.sleep(400);} catch (InterruptedException e) {e.printStackTrace();}
+			scrittaLav.setForeground(MetodiUtili.qualeUmore(Prof1.umore));
+			stampa("Esso si può calcolare usando una formula chiamata<br> Serie di Maclaurin, una sommatoria infinita:<br><br><br>", scrittaLav);
+			try {Thread.sleep(400);} catch (InterruptedException e) {e.printStackTrace();}
+			maclaurin.setVisible(true);
+			permettiInterazione();
+
+		}else if(paragrafo.equals("par3")) {
+			parCorrente = "par3";
+			try {Thread.sleep(400);} catch (InterruptedException e) {e.printStackTrace();}
+			scrittaLav.setForeground(MetodiUtili.qualeUmore(Prof1.umore));
+			stampa("Si deve sommare il risultato dell'espressione <br>fino all'\"infinito\" aumentando ad ogni <br>somma n di 1; più volte sommi, più è accurato il risultato<br><br><br>", scrittaLav);
+		}
+		}
+		static void spiegaQualcosa(ArrayList<Method> giàFatti,boolean giàIntro) {
 			Random random = new Random();
 			
 			try {
 				Method[] metodiSpiega = {
-						 Prof1Lezione.class.getDeclaredMethod("spiegaSeno", String.class, boolean.class),
+						 Prof1Lezione.class.getDeclaredMethod("spiegaSeno", String.class, boolean.class, boolean.class),
+						 Prof1Lezione.class.getDeclaredMethod("spiegaCoseno",String.class, boolean.class, boolean.class),
 				};
 				
-				int indiceCasuale = random.nextInt(metodiSpiega.length);
-				metodoCorrente = metodiSpiega[indiceCasuale];
+				  ArrayList<Method> metodiDisponibili = new ArrayList<>();
+			        for (Method m : metodiSpiega) {
+			            if (!giàFatti.contains(m)) {
+			                metodiDisponibili.add(m);
+			            }
+			        }
+			    
+			        
+			        int indiceCasuale = random.nextInt(metodiDisponibili.size());
+			        metodoCorrente = metodiDisponibili.get(indiceCasuale);
 				try {
-		            metodiSpiega[indiceCasuale].invoke(null, "par1", false); 
+		            metodoCorrente.invoke(null, "par1", giàIntro, false); 
 		       
 		        } catch (Exception e) {
 		            e.printStackTrace();
@@ -266,17 +322,8 @@ public class Prof1Lezione {
 						}
 					}
 					try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
-					conSpieg();
-				} else if(frisk.equals("continui a spiegare") || frisk.contains("spieghi") || (frisk.contains("continui") && frisk.contains("la lezione"))) {
-					sconfiguraTasti();
-					if(parCorrente.equals("par1")) {
-					try {
-						metodoCorrente.invoke(null, "par2", true);
-					} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}}
-				} else if(frisk.contains("sei stupido") || frisk.contains("è stupido") || frisk.contains("fai schifo")) {
+					
+				}  else if(frisk.contains("sei stupido") || frisk.contains("è stupido") || frisk.contains("fai schifo")) {
 					System.out.println(Prof1.umore);
 					cambiaUmore(-20); 
 					System.out.println(Prof1.umore + " NUOVO");
@@ -286,7 +333,7 @@ public class Prof1Lezione {
 					Main.aggiornaOro();
 					
 					try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
-					conSpieg();
+					
 				}else if(frisk.contains(MetodiUtili.decripta("rtrrt")) || frisk.contains(MetodiUtili.decripta("PLZG"))) {
 					cambiaUmore(-65); 
 					stampa("NON È AFFATTO DIVERTENTE!<br> SIAMO IN UN CONTESTO <br>DIDATTICO!!!", coseDette);
@@ -295,15 +342,29 @@ public class Prof1Lezione {
 					Main.personaggioSelezionato.setOro(Main.personaggioSelezionato.getOro() - 150);
 					Main.aggiornaOro();
 					try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
-					conSpieg();
+					
 				}else if(!frisk.contains("a") && !frisk.contains("à") && !frisk.contains("e") && !frisk.contains("è") && !frisk.contains("é") && !frisk.contains("i")&&!frisk.contains("ì") && !frisk.contains("o")&& !frisk.contains("ò") && !frisk.contains("u") &&!frisk.contains("ù") ) {
 					cambiaUmore(-10);
 					stampa("Parla in italiano <br> idiota!", coseDette);
 					try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
-					conSpieg();
+					
+				}else if(frisk.contains("3f.delete") || frisk.contains("prof.kill") || frisk.contains("prof.delete")
+						|| frisk.contains("arenga.delete")|| frisk.contains("arenga.kill")|| frisk.contains("arenga.uninstall")
+						|| frisk.contains("3f.uninstall")) {
+					cambiaUmore(-35);
+					stampa("È inutile che<br> provi a <br>cancellarmi, <br>tanto ho un <br>backup!", coseDette);
+					try {Thread.sleep(500);} catch (InterruptedException e) {e.printStackTrace();}
+					stampa("Cheattando<br> non si vince <br>niente!<br> Vigliacco", coseDette);
+					
+				}else if(frisk.contains("Ho vinto il kangourou")) {
+					cambiaUmore(40);
+					stampa("I miei più sinceri complimenti!!!!", coseDette);
+					try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
+					stampa("Sono stato<br> bravissimo ad<br> insegnarti che <br>sei riuscito a<br> vincerlo,<br> di nuovo <br>complimenti a me!!", coseDette);
+					
 				}
 				Main.debugEnter = false;
-				
+				conSpieg();
 			}).start();
 		}
 		
@@ -362,12 +423,23 @@ public class Prof1Lezione {
 		                if (parCorrente.equals("par1")) {
 		                    sconfiguraTasti();
 		                    try {
-		                        metodoCorrente.invoke(null, "par2", true);
+		                        metodoCorrente.invoke(null, "par2", true, true);
 		                    } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e1) {
 		                        e1.printStackTrace();
 		                    }
-		                }
-		            } else {
+		                }else if(parCorrente.equals("par2")) {
+							try {
+								metodoCorrente.invoke(null, "par3", true, true);
+							} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+							}
+		                }else if(parCorrente.equals("par3")) {
+							metodiSpiegati.add(metodoCorrente);
+		                	spiegaQualcosa(metodiSpiegati, true);
+						
+		                } else {
 		                stampa("Ok, fammi tutte le domande che non vuoi", coseDette);
 		            }
 		       }
