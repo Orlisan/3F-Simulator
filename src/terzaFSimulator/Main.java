@@ -85,6 +85,7 @@ public class Main {
         finestra.setResizable(false);
         finestra.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         finestra.setLayout(new BorderLayout());
+        finestra.setLocationRelativeTo(null);
         finestra.setVisible(true);
         mappaClasse = new JPanel();
         
@@ -92,7 +93,8 @@ public class Main {
         mappaClasse.setOpaque(false);
         
     	try {
-    	salvataggio = new File(userHome + "\\AppData\\Local\\salvataggio.txt");
+    	new File(userHome + "\\AppData\\Local\\3FSimulator").mkdir();
+    	salvataggio = new File(userHome + "\\AppData\\Local\\3FSimulator\\salvataggio.txt");
     	presoOro = seOroPreso();
     	
     	if(salvataggio.length() == 0) {
@@ -598,7 +600,9 @@ public class Main {
     
     static void salvataggio() {
     	String userHome = System.getProperty("user.home");
-    	salvataggio = new File(userHome + "\\AppData\\Local\\salvataggio.txt");
+
+    	new File(userHome + "\\AppData\\Local\\3FSimulator").mkdir();
+    	salvataggio = new File(userHome + "\\AppData\\Local\\3FSimulator\\salvataggio.txt");
     	salvataggio.mkdir();
  
     	try {
