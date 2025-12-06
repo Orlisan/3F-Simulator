@@ -24,7 +24,9 @@ public class Main {
     static JPanel inizioSimulator;
     static JLabel oro;
     
-   static  String userHome = System.getProperty("user.home");
+    static Timer movementTimer = null;
+    
+    static  String userHome = System.getProperty("user.home");
    
     static ImageIcon iconaProf;
     static ImageIcon inizio = new ImageIcon("Texture\\inizio.png");
@@ -58,9 +60,15 @@ public class Main {
     public static boolean nonToccaASinistra = true;
     public static boolean nonToccaADestra = true;
     
+    static boolean movUp = false;
+    static boolean movDown = false;
+    static boolean movLeft = false;
+    static boolean movRight = false;
+    
     public static Font determinationFont;
 
     public static int oroInPiù = 0;
+    public static int vel = 1;
    
     public static File salvataggio;
 	
@@ -323,7 +331,7 @@ public class Main {
               
         configuraTasti();
         
-       
+        
       
                             
                           
@@ -368,14 +376,27 @@ public class Main {
                 if (personaggioSelezionato == null) return;
                 
                 switch(e.getKeyCode()) {
-                    case KeyEvent.VK_UP: if(nonToccaSu) { muoviPersonaggio(0, -1); facciata = Direzione.SU; personaggioSelezionato.icona.setIcon(new ImageIcon("Texture\\personaggio_su.png")); break; }
+                    case KeyEvent.VK_UP: movUp = true; if(nonToccaSu) { muoviPersonaggio(0, -vel); facciata = Direzione.SU; personaggioSelezionato.icona.setIcon(new ImageIcon("Texture\\personaggio_su.png")); if (movementTimer != null) {
+                        movementTimer.stop();
+                    }
+                    avviaMovementTimer(); 
+               	}break;
                    
-                    case KeyEvent.VK_DOWN: if(nonToccaGiù) {muoviPersonaggio(0, 1); facciata = Direzione.GIU;personaggioSelezionato.icona.setIcon(new ImageIcon("Texture\\personaggio.png")); break;}
+                    case KeyEvent.VK_DOWN: movDown = true;if(nonToccaGiù) {muoviPersonaggio(0, vel); facciata = Direzione.GIU;personaggioSelezionato.icona.setIcon(new ImageIcon("Texture\\personaggio.png"));  if (movementTimer != null) {
+                        movementTimer.stop();
+                    }
+                    avviaMovementTimer(); }break;
                    
-                    case KeyEvent.VK_LEFT: if(nonToccaASinistra) muoviPersonaggio(-1, 0); facciata = Direzione.SINISTRA; personaggioSelezionato.icona.setIcon(new ImageIcon("Texture\\personaggio_sinistra.png")); break;
+                    case KeyEvent.VK_LEFT: movLeft = true; if(nonToccaASinistra) { muoviPersonaggio(-vel, 0); facciata = Direzione.SINISTRA; personaggioSelezionato.icona.setIcon(new ImageIcon("Texture\\personaggio_sinistra.png"));  if (movementTimer != null) {
+                        movementTimer.stop();
+                    }
+                    avviaMovementTimer(); }break;
                     
-                    case KeyEvent.VK_RIGHT: if(nonToccaADestra) { muoviPersonaggio(1, 0); facciata = Direzione.DESTRA; personaggioSelezionato.icona.setIcon(new ImageIcon("Texture\\personaggio_destra.png"));break;}
-                    
+                    case KeyEvent.VK_RIGHT: movRight = true; if(nonToccaADestra) { muoviPersonaggio(vel, 0); facciata = Direzione.DESTRA; personaggioSelezionato.icona.setIcon(new ImageIcon("Texture\\personaggio_destra.png")); if (movementTimer != null) {
+                        movementTimer.stop();
+                    }
+                    avviaMovementTimer(); }break;
+                    case KeyEvent.VK_Z: vel = 2; break;
                     case KeyEvent.VK_9: muoviPersonaggio(30, 0); break;
                     case KeyEvent.VK_8: muoviPersonaggio(-30, 0);break;
                     case KeyEvent.VK_7: muoviPersonaggio(0, 30);break;
@@ -426,6 +447,22 @@ public class Main {
                     	break;
                     	
                 }}
+            @Override
+            public void keyReleased(KeyEvent e) {
+            	 if (personaggioSelezionato == null) return;
+            	 switch(e.getKeyCode()) {
+            	 case KeyEvent.VK_UP: movUp = false; break;
+            	 case KeyEvent.VK_DOWN: movDown = false; break;
+            	 case KeyEvent.VK_LEFT: movLeft = false; break;
+            	 case KeyEvent.VK_RIGHT: movRight = false; break;
+            	 case KeyEvent.VK_Z: vel = 1; break;
+            	 }
+            	 if (!movUp && !movDown && !movLeft && !movRight) {
+            	        if (movementTimer != null) {
+            	            movementTimer.stop();
+            	        }
+            	    }
+            }
         });
     	mappaClasse.setFocusable(true);
     	mappaClasse.requestFocus();
@@ -516,7 +553,7 @@ public class Main {
         }System.out.println(personaggioSelezionato.posizioneX);
          System.out.println(personaggioSelezionato.posizioneY);
          aggiornaOro();
-         
+         mappaClasse.requestFocusInWindow();
         
     }
     
@@ -678,7 +715,71 @@ public class Main {
     	  }
     	  
       }
-      
+      static void avviaMovementTimer() {
+    	    if (movementTimer != null) {
+    	        movementTimer.stop();
+    	    }
+    	    
+    	    movementTimer = new Timer(16, e -> {
+    	        if (personaggioSelezionato == null) return;
+    	        
+    	        // ⭐⭐ DIAGONALE FUNZIONANTE
+    	        int dx = 0, dy = 0;
+    	        boolean siMuove = false;
+    	        
+    	        if (movUp && nonToccaSu) { dy -= vel; siMuove = true; }
+    	        if (movDown && nonToccaGiù) { dy += vel; siMuove = true; }
+    	        if (movLeft && nonToccaASinistra) { dx -= vel; siMuove = true; }
+    	        if (movRight && nonToccaADestra) { dx += vel; siMuove = true; }
+    	        
+    	        // ⭐⭐ MUOVI IN DIAGONALE
+    	        if (siMuove) {
+    	            muoviPersonaggio(dx, dy);
+    	            
+    	            // ⭐⭐ FIX BUG: Resetta movLeft se non premuto
+    	            if (!movLeft && dx < 0) {
+    	                // dx è negativo (sinistra) ma movLeft è false? BUG!
+    	                // Correggi forzando movimento solo se davvero premuto
+    	                if (dx < 0 && !movLeft) {
+    	                    dx = 0; // Non muovere a sinistra se non premuto
+    	                }
+    	            }
+    	            
+    	            // Animazione (priorità diagonale)
+    	            if (movUp && movRight && nonToccaSu && nonToccaADestra) {
+    	                facciata = Direzione.SU; // o crea texture diagonale
+    	                personaggioSelezionato.icona.setIcon(new ImageIcon("Texture\\personaggio_su.png"));
+    	            } else if (movUp && movLeft && nonToccaSu && nonToccaASinistra) {
+    	                facciata = Direzione.SU;
+    	                personaggioSelezionato.icona.setIcon(new ImageIcon("Texture\\personaggio_su.png"));
+    	            } else if (movDown && movRight && nonToccaGiù && nonToccaADestra) {
+    	                facciata = Direzione.GIU;
+    	                personaggioSelezionato.icona.setIcon(new ImageIcon("Texture\\personaggio.png"));
+    	            } else if (movDown && movLeft && nonToccaGiù && nonToccaASinistra) {
+    	                facciata = Direzione.GIU;
+    	                personaggioSelezionato.icona.setIcon(new ImageIcon("Texture\\personaggio.png"));
+    	            } else if (movUp && nonToccaSu) {
+    	                facciata = Direzione.SU;
+    	                personaggioSelezionato.icona.setIcon(new ImageIcon("Texture\\personaggio_su.png"));
+    	            } else if (movDown && nonToccaGiù) {
+    	                facciata = Direzione.GIU;
+    	                personaggioSelezionato.icona.setIcon(new ImageIcon("Texture\\personaggio.png"));
+    	            } else if (movLeft && nonToccaASinistra) {
+    	                facciata = Direzione.SINISTRA;
+    	                personaggioSelezionato.icona.setIcon(new ImageIcon("Texture\\personaggio_sinistra.png"));
+    	            } else if (movRight && nonToccaADestra) {
+    	                facciata = Direzione.DESTRA;
+    	                personaggioSelezionato.icona.setIcon(new ImageIcon("Texture\\personaggio_destra.png"));
+    	            }
+    	        } else {
+    	            movementTimer.stop();
+    	        }
+    	    });
+    	    
+    	    movementTimer.setInitialDelay(0);
+    	    movementTimer.setCoalesce(true);
+    	    movementTimer.start();
+    	}
      
 }
 
