@@ -171,7 +171,7 @@ public class Main {
 		        
 		        
 	        	scrittaInizio.setBounds(340, 135, larghezza * 2, lunghezza);
-	        	scrittaInizio.setFont(new Font("Arial", Font.BOLD, 10 + i));
+	        	scrittaInizio.setFont(new Font("Determination Sans", Font.BOLD, 10 + i));
 	        	
 	        	int tempoDaAspettare = 5;
 	        	

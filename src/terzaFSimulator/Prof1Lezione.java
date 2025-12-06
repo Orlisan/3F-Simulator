@@ -5,15 +5,18 @@ import javax.swing.*;
 import terzaFSimulator.Prof1.UmoriProf;
 
 import java.awt.*;
-import java.io.File;
 import java.util.Random;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+
 import static terzaFSimulator.MetodiUtili.*;
+import static terzaFSimulator.Main.*;
+
 public class Prof1Lezione {
 
 	public static JButton manoAlzata;
+	public static JButton helpFrasi;
 	
 	static JPanel panLezione = new JPanel();
 	
@@ -76,7 +79,16 @@ public class Prof1Lezione {
 	    manoAlzata = new JButton(labelMano);
 	    manoAlzata.setBounds(90, 450, 200, 84);
 	    manoAlzata.setOpaque(false);
+	    manoAlzata.setContentAreaFilled(false);
+	    manoAlzata.setBorderPainted(false); 
 	    panLezione.add(manoAlzata);
+	    
+	    helpFrasi = new JButton(new ImageIcon("Texture\\help_frasi_grigia.png"));
+	    helpFrasi.setBounds(350, 450, 90, 90);
+	    helpFrasi.setOpaque(false);
+	    helpFrasi.setContentAreaFilled(false);  // RIMUOVE sfondo del bottone
+	    helpFrasi.setBorderPainted(false);      // RIMUOVE bordo del bottone
+	    panLezione.add(helpFrasi);
 	    
 	    labelIntervento = new JLabel("");
 	    labelIntervento.setBounds(460, 420, 400, 200);
@@ -95,17 +107,17 @@ public class Prof1Lezione {
 		scrittaLav.setFont(new Font("Serif", Font.PLAIN, 20));
 		panLezione.add(scrittaLav);
 	     
-		
-		panLezione.setComponentZOrder(labelIntervento, 0);
-	    panLezione.setComponentZOrder(coseDette, 1 );
-	    panLezione.setComponentZOrder(profAllaLavagna, 2);
-	    panLezione.setComponentZOrder(manoAlzata, 3);
-	    panLezione.setComponentZOrder(scrittaLav, 4);
-	    panLezione.setComponentZOrder(titoloLav, 5);
-		panLezione.setComponentZOrder(maclaurin, 6);
-		panLezione.setComponentZOrder(cirGon, 7);//Dev'essere davanti alla lavagna
-	    panLezione.setComponentZOrder(lavagna, 8);
-	    panLezione.setComponentZOrder(sfondoLez, 9);      //lo sfondo dev'essere sempre ultimo
+		panLezione.setComponentZOrder(helpFrasi, 0);
+		panLezione.setComponentZOrder(labelIntervento, 1);
+	    panLezione.setComponentZOrder(coseDette, 2);
+	    panLezione.setComponentZOrder(profAllaLavagna, 3);
+	    panLezione.setComponentZOrder(manoAlzata, 4);
+	    panLezione.setComponentZOrder(scrittaLav, 5);
+	    panLezione.setComponentZOrder(titoloLav, 6);
+		panLezione.setComponentZOrder(maclaurin, 7); //Dev'essere davanti alla lavagna
+		panLezione.setComponentZOrder(cirGon, 8);
+	    panLezione.setComponentZOrder(lavagna, 9);
+	    panLezione.setComponentZOrder(sfondoLez, 10);      //lo sfondo dev'essere sempre ultimo
 	    
 	    
 	    Main.finestra.add(panLezione);
@@ -124,7 +136,7 @@ public class Prof1Lezione {
 		Thread threadScrivProf = new Thread(() -> {
 			//
 		 
-        stampa("Oggi Faremo <br> lezione di <br> Trigonometria, <br> il nuovo <br> semplicissimo <br> argomento", coseDette);
+      /*  stampa("Oggi Faremo <br> lezione di <br> Trigonometria, <br> il nuovo <br> semplicissimo <br> argomento", coseDette);
 		
 		try {Thread.sleep(500);} catch (InterruptedException e) {e.printStackTrace();}
 		
@@ -141,7 +153,7 @@ public class Prof1Lezione {
 		try {Thread.sleep(500);} catch (InterruptedException e) {e.printStackTrace();}
 		
 		stampa( "Adesso inizio<br> a spiegare,<br> vi prometto che<br> userò un <br>linguaggio molto <br>complicato, <br>come volete voi", coseDette);
-		spiegaQualcosa(metodiSpiegati, false);
+		*/spiegaQualcosa(metodiSpiegati, false);
 		});
 		threadScrivProf.start();
 	}
@@ -333,19 +345,57 @@ public class Prof1Lezione {
 		
 		static void permettiInterazione() {
 			manoAlzata.setIcon(new ImageIcon("Texture\\alza_mano.png"));
+			helpFrasi.setIcon(new ImageIcon("Texture\\help_frasi.png"));
 			
 			manoAlzata.addActionListener(e -> {
 				panLezione.setFocusable(true);
 				panLezione.requestFocus();
 				Main.configuraTasti(); 
 			});
+				helpFrasi.addActionListener(e -> {
+					JFrame frasiProf1 = new JFrame("Frasi Reattive");
+					frasiProf1.setSize(600, 600);
+					frasiProf1.setDefaultCloseOperation(frasiProf1.DISPOSE_ON_CLOSE);
+					frasiProf1.setLayout(new BorderLayout());
+					frasiProf1.setResizable(false);
+					
+					JPanel panFrasi = new JPanel();
+					panFrasi.setLayout(null);
+					panFrasi.setOpaque(false);
+					frasiProf1.add(panFrasi);
+					JLabel frasi = new JLabel("<html><b> <div style='padding: 10px'> <h3>  FRASI CHE SUSCITANO REAZIONI </h3> </b> <br>"
+												+ "<ul> "
+													+ "<li>Non ho capito</li>"
+													+ "<li>Sei stupido/fai schifo</li>"
+													+ "<li>prof/3f/arenga .delete/uninstall/kill</li>"
+													+ "<li>Non mettere vocali nella frase</li>"
+													+ "<li>Ho vinto il kangourou</li>"
+													+ "<li>\"ah\" 15 volte</li>"
+													+ "<li>Scrivere \"testo\".repeat(numero) ti ripete il testo per \"numero\" volte</li>"
+												+ "</ul>");
+					frasi.setBounds(10,10, 600, 600);
+					frasi.setVerticalAlignment(SwingConstants.TOP); 
+					panFrasi.add(frasi);
+					frasiProf1.setVisible(true);
+				});
 			}
+
 		
 		
 		public static void analizzaRisposta() {
 			new Thread(() -> {
 				String frisk = intervento.toLowerCase().trim();
 				spiegazioneInCorso = false;
+				if(frisk.contains(".repeat(") && frisk.contains(")")) {
+					int num = Integer.parseInt(frisk.substring(
+						    frisk.indexOf(".repeat(") + 8, 
+						    frisk.indexOf(")", frisk.indexOf(".repeat(") + 8)
+						).trim());
+					String nuovoFrisk = frisk.replaceAll("\\.repeat", "").replaceAll("\\("+String.valueOf(num)+"\\)", "");
+					frisk = nuovoFrisk.repeat(num);
+					System.out.println(frisk);
+				}
+				
 				if(frisk.equals("non ho capito")) {
 					ImageIcon brill1 = new ImageIcon("Texture\\prof_lavagna_brillante1.png");
 					ImageIcon brill2 = new ImageIcon("Texture\\prof_lavagna_brillante2.png");
@@ -412,8 +462,14 @@ public class Prof1Lezione {
 					try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
 					stampa("Sono stato<br> bravissimo ad<br> insegnarti che <br>sei riuscito a<br> vincerlo,<br> di nuovo <br>complimenti a me!!", coseDette);
 					
+				}else if(frisk.contains("ah".repeat(15))) {
+					cambiaUmore(45);
+					stampa("AHAHAHAHA<br>HAHAHAHA<br>HAHAHAHAH<br>AHAHAHAH<br>AHAHAHAHA", coseDette);
+					stampa("AHAHAHAHAHAHAHAHAHAHAHAHAH<br>AHAHAHAHAHAHAHAHAHAHA<br>HAHAHAHAHAHAHAHAHAHAHAHAH<br>AHAHAHAHAHAHAHAHAHAHAHAHAHAHAH<br>AHAHAHAHAHA"
+							+ "HAHAHAHAHAHAHAHAHAHAH<br>AHAHAHAHAHAHAHAHAHAHAHAHAHAHA".repeat(3),scrittaLav);
+					stampa("AHAH<br>AHAHA<br>HAHAHA", titoloLav);
 				}
-				Main.debugEnter = false;
+				debugEnter = false;
 				conSpieg();
 			}).start();
 		}
@@ -472,8 +528,8 @@ public class Prof1Lezione {
 		                Thread.sleep(100); 
 		            }
 		       if(!intervento.trim().isEmpty()) {
-		            String risposta = intervento.toLowerCase().trim();
-		            if(risposta.equals("sì") || risposta.equals("si")) {
+		    	   String risposta = intervento.toLowerCase().trim();
+		            if(risposta.contains("sì") || risposta.contains("si")) {
 		                if (parCorrente.equals("par1")) {
 		                    sconfiguraTasti();
 		                    try {
@@ -482,7 +538,8 @@ public class Prof1Lezione {
 		                        e1.printStackTrace();
 		                    }
 		                }else if(parCorrente.equals("par2")) {
-							try {
+		                	 sconfiguraTasti();
+		                	try {
 								metodoCorrente.invoke(null, "par3", true, true);
 							} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e1) {
 								// TODO Auto-generated catch block
@@ -490,7 +547,8 @@ public class Prof1Lezione {
 							}
 							
 		                }else if(parCorrente.equals("par3")) {
-							try {
+		                	sconfiguraTasti();
+		                	try {
 								metodoCorrente.invoke(null, "par4", true, true);
 							} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e1) {
 								// TODO Auto-generated catch block
@@ -499,11 +557,12 @@ public class Prof1Lezione {
 							
 		                }else if(parCorrente.equals("par4")) {
 		                	spiegaQualcosa(metodiSpiegati, true);
-						
-		                } else {
+		                }
+		             } else {
 		                stampa("Ok, fammi tutte le domande che non vuoi", coseDette);
-		            }
-		       }
+		                
+		                }
+		       
 		       }
 		       } catch (InterruptedException e) {
 		            e.printStackTrace();
