@@ -601,7 +601,8 @@ public class Prof1Lezione {
             }
 		}
 		static void tornAllaMappa() {
-				
+				stampa("Purtroppo, <br>la lezione di oggi<br> è finita, <br>quindi addio e <br>ci rivediamo <br>tra 5 minuti", coseDette);
+				try {Thread.sleep(s(4));}catch(InterruptedException e) {e.printStackTrace();}
 				mappaClasse.remove(prof.icona);
 				mappaClasse.remove(prof.fraseProf);
 				panLezione.setVisible(false);
