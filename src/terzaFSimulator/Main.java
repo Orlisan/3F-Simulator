@@ -345,7 +345,7 @@ public class Main {
             mappaClasse.add(persona.icona);
         }
         
-        finestra.add(mappaClasse);
+        finestra.add(mappaClasse, BorderLayout.CENTER);
 
         // ✅ INFINE aggiorna la finestra
            finestra.revalidate();
@@ -361,6 +361,12 @@ public class Main {
         
     
     static void configuraTasti() {
+    	 KeyListener[] listeners = mappaClasse.getKeyListeners();
+    	    for (KeyListener kl : listeners) {
+    	        mappaClasse.removeKeyListener(kl);
+    	    }
+    	    
+    	
     	finestra.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -502,6 +508,7 @@ public class Main {
                             Prof1Lezione.manoAlzata.setIcon(new ImageIcon("Texture\\alza_mano_grigia.png"));
                             debugEnter = true;
         	        	}
+        	      
         	        }
         	  }
         });
