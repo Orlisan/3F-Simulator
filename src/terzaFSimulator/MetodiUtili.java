@@ -1,11 +1,17 @@
 package terzaFSimulator;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 
 import terzaFSimulator.Prof1.UmoriProf;
 
 import java.awt.*;
-
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 
 public class MetodiUtili {
@@ -207,8 +213,23 @@ public class MetodiUtili {
 		return paroladeCript.toString();
 }
 	static int s(double ms) {
-		return (int) ms*1000;
-		
+		return  (int) ms*1000;
+	}
+	
+	public static void audio(String audioPath) {
+		new Thread(() -> {
+			try {
+				File audio = new File(audioPath);
+				AudioInputStream audioStream;
+				audioStream = AudioSystem.getAudioInputStream(audio);
+				Clip clip = AudioSystem.getClip();
+	            clip.open(audioStream);
+	            clip.start();
+			} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}).start();
 	}
 	
 }
