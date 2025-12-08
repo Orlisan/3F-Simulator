@@ -451,7 +451,6 @@ public class Main {
                     		FinestraNote.creaNote();
                     	}
                     	break;
-                    	
                 }}
             @Override
             public void keyReleased(KeyEvent e) {
@@ -509,8 +508,7 @@ public class Main {
                             debugEnter = true;
         	        	}
         	      
-        	        }
-        	  }
+        	  }}
         });
    
     }

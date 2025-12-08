@@ -1,10 +1,17 @@
 package terzaFSimulator;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 
 import terzaFSimulator.Prof1.UmoriProf;
 
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.Random;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -15,6 +22,8 @@ import static terzaFSimulator.Main.*;
 
 public class Prof1Lezione {
 
+	public static ImageIcon scappaCheÈMeglio = new ImageIcon("Texture\\prof_lavagna_malus.png");
+	
 	public static JButton manoAlzata;
 	public static JButton helpFrasi;
 	
@@ -40,6 +49,8 @@ public class Prof1Lezione {
 	static Method metodoCorrente;
 	
 	static ArrayList<Method> metodiSpiegati = new ArrayList<Method>();
+	static ArrayList<String> veriCompiti = new ArrayList<String>();
+	
 	static void creaAmbiente() {
 		mappaClasse.setVisible(false);
 		
@@ -154,7 +165,12 @@ public class Prof1Lezione {
 		try {Thread.sleep(500);} catch (InterruptedException e) {e.printStackTrace();}
 		
 		stampa( "Adesso inizio<br> a spiegare,<br> vi prometto che<br> userò un <br>linguaggio molto <br>complicato, <br>come volete voi", coseDette);
-		*/spiegaQualcosa(metodiSpiegati, false);
+		*/try {
+			spiegaQualcosa(metodiSpiegati, false);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		});
 		threadScrivProf.start();
 	}
@@ -198,7 +214,7 @@ public class Prof1Lezione {
 				maclaurin.setVisible(true);
 				try {Thread.sleep(400);} catch (InterruptedException e) {e.printStackTrace();}
 				scrittaLav.setForeground(MetodiUtili.qualeUmore(Prof1.umore));
-				stampa("Si deve sommare il risultato dell'espressione <br>fino all'\"infinito\" aumentando ad ogni <br>somma n di 1; più volte sommi, più è accurato il risultato<br><br><br>", scrittaLav);
+				stampa("Si deve sommare il risultato dell'espressione <br>fino all' \"infinito\" aumentando ad ogni <br>somma n di 1; più volte sommi, più è accurato il risultato<br><br><br>", scrittaLav);
 				permettiInterazione();
 			}else if(paragrafo.equals("par4")) {
 				parCorrente = "par4";
@@ -206,11 +222,11 @@ public class Prof1Lezione {
 				cirGon.setVisible(false);
 				try {Thread.sleep(400);} catch (InterruptedException e) {e.printStackTrace();}
 				scrittaLav.setForeground(MetodiUtili.qualeUmore(Prof1.umore));
-				stampa("In realtà i<br>l modo più corretto <br>per calcolare <br>queste formule sarebbe<br> tramite questa<br> circonferenza <br>goniometrica: ", scrittaLav);
+				stampa("In realtà il<br> modo più corretto <br>per calcolare <br>queste formule sarebbe<br> tramite questa<br> circonferenza <br>goniometrica: ", scrittaLav);
 				try {Thread.sleep(400);} catch (InterruptedException e) {e.printStackTrace();}
 				cirGon.setIcon(new ImageIcon("Texture\\cir_sin().png"));
 				cirGon.setVisible(true);
-				stampa("È la stessa roba<br> di prima solo che <br>il triangolo è \"incastrato\"<br> tra 2 raggi di angolo x ", scrittaLav);
+				stampa("È la stessa roba<br> di prima solo <br>che il triangolo<br> è \"incastrato\"<br> tra 2 raggi <br>di angolo x ", scrittaLav);
 				permettiInterazione();
 			}
 		}
@@ -255,7 +271,7 @@ public class Prof1Lezione {
 			maclaurin.setVisible(true);
 			try {Thread.sleep(400);} catch (InterruptedException e) {e.printStackTrace();}
 			scrittaLav.setForeground(MetodiUtili.qualeUmore(Prof1.umore));
-			stampa("Si deve sommare il risultato dell'espressione <br>fino all'\"infinito\" aumentando ad ogni <br>somma n di 1; più volte sommi, più è accurato il risultato<br><br><br>", scrittaLav);
+			stampa("Si deve sommare il risultato dell'espressione <br>fino all' \"infinito\" aumentando ad ogni <br>somma n di 1; più volte sommi, più è accurato il risultato<br><br><br>", scrittaLav);
 			permettiInterazione();
 		}else if(paragrafo.equals("par4")) {
 			parCorrente = "par4";
@@ -271,7 +287,7 @@ public class Prof1Lezione {
 			permettiInterazione();
 		}
 		}
-		static void spiegaQualcosa(ArrayList<Method> giàFatti,boolean giàIntro) {
+		static void spiegaQualcosa(ArrayList<Method> giàFatti,boolean giàIntro) throws InterruptedException {
 		    Random random = new Random();
 		    
 		    try {
@@ -321,7 +337,8 @@ public class Prof1Lezione {
 			for(char ilMessaggio: messaggioDaDire) {
 	            	
 					messaggioFinOra.append(ilMessaggio);
-	            	 labelDaMod.setText(messaggioFinOra.toString() + "</html>");
+	            	labelDaMod.setForeground(qualeUmore(Prof1.umore)); 
+					labelDaMod.setText(messaggioFinOra.toString() + "</html>");
 	            	 try {
 						Thread.sleep(50);
 					} catch (InterruptedException e) {
@@ -354,6 +371,7 @@ public class Prof1Lezione {
 				Main.configuraTasti(); 
 			});
 				helpFrasi.addActionListener(e -> {
+				
 					JFrame frasiProf1 = new JFrame("Frasi Reattive");
 					frasiProf1.setSize(600, 600);
 					frasiProf1.setDefaultCloseOperation(frasiProf1.DISPOSE_ON_CLOSE);
@@ -367,12 +385,14 @@ public class Prof1Lezione {
 					JLabel frasi = new JLabel("<html><b> <div style='padding: 10px'> <h3>  FRASI CHE SUSCITANO REAZIONI </h3> </b> <br>"
 												+ "<ul> "
 													+ "<li>Non ho capito</li>"
+													+ "spieghi / continui la lezione"
 													+ "<li>Sei stupido/fai schifo</li>"
 													+ "<li>prof/3f/arenga .delete/uninstall/kill</li>"
 													+ "<li>Non mettere vocali nella frase</li>"
 													+ "<li>Ho vinto il kangourou</li>"
 													+ "<li>\"ah\" 15 volte</li>"
 													+ "<li>Chiedere di andare in bagno</li>"
+													+ "<li>Elencare sin, cos, tan, cot, sec, e csc, le formule trigonometriche principali</li>"
 													+ "<li>Scrivere \"testo\".repeat(numero) ti ripete il testo per \"numero\" volte</li>"
 												+ "</ul>");
 					frasi.setBounds(10,10, 600, 600);
@@ -439,7 +459,7 @@ public class Prof1Lezione {
 					
 					try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
 					
-				}else if(frisk.contains(MetodiUtili.decripta("rtrrt")) || frisk.contains(MetodiUtili.decripta("PLZG"))) {
+				}else if(frisk.contains(decripta("rtrr")) || frisk.contains(decripta("PLZG"))) {
 					cambiaUmore(-65); 
 					stampa("NON È AFFATTO DIVERTENTE!<br> SIAMO IN UN CONTESTO <br>DIDATTICO!!!", coseDette);
 					try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
@@ -476,11 +496,15 @@ public class Prof1Lezione {
 				}else if(frisk.contains("bagno") || frisk.contains("gabinetto")) {
 					cambiaUmore(-5);
 					stampa("Ci sei stato/a<br> 5 mesi fa!,<br> aspetta <br>l'intervallo", coseDette);
+				}else if(frisk.contains("sin") && frisk.contains("cos") && frisk.contains("tan") && frisk.contains("cot") && frisk.contains("sec") && frisk.contains("csc")) {
+					cambiaUmore(15);
+					stampa("Vedo che hai<br>studiato bene <br>la lezione, <br>avrai sicuramente<br> studiato 1500 ore,<br> se no non ce <br>l'avresti fatta", coseDette);
 				}
 				debugEnter = false;
 				if(!giàCon) {
 					conSpieg();
 				}
+				giàCon = false;
 			}).start();
 		}
 		
@@ -597,11 +621,18 @@ public class Prof1Lezione {
                         System.out.println("DEBUG: metodiSpiegati ora contiene " + metodiSpiegati.size() + " metodi");
                     }
                 }
-                spiegaQualcosa(metodiSpiegati, true);
+                try {
+					spiegaQualcosa(metodiSpiegati, true);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
             }
 		}
-		static void tornAllaMappa() {
+		static void tornAllaMappa() throws InterruptedException {
+				cirGon.setVisible(false);
 				stampa("Purtroppo, <br>la lezione di oggi<br> è finita, <br>quindi addio e <br>ci rivediamo <br>tra 5 minuti", coseDette);
+		
 				try {Thread.sleep(s(4));}catch(InterruptedException e) {e.printStackTrace();}
 				mappaClasse.remove(prof.icona);
 				mappaClasse.remove(prof.fraseProf);
@@ -611,5 +642,96 @@ public class Prof1Lezione {
 				mappaClasse.setFocusable(true);
 				mappaClasse.requestFocus(true);
 				
+				try {Thread.sleep(s(10));}catch(InterruptedException e) {e.printStackTrace();}
+ 				 
+				mappaClasse.setVisible(false);
+				panLezione.setVisible(true);
+				if(!mappaClasse.isVisible()) {System.out.println("Mappa sparita");}
+				
+				stampa("Pensavi di averla fatta franca, eh?, beh, ti sbagli, CI SONO I COMPITI!", coseDette);
+				
+				String[] compiti = {"P 123 n. 123", "P 321 n. 13", "P 324 n. 576", "P 666 n. 67", "P 28 n. 12", "P 140 n. 50", "P 2.5 n. 1.2", "P sin(90) n. cos(0)", "P 60° n. 32° 30'", "P a n. b", "P sqrt(-100) n. 0 / 0"};
+				
+				Random random = new Random();
+				int ran = compiti.length;
+				for(String compito: compiti) {
+					int indice = random.nextInt(ran + 1);
+					if(indice == ran) {
+						veriCompiti.add(compito);
+						ran--;
+					}else {
+						continue;
+					}
+				}
+				
+				if(veriCompiti.isEmpty()) {
+					cambiaUmore(-40);
+					stampa("Maledizione,<br> il libro non ha <br>esercizi adatti!!<br>Uffa, per stavolta<br> siete abbonati<br> dai compiti", coseDette);
+				}else if(veriCompiti.size() == 11) {
+					cambiaUmore(40);
+					stampa("Ah che bello,<br> vi ho rimpinzato <br>di compiti,<br>che soddisfazione!", coseDette);
+				} else {
+					stampa("Su col morale,<br>avete solo " + veriCompiti.size() + " problemi<br> trigonometrici,<br> cosa volete che siano", coseDette);
+					
+				}
+				StringBuilder dicCom = new StringBuilder();
+				for(String veroCompito: veriCompiti) {
+			        dicCom.append(veroCompito + ", ");
+			        if((dicCom.length() % 30) == 0) {
+			        	dicCom.append("<br>");
+			        }
+		  		}
+				stampa("I Compiti sono: " +  dicCom.toString(), scrittaLav);
+				Thread.sleep(s(2));
+				stampa("Li avete scrittti sul diario?, adesso controllo", coseDette);
+				try {Thread.sleep(s(2));} catch (InterruptedException e1) {e1.printStackTrace();}
+				cambiaUmore(-300);
+				profAllaLavagna.setIcon(scappaCheÈMeglio);
+				stampa("NNNNOOONN HHAII SSCCRITTTO II COMMPITTI!!", coseDette);
+				if(Prof1.umore != UmoriProf.OMICIDA) {
+					stampa("AADDESSSO...", coseDette);
+					try {Thread.sleep(s(2));} catch (InterruptedException e1) {e1.printStackTrace();}
+					coseDette.setFont(new Font("Serif", Font.BOLD, 30));
+					stampa("IO. . .", coseDette);
+					try {Thread.sleep(s(3));} catch (InterruptedException e1) {e1.printStackTrace();}
+					coseDette.setFont(new Font("Serif", Font.BOLD, 50));
+					stampa("TI. . . . . .", coseDette);
+					audio("Sounds\\campanella.wav");
+					Thread.sleep(500);
+					coseDette.setFont(new Font("Serif", Font.BOLD, 10));
+					stampa("Maledizione", coseDette);
+					try {Thread.sleep(s(1));} catch (InterruptedException e1) {e1.printStackTrace();}
+					stampa("Sei salvo, la tua esistenza è meno importante che la 3E", coseDette);
+					try {Thread.sleep(s(1));} catch (InterruptedException e1) {e1.printStackTrace();}
+					stampa("Addio.", coseDette);
+					try {Thread.sleep(s(2));} catch (InterruptedException e1) {e1.printStackTrace();}
+					audio("Sounds\\fine_lezione.wav");
+				}
+				
+				mappaClasse.remove(prof.icona);
+				mappaClasse.remove(prof.fraseProf);
+				panLezione.setVisible(false);
+				mappaClasse.setVisible(true);
+				configuraTasti();
+				mappaClasse.setFocusable(true);
+				mappaClasse.requestFocus(true);
+				
+				}
+		public static void audio(String audioPath) {
+			new Thread(() -> {
+				try {
+					File audio = new File(audioPath);
+					AudioInputStream audioStream;
+					audioStream = AudioSystem.getAudioInputStream(audio);
+					Clip clip = AudioSystem.getClip();
+		            clip.open(audioStream);
+		            clip.start();
+				} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}).start();
 		}
+				
 }
+
