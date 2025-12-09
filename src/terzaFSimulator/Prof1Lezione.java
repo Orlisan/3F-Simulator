@@ -7,7 +7,7 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 
-import terzaFSimulator.Prof1.UmoriProf;
+import static terzaFSimulator.Prof1.UmoriProf;
 
 import java.awt.*;
 import java.io.File;
@@ -19,6 +19,7 @@ import java.util.ArrayList;
 
 import static terzaFSimulator.MetodiUtili.*;
 import static terzaFSimulator.Main.*;
+
 
 public class Prof1Lezione {
 
@@ -47,6 +48,7 @@ public class Prof1Lezione {
 	static int indiceCasuale;
 	static int puntiInPiù = 0;
 	
+	static Timer timerBrill;
 	static Method metodoCorrente;
 	
 	static ArrayList<Method> metodiSpiegati = new ArrayList<Method>();
@@ -423,12 +425,12 @@ public class Prof1Lezione {
 					if(!brill) {ImageIcon brill1 = new ImageIcon("Texture\\prof_lavagna_brillante1.png");
 					ImageIcon brill2 = new ImageIcon("Texture\\prof_lavagna_brillante2.png");
 					
-					Timer timer = new Timer(300, e -> {
+					timerBrill = new Timer(300, e -> {
 						profAllaLavagna.setIcon(unoDue ? brill1 : brill2);
 						unoDue = !unoDue;
 					});
-					timer.setRepeats(true);
-					timer.start();
+					timerBrill.setRepeats(true);
+					timerBrill.start();
 					brill = true;}
 					cambiaUmore(60);
 					
@@ -503,6 +505,7 @@ public class Prof1Lezione {
 					stampa("Vedo che hai<br>studiato bene <br>la lezione, <br>avrai sicuramente<br> studiato 1500 ore,<br> se no non ce <br>l'avresti fatta", coseDette);
 				}
 				debugEnter = false;
+				checkUmore();
 				if(!giàCon) {
 					conSpieg();
 				}
@@ -638,6 +641,7 @@ public class Prof1Lezione {
 				try {Thread.sleep(s(4));}catch(InterruptedException e) {e.printStackTrace();}
 				mappaClasse.remove(prof.icona);
 				mappaClasse.remove(prof.fraseProf);
+				audio("Sounds\\fine_lezione.wav");
 				panLezione.setVisible(false);
 				mappaClasse.setVisible(true);
 				configuraTasti();
@@ -688,6 +692,8 @@ public class Prof1Lezione {
 				stampa("Li avete scrittti sul diario?, adesso controllo", coseDette);
 				try {Thread.sleep(s(2));} catch (InterruptedException e1) {e1.printStackTrace();}
 				cambiaUmore(-300);
+				checkUmore();
+				if(brill) {timerBrill.stop();}
 				profAllaLavagna.setIcon(scappaCheÈMeglio);
 				stampa("NNNNOOONN HHAII SSCCRITTTO II COMMPITTI!!", coseDette);
 				if(Prof1.umore != UmoriProf.OMICIDA) {
@@ -721,29 +727,45 @@ public class Prof1Lezione {
 				}
 		static void checkUmore() {
 			if(Prof1.umore == UmoriProf.ESTASIATO) {
+				if(brill) {timerBrill.stop();}
 				profAllaLavagna.setIcon(new ImageIcon("Texture\\prof_lavagna_estasiato.png"));
 				stampa("Oh", coseDette);		
-				try {Thread.sleep(s(1));} catch (InterruptedException e1) {e1.printStackTrace();}
+				try {Thread.sleep(s(2));} catch (InterruptedException e1) {e1.printStackTrace();}
 				stampa("Mi sento così. . . ", coseDette);
-				try {Thread.sleep(s(0.5));} catch (InterruptedException e1) {e1.printStackTrace();}
+				try {Thread.sleep(s(2));} catch (InterruptedException e1) {e1.printStackTrace();}
 				stampa("Non ho mai<br> provato questa <br>sensazione. . . ", coseDette);
-				try {Thread.sleep(s(0.5));} catch (InterruptedException e1) {e1.printStackTrace();}
+				try {Thread.sleep(s(2));} catch (InterruptedException e1) {e1.printStackTrace();}
 				stampa("Non so come<br> chiamarla. . . ", coseDette);
-				try {Thread.sleep(s(0.5));} catch (InterruptedException e1) {e1.printStackTrace();}
+				try {Thread.sleep(s(2));} catch (InterruptedException e1) {e1.printStackTrace();}
 				stampa("Guardiamo nel<br> vocabolario. . . ", coseDette);
-				try {Thread.sleep(s(0.5));} catch (InterruptedException e1) {e1.printStackTrace();}
+				try {Thread.sleep(s(2));} catch (InterruptedException e1) {e1.printStackTrace();}
 				stampa("Uhmm. . . ", coseDette);
-				try {Thread.sleep(s(0.5));} catch (InterruptedException e1) {e1.printStackTrace();}
+				try {Thread.sleep(s(2));} catch (InterruptedException e1) {e1.printStackTrace();}
 				stampa("Ecco: <br>“Voglia di non<br> torturare gli<br> alunni” è esattamente <br>come mi sento<br>", coseDette);
-				try {Thread.sleep(s(0.5));} catch (InterruptedException e1) {e1.printStackTrace();}
+				try {Thread.sleep(s(2));} catch (InterruptedException e1) {e1.printStackTrace();}
 				stampa("“Sinonimo di regalare 500 Oro a " + personaggioSelezionato.nome + " " + personaggioSelezionato.cognome+"”",coseDette );
-				try {Thread.sleep(s(0.5));} catch (InterruptedException e1) {e1.printStackTrace();}
+				try {Thread.sleep(s(2));} catch (InterruptedException e1) {e1.printStackTrace();}
 				stampa("Beh, allora non mi resta che una cosa da fare", coseDette);
-				try {Thread.sleep(s(0.5));} catch (InterruptedException e1) {e1.printStackTrace();}
+				try {Thread.sleep(s(2));} catch (InterruptedException e1) {e1.printStackTrace();}
 				personaggioSelezionato.setOro(personaggioSelezionato.getOro() + 500);
 				stampa("Fatto", coseDette);
-				try {Thread.sleep(s(0.5));} catch (InterruptedException e1) {e1.printStackTrace();}
+				try {Thread.sleep(s(2));} catch (InterruptedException e1) {e1.printStackTrace();}
 				stampa("Qua non ho più niente da fare, arrivederci, e grazie dei -500 Oro!", coseDette);
+				try {Thread.sleep(s(2));} catch (InterruptedException e1) {e1.printStackTrace();}
+				mappaClasse.remove(prof.icona);
+				mappaClasse.remove(prof.fraseProf);
+				audio("Sounds\\fine_lezione.wav");
+				try {Thread.sleep(s(1));} catch (InterruptedException e1) {e1.printStackTrace();}
+				panLezione.setVisible(false);
+				mappaClasse.setVisible(true);
+				configuraTasti();
+				mappaClasse.setFocusable(true);
+				mappaClasse.requestFocus(true);
+				
+			}
+			else if(Prof1.umore == UmoriProf.OMICIDA) {
+				if(brill) {timerBrill.stop();}
+				profAllaLavagna.setIcon(scappaCheÈMeglio);
 			}
 		}
 				
