@@ -10,6 +10,7 @@ import javax.swing.*;
 import static terzaFSimulator.Prof1.UmoriProf;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Random;
@@ -76,7 +77,6 @@ public class Prof1Lezione {
 	    
 	    coseDette = new JLabel("");
 	    coseDette.setBounds(75, 70, 200, 200);
-	    coseDette.setFont(new Font("Serif", Font.BOLD, 20));
 	    coseDette.setForeground(MetodiUtili.qualeUmore(Prof1.umore));
 	    panLezione.add(coseDette);
 	    
@@ -107,19 +107,16 @@ public class Prof1Lezione {
 	    
 	    labelIntervento = new JLabel("");
 	    labelIntervento.setBounds(460, 420, 400, 200);
-	    labelIntervento.setFont(new Font("Serif", Font.ITALIC, 25));
 	    labelIntervento.setForeground(Color.WHITE);
 	    labelIntervento.setOpaque(false);
 	    panLezione.add(labelIntervento);
 	    
 	    titoloLav = new JLabel("");
 		titoloLav.setBounds(415, 110, 120, 40);
-		titoloLav.setFont(new Font("Serif", Font.BOLD, 40));
 		panLezione.add(titoloLav);
 		
 		scrittaLav = new JLabel("");
 		scrittaLav.setBounds(315, 100, 320, 240);//DISPONIBILI 29 CARATTERI PER RIGA!!!!!!!YAY
-		scrittaLav.setFont(new Font("Serif", Font.PLAIN, 20));
 		panLezione.add(scrittaLav);
 	     
 		panLezione.setComponentZOrder(helpFrasi, 0);
@@ -472,7 +469,7 @@ public class Prof1Lezione {
 					Main.aggiornaOro();
 					try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
 					
-				}else if(!frisk.contains("a") && !frisk.contains("à") && !frisk.contains("e") && !frisk.contains("è") && !frisk.contains("é") && !frisk.contains("i")&&!frisk.contains("ì") && !frisk.contains("o")&& !frisk.contains("ò") && !frisk.contains("u") &&!frisk.contains("ù") ) {
+				}else if(!frisk.contains("a") && !frisk.contains("à") && !frisk.contains("e") && !frisk.contains("è") && !frisk.contains("é") && !frisk.contains("i")&&!frisk.contains("ì") && !frisk.contains("o")&& !frisk.contains("ò") && !frisk.contains("u") &&!frisk.contains("ù") && !frisk.contains("666") ) {
 					cambiaUmore(-10);
 					stampa("Parla in italiano <br> idiota!", coseDette);
 					try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
@@ -503,6 +500,8 @@ public class Prof1Lezione {
 				}else if(frisk.contains("sin") && frisk.contains("cos") && frisk.contains("tan") && frisk.contains("cot") && frisk.contains("sec") && frisk.contains("csc")) {
 					cambiaUmore(15);
 					stampa("Vedo che hai<br>studiato bene <br>la lezione, <br>avrai sicuramente<br> studiato 1500 ore,<br> se no non ce <br>l'avresti fatta", coseDette);
+				}else if(frisk.contains("666")) {
+					gaster();
 				}
 				debugEnter = false;
 				checkUmore();
@@ -699,14 +698,12 @@ public class Prof1Lezione {
 				if(Prof1.umore != UmoriProf.OMICIDA) {
 					stampa("AADDESSSO...", coseDette);
 					try {Thread.sleep(s(2));} catch (InterruptedException e1) {e1.printStackTrace();}
-					coseDette.setFont(new Font("Serif", Font.BOLD, 30));
 					stampa("IO. . .", coseDette);
 					try {Thread.sleep(s(3));} catch (InterruptedException e1) {e1.printStackTrace();}
-					coseDette.setFont(new Font("Serif", Font.BOLD, 50));
 					stampa("TI. . . . . .", coseDette);
 					audio("Sounds\\campanella.wav");
 					Thread.sleep(500);
-					coseDette.setFont(new Font("Serif", Font.BOLD, 10));
+				
 					stampa("Maledizione", coseDette);
 					try {Thread.sleep(s(1));} catch (InterruptedException e1) {e1.printStackTrace();}
 					stampa("Sei salvo, la tua esistenza è meno importante che la 3E", coseDette);
@@ -768,6 +765,39 @@ public class Prof1Lezione {
 				profAllaLavagna.setIcon(scappaCheÈMeglio);
 			}
 		}
+		
+		static void gaster() {
+			audio("Sounds\\her.wav");
+			JLabel gaster = new JLabel("Texture\\misterious_man.png");
+			gaster.setBounds(220, 80, 100, 130);
+			gaster.setIcon(trasparenza("Texture\\misterious_man.png", 0f));
+			panLezione.add(gaster);
+			panLezione.setComponentZOrder(gaster, 0);
+			new Thread(() -> {
+			for(float i = 0f; i <= 1.0f; i += 0.02f) {
+				float ci = i;
+				SwingUtilities.invokeLater(() -> {gaster.setIcon(trasparenza("Texture\\misterious_man.png", ci));});
+				try {
+					Thread.sleep(200);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			}).start();
+			try {Thread.sleep(s(5));}catch(InterruptedException e) {e.printStackTrace();}
+			scrittaLav.setFont(wingdingsFont);
+			stampa("\"Entry number 17<br> Dark Darker Yet Darker <br>The Darkness Keeps Growing<br> The Shadows Cutting Deeper<br> Photon Readings Negative<br>", scrittaLav);
+			try {Thread.sleep(s(2));}catch(InterruptedException e) {e.printStackTrace();}
+			stampa("This Next Experiment Seems Very Very Interesting ...<br> What Do You Two Think<br>, are you ready, to create,<br> the, first, original, DARK SCHOOL???\" <br>", scrittaLav);
+			try {Thread.sleep(s(2));}catch(InterruptedException e) {e.printStackTrace();}
+			stampa("This was the beginning of your reality,<br> of your agony, <br>of your Determination. . .<br> But now. . . I must do another experiment,<br> and I need my determination for it,<br>", scrittaLav); 
+			try {Thread.sleep(s(2));}catch(InterruptedException e) {e.printStackTrace();}
+			stampa("your time is up. . . <br>GOODBYE <br>        EXPERIMENT NUMBER 17", scrittaLav);
+			
+			
+		}
+		
 				
 }
 

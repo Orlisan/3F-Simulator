@@ -28,7 +28,6 @@ public class Prof1 extends Professore{
 				fraseProf = new JLabel("BUONGIORNO...");
 				fraseProf.setBounds(374, 21, 120, 20);
 				fraseProf.setForeground(coloreLabel);
-				fraseProf.setFont(new Font("Verdana", Font.PLAIN, 14));
 				fraseProf.setBackground(Color.GRAY);
 				
 				Main.mappaClasse.add(fraseProf);
@@ -39,7 +38,6 @@ public class Prof1 extends Professore{
 			Timer timer = new Timer(2000, e -> {
 				fraseProf.setText("...RAGAZZI");
 				fraseProf.setBounds(460, 21, 150, 30);
-				fraseProf.setFont(new Font("Verdana", Font.PLAIN, 20));
 			});
 			timer.setRepeats(false);
 			timer.start();

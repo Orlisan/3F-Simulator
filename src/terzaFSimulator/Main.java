@@ -15,6 +15,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Random;
 
+import static terzaFSimulator.MetodiUtili.*;
+
 public class Main {
     
     static ArrayList<Persona> personaggi = new ArrayList<>();
@@ -83,7 +85,9 @@ public class Main {
     public static void main(String[] args) throws FontFormatException, IOException {
         // Questo è il progetto di 3F SIMULATOR	(il gioco più bello al mondo)
     	
-    	
+    	UIManager.put("Label.font", MetodiUtili.determinationFont);
+        UIManager.put("Button.font", MetodiUtili.determinationFont);
+        UIManager.put("TextField.font", MetodiUtili.determinationFont);
         JButton bot1 = new JButton("Prova");
         bot1.setBounds(15, 15, 100 , 100);
     	
@@ -181,7 +185,7 @@ public class Main {
 		        
 		        
 	        	scrittaInizio.setBounds(340, 135, larghezza * 2, lunghezza);
-	        	scrittaInizio.setFont(new Font("Determination Sans", Font.BOLD, 10 + i));
+	        	scrittaInizio.setFont(MetodiUtili.determinationFont.deriveFont(15f + i));
 	        	
 	        	int tempoDaAspettare = 5;
 	        	
@@ -239,6 +243,7 @@ public class Main {
         }
         
         // ti mette le variabili delle immagini dello sfondo
+        audio("Sounds\\agonia_didattica.wav");
         iconaSfondoSinistro = new ImageIcon("Texture\\mappaclasse_sinistra.png");
         sfondoSinistro = new JLabel(iconaSfondoSinistro);
         
@@ -321,7 +326,6 @@ public class Main {
         oro = new JLabel("Oro:" + orlando.oro);
         oro.setBounds(0, 209, 78, 63);
         oro.setForeground(Color.YELLOW);
-        oro.setFont(new Font("Arial", Font.BOLD, 14));
         mappaClasse.add(oro);
         mappaClasse.setComponentZOrder(oro, 0);
         

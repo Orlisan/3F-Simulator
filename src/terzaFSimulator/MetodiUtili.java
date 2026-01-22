@@ -3,6 +3,9 @@ package terzaFSimulator;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
+import javax.sound.sampled.LineEvent;
+import javax.sound.sampled.LineListener;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
@@ -10,12 +13,39 @@ import javax.swing.*;
 import terzaFSimulator.Prof1.UmoriProf;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 
 public class MetodiUtili {
 	
+	public static Clip clipCorrente = null;
+	 public static Font wingdingsFont;
+	  public static Font determinationFont; // 👈 Aggiungi questo
+	    
+	    static {
+	        try {
+	            // 1. CARICA WINGDINGS
+	            wingdingsFont = Font.createFont(Font.TRUETYPE_FONT, 
+	                new File("wingdings.ttf")).deriveFont(15f);
+	            
+	            // 2. CARICA DETERMINATION
+	            determinationFont = Font.createFont(Font.TRUETYPE_FONT, 
+	                new File("determination.otf")).deriveFont(15f); // 👈 Dimensioni diverse se vuoi
+	            
+	            // Registra entrambi
+	            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+	            ge.registerFont(wingdingsFont);
+	            ge.registerFont(determinationFont);
+	            
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	            // Fallback
+	            wingdingsFont = new Font("Serif", Font.PLAIN, 24);
+	            determinationFont = new Font("SansSerif", Font.BOLD, 20);
+	        }
+	    }
 	
 	public static String forseAperta(String chiusa, String aperta, boolean porta) {
 		String forseAperta = null;
@@ -217,19 +247,48 @@ public class MetodiUtili {
 	}
 	
 	public static void audio(String audioPath) {
-		new Thread(() -> {
-			try {
-				File audio = new File(audioPath);
-				AudioInputStream audioStream;
-				audioStream = AudioSystem.getAudioInputStream(audio);
-				Clip clip = AudioSystem.getClip();
+	    // Crea un nuovo thread
+	    new Thread(() -> {
+	        try {
+	            // SEMPLICE: ferma tutto subito
+	            if (clipCorrente != null) {
+	                clipCorrente.stop();
+	                clipCorrente.close();
+	                clipCorrente = null;
+	            }
+	            
+	            // Breve pausa
+	            Thread.sleep(10);
+	            
+	            // Carica e avvia la nuova
+	            File audio = new File(audioPath);
+	            AudioInputStream audioStream = AudioSystem.getAudioInputStream(audio);
+	            Clip clip = AudioSystem.getClip();
+	            
+	            clipCorrente = clip;
 	            clip.open(audioStream);
-	            clip.start();
-			} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}).start();
+	            clip.loop(Clip.LOOP_CONTINUOUSLY); // Loop infinito e basta
+	            
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	    }).start();
+	}
+	
+	public static ImageIcon trasparenza(String path, float trasparenza) {
+	    ImageIcon iconaOriginale = new ImageIcon(path);
+	    BufferedImage imgTrasparente = new BufferedImage(
+	        iconaOriginale.getIconWidth(),
+	        iconaOriginale.getIconHeight(),
+	        BufferedImage.TYPE_INT_ARGB
+	    );
+	    
+	    Graphics2D g2d = imgTrasparente.createGraphics();
+	    g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, trasparenza));
+	    g2d.drawImage(iconaOriginale.getImage(), 0, 0, null);
+	    g2d.dispose();
+	    
+	    return new ImageIcon(imgTrasparente);
 	}
 	
 }
