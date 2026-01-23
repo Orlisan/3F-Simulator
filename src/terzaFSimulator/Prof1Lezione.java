@@ -785,6 +785,7 @@ public class Prof1Lezione {
 				}
 			}
 			}).start();
+			
 			try {Thread.sleep(s(5));}catch(InterruptedException e) {e.printStackTrace();}
 			scrittaLav.setFont(wingdingsFont);
 			stampa("\"Entry number 17<br> Dark Darker Yet Darker <br>The Darkness Keeps Growing<br> The Shadows Cutting Deeper<br> Photon Readings Negative<br>", scrittaLav);
