@@ -27,8 +27,8 @@ public class MetodiUtili {
 	    static {
 	        try {
 	            // 1. CARICA WINGDINGS
-	            wingdingsFont = Font.createFont(Font.TRUETYPE_FONT, 
-	                new File("wingdings.ttf")).deriveFont(15f);
+	             wingdingsFont = Font.createFont(Font.TRUETYPE_FONT, 
+	             new File("wingding.ttf")).deriveFont(15f);
 	            
 	            // 2. CARICA DETERMINATION
 	            determinationFont = Font.createFont(Font.TRUETYPE_FONT, 
@@ -38,6 +38,7 @@ public class MetodiUtili {
 	            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 	            ge.registerFont(wingdingsFont);
 	            ge.registerFont(determinationFont);
+	            
 	            
 	        } catch (Exception e) {
 	            e.printStackTrace();

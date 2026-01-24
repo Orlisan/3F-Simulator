@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.util.Random;
 
 import static terzaFSimulator.MetodiUtili.*;
+import static java.lang.System.out;
 
 public class Main {
     
@@ -105,8 +106,17 @@ public class Main {
         mappaClasse.setOpaque(false);
         
     	try {
-    	new File(userHome + "\\AppData\\Local\\3FSimulator").mkdir();
+    	String os = System.getProperty("os.name").toLowerCase();
+    	out.print(os);
+    	if(os.contains("win")) {new File(userHome + "\\AppData\\Local\\3FSimulator").mkdir(); //Windows
     	salvataggio = new File(userHome + "\\AppData\\Local\\3FSimulator\\salvataggio.txt");
+    	}else if(os.contains("lin") || os.contains("ubu") || os.contains("mint") || os.contains("zor") || os.contains("deb") || os.contains("chrome")) { //linux, ubuntu e company, mint, zorin os, debian e chromebook
+    		new File(userHome + "/.config/3FSimulator").mkdir();
+    		salvataggio = new File(userHome + "/.config/3FSimulator/salvataggio.txt");
+    	}else if(os.contains("mac")) { //MacOS
+    		new File(userHome + "/Library/Application Support/3FSimulator").mkdir();
+    		salvataggio = new File(userHome + "/Library/Application Support/3FSimulator/salvataggio.txt");
+    	}
     	presoOro = seOroPreso();
     	
     	if(salvataggio.length() == 0) {
@@ -645,12 +655,6 @@ public class Main {
     
     
     static void salvataggio() {
-    	String userHome = System.getProperty("user.home");
-
-    	new File(userHome + "\\AppData\\Local\\3FSimulator").mkdir();
-    	salvataggio = new File(userHome + "\\AppData\\Local\\3FSimulator\\salvataggio.txt");
-    	salvataggio.mkdir();
- 
     	try {
 		FileWriter writer = new FileWriter(salvataggio);
 		

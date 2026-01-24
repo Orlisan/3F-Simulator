@@ -38,6 +38,7 @@ public class Prof1Lezione {
 	static JLabel maclaurin;
 	static JLabel cirGon;
 	public static JLabel labelIntervento;
+	static JLabel lavagna;
 	
 	static String intervento = null;
 	static String parCorrente = null;
@@ -70,7 +71,7 @@ public class Prof1Lezione {
 	    profAllaLavagna.setOpaque(false);
 	    panLezione.add(profAllaLavagna);
 	    
-	    JLabel lavagna = new JLabel(new ImageIcon("Texture\\lavagna.png"));
+	    lavagna = new JLabel(new ImageIcon("Texture\\lavagna.png"));
 	    lavagna.setBounds(250, 50, 439, 345);
 	    lavagna.setOpaque(false);
 	    panLezione.add(lavagna);
@@ -330,23 +331,43 @@ public class Prof1Lezione {
 		
 		
 		static void stampa(String messaggio, JLabel labelDaMod) {
-			
-			StringBuilder messaggioFinOra = new StringBuilder("<html>");
-			char[] messaggioDaDire = messaggio.toCharArray();
-			
-			for(char ilMessaggio: messaggioDaDire) {
-	            	
-					messaggioFinOra.append(ilMessaggio);
-	            	labelDaMod.setForeground(qualeUmore(Prof1.umore)); 
-					labelDaMod.setText(messaggioFinOra.toString() + "</html>");
-	            	 try {
-						Thread.sleep(50);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-	             }
+		    StringBuilder messaggioFinOra = new StringBuilder("<html>");
+		    char[] messaggioDaDire = messaggio.toCharArray();
+		    
+		    // Controlla se il font attuale è Wingdings
+		    // Nota: confrontiamo il "Family" o il "Font Name" per sicurezza
+		    String fontName = labelDaMod.getFont().getFamily();
+		    boolean isWingdings = fontName.equalsIgnoreCase("Wingdings");
+
+		    boolean inTag = false;
+
+		    for (char c : messaggioDaDire) {
+		        if (c == '<') inTag = true;
+		        
+		        if (inTag) {
+		            messaggioFinOra.append(c);
+		            if (c == '>') inTag = false;
+		        } else {
+		            // Applica l'offset SOLO se il font è Wingdings e non è uno spazio
+		            if (isWingdings && c > 32) {
+		                messaggioFinOra.append((char) (c + 0xF000));
+		            } else {
+		                messaggioFinOra.append(c);
+		            }
+		        }
+
+		        labelDaMod.setForeground(qualeUmore(Prof1.umore)); 
+		        labelDaMod.setText(messaggioFinOra.toString() + "</html>");
+
+		        try {
+		            Thread.sleep(50);
+		        } catch (InterruptedException e) {
+		            e.printStackTrace();
+		        }
+		    }
 		}
+
+
 		
 		static void muoviTitolo(JLabel titolo, boolean suOGiù) {
 			new Thread(() -> {
@@ -769,7 +790,7 @@ public class Prof1Lezione {
 		static void gaster() {
 			audio("Sounds\\her.wav");
 			JLabel gaster = new JLabel("Texture\\misterious_man.png");
-			gaster.setBounds(220, 80, 100, 130);
+			gaster.setBounds(220, 60, 130, 160);
 			gaster.setIcon(trasparenza("Texture\\misterious_man.png", 0f));
 			panLezione.add(gaster);
 			panLezione.setComponentZOrder(gaster, 0);
@@ -794,9 +815,30 @@ public class Prof1Lezione {
 			try {Thread.sleep(s(2));}catch(InterruptedException e) {e.printStackTrace();}
 			stampa("This was the beginning of your reality,<br> of your agony, <br>of your Determination. . .<br> But now. . . I must do another experiment,<br> and I need my determination for it,<br>", scrittaLav); 
 			try {Thread.sleep(s(2));}catch(InterruptedException e) {e.printStackTrace();}
+			gaster.setBounds(200, 40, 150, 180);
+			gaster.setIcon(new ImageIcon("Texture\\misterious_man_surprised.png"));
 			stampa("your time is up. . . <br>GOODBYE <br>        EXPERIMENT NUMBER 17", scrittaLav);
-			
-			
+			try {Thread.sleep(s(4));}catch(InterruptedException e) {e.printStackTrace();}
+			Random casuale = new Random();
+			Timer timer = new Timer(50, e -> {
+			  
+			    lavagna.setLocation(casuale.nextInt(880), casuale.nextInt(671));
+			    coseDette.setLocation(casuale.nextInt(880), casuale.nextInt(671));
+			    scrittaLav.setLocation(casuale.nextInt(880), casuale.nextInt(671));
+			    titoloLav.setLocation(casuale.nextInt(880), casuale.nextInt(671));
+			    maclaurin.setLocation(casuale.nextInt(880), casuale.nextInt(671));
+			    cirGon.setLocation(casuale.nextInt(880), casuale.nextInt(671));
+			    manoAlzata.setLocation(casuale.nextInt(880), casuale.nextInt(671));
+			    helpFrasi.setLocation(casuale.nextInt(880), casuale.nextInt(671));
+			    labelIntervento.setLocation(casuale.nextInt(880), casuale.nextInt(671));
+			    
+			});
+			timer.setRepeats(true);
+			timer.start();
+			try {Thread.sleep(s(4));}catch(InterruptedException e) {e.printStackTrace();}
+			audio("Sounds\\adios.wav");
+			try {Thread.sleep(s(2));}catch(InterruptedException e) {e.printStackTrace();}
+			System.exit(1);
 		}
 		
 				
