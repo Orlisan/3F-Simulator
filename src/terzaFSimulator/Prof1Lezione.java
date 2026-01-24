@@ -522,7 +522,7 @@ public class Prof1Lezione {
 					cambiaUmore(15);
 					stampa("Vedo che hai<br>studiato bene <br>la lezione, <br>avrai sicuramente<br> studiato 1500 ore,<br> se no non ce <br>l'avresti fatta", coseDette);
 				}else if(frisk.contains("666")) {
-					gaster();
+						gaster();
 				}
 				debugEnter = false;
 				checkUmore();
@@ -820,7 +820,7 @@ public class Prof1Lezione {
 			stampa("your time is up. . . <br>GOODBYE <br>        EXPERIMENT NUMBER 17", scrittaLav);
 			try {Thread.sleep(s(4));}catch(InterruptedException e) {e.printStackTrace();}
 			Random casuale = new Random();
-			Timer timer = new Timer(50, e -> {
+			Timer timer = new Timer(30, e -> {
 			  
 			    lavagna.setLocation(casuale.nextInt(880), casuale.nextInt(671));
 			    coseDette.setLocation(casuale.nextInt(880), casuale.nextInt(671));
@@ -836,8 +836,10 @@ public class Prof1Lezione {
 			timer.setRepeats(true);
 			timer.start();
 			try {Thread.sleep(s(4));}catch(InterruptedException e) {e.printStackTrace();}
+			System.err.println("Exception in thread \"main\" java.lang.GasterException: temporal lines corrupted");
+			System.err.println("\tat java.lang.gaster.$_.€£○.♦◙");
 			audio("Sounds\\adios.wav");
-			try {Thread.sleep(s(2));}catch(InterruptedException e) {e.printStackTrace();}
+			try { Thread.sleep(s(2)); } catch(Exception e) {}
 			System.exit(1);
 		}
 		
