@@ -820,8 +820,20 @@ public class Prof1Lezione {
 			stampa("your time is up. . . <br>GOODBYE <br>        EXPERIMENT NUMBER 17", scrittaLav);
 			try {Thread.sleep(s(4));}catch(InterruptedException e) {e.printStackTrace();}
 			Random casuale = new Random();
+			String[] robeGasterose = {
+					"\u231B\u2609\u263C\u263E\u2641\u2644\u260C\u2643\u2299",
+					"\u2620\u2720\u2719\u2726\u271B\u271C\u2622\u2623\u267E",
+					"\u25A3\u25A9\u25C8\u25D0\u25D1\u25EB\u25EC\u25F0\u25F1",
+					"\u2611\u2612\u2610\u27A1\u2B05\u2B06\u2B07\u21AF\u2316",
+					"\u2744\u2745\u2746\u273D\u273B\u2749\u274B\u2724\u2722",
+					"\u25CF\u25D2\u25D3\u25D4\u25D5\u263D\u263E\u2298\u2609",
+					"\u2317\u2318\u231A\u231B\u2324\u2325\u2326\u2327\u2328",
+					"\u261C\u261E\u261D\u261F\u272A\u272B\u272C\u272D\u272E",
+					"\u221E\u2234\u2235\u2295\u2297\u224B\u224C\u2230\u2231",
+					"\u2620\u231B\u2720\u2609\u263E\u2644\u221E\u2744\u2622"
+			};
 			Timer timer = new Timer(30, e -> {
-			  
+			   finestra.setTitle(robeGasterose[casuale.nextInt(10)]);
 			    lavagna.setLocation(casuale.nextInt(880), casuale.nextInt(671));
 			    coseDette.setLocation(casuale.nextInt(880), casuale.nextInt(671));
 			    scrittaLav.setLocation(casuale.nextInt(880), casuale.nextInt(671));
@@ -838,6 +850,7 @@ public class Prof1Lezione {
 			try {Thread.sleep(s(4));}catch(InterruptedException e) {e.printStackTrace();}
 			System.err.println("Exception in thread \"main\" java.lang.GasterException: temporal lines corrupted");
 			System.err.println("\tat java.lang.gaster.$_.€£○.♦◙");
+			
 			audio("Sounds\\adios.wav");
 			try { Thread.sleep(s(2)); } catch(Exception e) {}
 			System.exit(1);
