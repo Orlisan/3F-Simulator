@@ -49,7 +49,7 @@ public class Prof1 extends Professore{
 			            
 			            SwingUtilities.invokeLater(() -> {
 			                ImageIcon imageScalata = new ImageIcon(
-			                    new ImageIcon("Texture\\prof_seduto.png")
+			                    new ImageIcon("Texture/prof_seduto.png")
 			                        .getImage()
 			                        .getScaledInstance(ci, ci, Image.SCALE_SMOOTH)
 			                );
@@ -71,7 +71,7 @@ public class Prof1 extends Professore{
 		
 			Timer timerFinale = new Timer(5000, e -> {
 				new Thread (() -> {
-					JLabel inizioLez = new JLabel(new ImageIcon("Texture\\inizio.png"));
+					JLabel inizioLez = new JLabel(new ImageIcon("Texture/inizio.png"));
 					inizioLez.setBounds(0,0,880, 671);
 					SwingUtilities.invokeLater(() -> {
 						Main.mappaClasse.add(inizioLez);
@@ -168,7 +168,7 @@ public class Prof1 extends Professore{
 					e1.printStackTrace();
 				}
 				 SwingUtilities.invokeLater(() -> {
-                 	this.vaAllaCattedra("Texture\\prof.png", "Texture\\prof_camminante.png", "Texture\\prof_seduto.png");
+                 	this.vaAllaCattedra("Texture/prof.png", "Texture/prof_camminante.png", "Texture/prof_seduto.png");
                  });    
 			});
 			

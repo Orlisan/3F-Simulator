@@ -19,6 +19,14 @@ import static terzaFSimulator.MetodiUtili.*;
 import static java.lang.System.out;
 
 public class Main {
+	static MouseMotionListener listener = (new MouseAdapter() {
+	    @Override
+	    public void mouseMoved(MouseEvent e) {
+	        int xRelativo = e.getX();  // X relativo al componente
+	        int yRelativo = e.getY();  // Y relativo al componente
+	        System.out.println("Pos Pannello: " + xRelativo + ", " + yRelativo);
+	    }
+	});
     
     static ArrayList<Persona> personaggi = new ArrayList<>();
     static ArrayList<String> righeCript = new ArrayList<>();
@@ -32,7 +40,7 @@ public class Main {
     static  String userHome = System.getProperty("user.home");
    
     static ImageIcon iconaProf;
-    static ImageIcon inizio = new ImageIcon("Texture\\inizio.png");
+    static ImageIcon inizio = new ImageIcon("Texture/inizio.png");
     
     static String riga1;
     static String riga2;
@@ -108,8 +116,8 @@ public class Main {
     	try {
     	String os = System.getProperty("os.name").toLowerCase();
     	out.print(os);
-    	if(os.contains("win")) {new File(userHome + "\\AppData\\Local\\3FSimulator").mkdir(); //Windows
-    	salvataggio = new File(userHome + "\\AppData\\Local\\3FSimulator\\salvataggio.txt");
+    	if(os.contains("win")) {new File(userHome + "/AppData/Local/3FSimulator").mkdir(); //Windows
+    	salvataggio = new File(userHome + "/AppData/Local/3FSimulator/salvataggio.txt");
     	}else if(os.contains("lin") || os.contains("ubu") || os.contains("mint") || os.contains("zor") || os.contains("deb") || os.contains("chrome")) { //linux, ubuntu e company, mint, zorin os, debian e chromebook
     		new File(userHome + "/.config/3FSimulator").mkdir();
     		salvataggio = new File(userHome + "/.config/3FSimulator/salvataggio.txt");
@@ -253,25 +261,25 @@ public class Main {
         }
         
         // ti mette le variabili delle immagini dello sfondo
-        audio("Sounds\\agonia_didattica.wav");
-        iconaSfondoSinistro = new ImageIcon("Texture\\mappaclasse_sinistra.png");
+        audio("Sounds/agonia_didattica.wav");
+        iconaSfondoSinistro = new ImageIcon("Texture/mappaclasse_sinistra.png");
         sfondoSinistro = new JLabel(iconaSfondoSinistro);
         
         sfondoSinistro.setBounds(0, 0, 672, 671);
         mappaClasse.add(sfondoSinistro);
         
-        iconaSfondoDestro = new ImageIcon("Texture\\mappaclasse_destra.png");
+        iconaSfondoDestro = new ImageIcon("Texture/mappaclasse_destra.png");
         sfondoDestro = new JLabel(iconaSfondoDestro);
         sfondoDestro.setBounds(672, 0, 208, 671);
         mappaClasse.add(sfondoDestro);
         
        
-        ImageIcon iconaOrlando = new ImageIcon("Texture\\personaggio.png");
+        ImageIcon iconaOrlando = new ImageIcon("Texture/personaggio.png");
         JLabel orlandoLabel = new JLabel(iconaOrlando);
         orlandoLabel.setBounds(100, 100, 50, 50);
         orlandoLabel.setOpaque(false);
         
-        iconaProf = new ImageIcon("Texture\\prof.png");
+        iconaProf = new ImageIcon("Texture/prof.png");
         JLabel profLabel = new JLabel(iconaProf);
         profLabel.setBounds(100, 100, 50, 50);
         profLabel.setOpaque(false);
@@ -396,23 +404,28 @@ public class Main {
                 if (personaggioSelezionato == null) return;
                 
                 switch(e.getKeyCode()) {
-                    case KeyEvent.VK_UP: movUp = true; if(nonToccaSu) { muoviPersonaggio(0, -vel); facciata = Direzione.SU; personaggioSelezionato.icona.setIcon(new ImageIcon("Texture\\personaggio_su.png")); if (movementTimer != null) {
+                    case KeyEvent.VK_UP: movUp = true; if(nonToccaSu) { muoviPersonaggio(0, -vel); facciata = Direzione.SU; personaggioSelezionato.icona.setIcon(new ImageIcon("Texture/personaggio_su.png")); if (movementTimer != null) {
                         movementTimer.stop();
                     }
                     avviaMovementTimer(); 
                	}break;
-                   
-                    case KeyEvent.VK_DOWN: movDown = true;if(nonToccaGiù) {muoviPersonaggio(0, vel); facciata = Direzione.GIU;personaggioSelezionato.icona.setIcon(new ImageIcon("Texture\\personaggio.png"));  if (movementTimer != null) {
+                    case KeyEvent.VK_M:
+                    	mappaClasse.addMouseMotionListener(listener);
+                    	break;
+                    case KeyEvent.VK_D: 
+                    	Enemy bidello = new Enemy("Bidello", 0, 0, 0, null,false, null, false, null, new ImageIcon("Texture/bidello.png"), 740, 60, null, null, null, 0, null, (byte) 2 );
+                    	break;
+                    case KeyEvent.VK_DOWN: movDown = true;if(nonToccaGiù) {muoviPersonaggio(0, vel); facciata = Direzione.GIU;personaggioSelezionato.icona.setIcon(new ImageIcon("Texture/personaggio.png"));  if (movementTimer != null) {
                         movementTimer.stop();
                     }
                     avviaMovementTimer(); }break;
                    
-                    case KeyEvent.VK_LEFT: movLeft = true; if(nonToccaASinistra) { muoviPersonaggio(-vel, 0); facciata = Direzione.SINISTRA; personaggioSelezionato.icona.setIcon(new ImageIcon("Texture\\personaggio_sinistra.png"));  if (movementTimer != null) {
+                    case KeyEvent.VK_LEFT: movLeft = true; if(nonToccaASinistra) { muoviPersonaggio(-vel, 0); facciata = Direzione.SINISTRA; personaggioSelezionato.icona.setIcon(new ImageIcon("Texture/personaggio_sinistra.png"));  if (movementTimer != null) {
                         movementTimer.stop();
                     }
                     avviaMovementTimer(); }break;
                     
-                    case KeyEvent.VK_RIGHT: movRight = true; if(nonToccaADestra) { muoviPersonaggio(vel, 0); facciata = Direzione.DESTRA; personaggioSelezionato.icona.setIcon(new ImageIcon("Texture\\personaggio_destra.png")); if (movementTimer != null) {
+                    case KeyEvent.VK_RIGHT: movRight = true; if(nonToccaADestra) { muoviPersonaggio(vel, 0); facciata = Direzione.DESTRA; personaggioSelezionato.icona.setIcon(new ImageIcon("Texture/personaggio_destra.png")); if (movementTimer != null) {
                         movementTimer.stop();
                     }
                     avviaMovementTimer(); }break;
@@ -426,32 +439,32 @@ public class Main {
                     case KeyEvent.VK_SHIFT:  
                         if(personaggioSelezionato.posizioneX > 574 && personaggioSelezionato.posizioneX < 632 && personaggioSelezionato.posizioneY > -7 && personaggioSelezionato.posizioneY < 101 && !èAperta) {
                             
-                            String porta1 = MetodiUtili.forseAperta("Texture\\mappaclasse_porta1_semiaperta.png", "Texture\\mappaclasse_porta1_semiaperta_porta2.png", èAperta2);
-                            String porta2 = MetodiUtili.forseAperta("Texture\\mappaclasse_porta1_aperta.png", "Texture\\mappaclasse_porta1_aperta_porta2.png", èAperta2);
+                            String porta1 = MetodiUtili.forseAperta("Texture/mappaclasse_porta1_semiaperta.png", "Texture/mappaclasse_porta1_semiaperta_porta2.png", èAperta2);
+                            String porta2 = MetodiUtili.forseAperta("Texture/mappaclasse_porta1_aperta.png", "Texture/mappaclasse_porta1_aperta_porta2.png", èAperta2);
                             apriPorta(porta1, porta2);
                             èAperta = true;
                             
                         } else if (personaggioSelezionato.posizioneX > 574 && personaggioSelezionato.posizioneX < 632 && personaggioSelezionato.posizioneY > -10 && personaggioSelezionato.posizioneY < 101 && èAperta) {
                             
-                            String porta1 = MetodiUtili.forseAperta("Texture\\mappaclasse_porta1_semiaperta.png", "Texture\\mappaclasse_porta1_semiaperta_porta2.png", èAperta2);
-                            String porta2 = MetodiUtili.forseAperta("Texture\\mappaclasse_destra.png", "Texture\\mappaclasse_porta2_aperta_destra.png", èAperta2);
+                            String porta1 = MetodiUtili.forseAperta("Texture/mappaclasse_porta1_semiaperta.png", "Texture/mappaclasse_porta1_semiaperta_porta2.png", èAperta2);
+                            String porta2 = MetodiUtili.forseAperta("Texture/mappaclasse_destra.png", "Texture/mappaclasse_porta2_aperta_destra.png", èAperta2);
                             apriPorta(porta1, porta2);
                             èAperta = false;
                             
                         } else if (personaggioSelezionato.posizioneX > 574 && personaggioSelezionato.posizioneX < 632 && personaggioSelezionato.posizioneY > 457 && personaggioSelezionato.posizioneY < 550 && !èAperta2) {
                             
                             // ✅ CORREZIONE CRITICA: Texture per porta2 quando si APRE
-                            String porta1 = MetodiUtili.forseAperta("Texture\\mappaclasse_porta2_semiaperta_destra.png", "Texture\\mappaclasse_porta1_aperta_porta2.png", èAperta);   
-                            String porta2 = MetodiUtili.forseAperta("Texture\\mappaclasse_porta2_aperta_destra.png", "Texture\\mappaclasse_porta1_aperta_porta2.png", èAperta);
-                            apriPorta2("Texture\\mappaclasse_porta2_semiaperta_sinistra.png", porta1, "Texture\\mappaclasse_porta2_aperta_sinistra.png", porta2);
+                            String porta1 = MetodiUtili.forseAperta("Texture/mappaclasse_porta2_semiaperta_destra.png", "Texture/mappaclasse_porta1_aperta_porta2.png", èAperta);   
+                            String porta2 = MetodiUtili.forseAperta("Texture/mappaclasse_porta2_aperta_destra.png", "Texture/mappaclasse_porta1_aperta_porta2.png", èAperta);
+                            apriPorta2("Texture/mappaclasse_porta2_semiaperta_sinistra.png", porta1, "Texture/mappaclasse_porta2_aperta_sinistra.png", porta2);
                             èAperta2 = true;
                             
                         } else if (personaggioSelezionato.posizioneX > 574 && personaggioSelezionato.posizioneX < 632 && personaggioSelezionato.posizioneY > 457 && personaggioSelezionato.posizioneY < 550 && èAperta2) {
                             
                             // ✅ CORREZIONE CRITICA: Texture per porta2 quando si CHIUDE  
-                            String porta1 = MetodiUtili.forseAperta("Texture\\mappaclasse_porta2_semiaperta_destra.png", "Texture\\mappaclasse_porta1_aperta_porta2.png", èAperta);
-                            String porta2 = MetodiUtili.forseAperta("Texture\\mappaclasse_destra.png", "Texture\\mappaclasse_porta1_aperta.png", èAperta);
-                            apriPorta2("Texture\\mappaclasse_porta2_semiaperta_sinistra.png", porta1, "Texture\\mappaclasse_sinistra.png", porta2);
+                            String porta1 = MetodiUtili.forseAperta("Texture/mappaclasse_porta2_semiaperta_destra.png", "Texture/mappaclasse_porta1_aperta_porta2.png", èAperta);
+                            String porta2 = MetodiUtili.forseAperta("Texture/mappaclasse_destra.png", "Texture/mappaclasse_porta1_aperta.png", èAperta);
+                            apriPorta2("Texture/mappaclasse_porta2_semiaperta_sinistra.png", porta1, "Texture/mappaclasse_sinistra.png", porta2);
                             èAperta2 = false;
                             
                         } else if(personaggioSelezionato.posizioneX > -46 && personaggioSelezionato.posizioneX < 32 && personaggioSelezionato.posizioneY > 209 && personaggioSelezionato.posizioneY < 272) {
@@ -475,6 +488,7 @@ public class Main {
             	 case KeyEvent.VK_LEFT: movLeft = false; break;
             	 case KeyEvent.VK_RIGHT: movRight = false; break;
             	 case KeyEvent.VK_Z: vel = 1; break;
+            	 case KeyEvent.VK_M: mappaClasse.removeMouseMotionListener(listener);
             	 }
             	 if (!movUp && !movDown && !movLeft && !movRight) {
             	        if (movementTimer != null) {
@@ -518,7 +532,7 @@ public class Main {
         	        		testoScrivente.setLength(0);
                             Prof1Lezione.labelIntervento.setText(testoScrivente.toString());
                             Prof1Lezione.analizzaRisposta();
-                            Prof1Lezione.manoAlzata.setIcon(new ImageIcon("Texture\\alza_mano_grigia.png"));
+                            Prof1Lezione.manoAlzata.setIcon(new ImageIcon("Texture/alza_mano_grigia.png"));
                             debugEnter = true;
         	        	}
         	      
@@ -569,8 +583,7 @@ public class Main {
             );
         
     
-        }System.out.println(personaggioSelezionato.posizioneX);
-         System.out.println(personaggioSelezionato.posizioneY);
+        }
          aggiornaOro();
          mappaClasse.requestFocusInWindow();
         
@@ -695,7 +708,7 @@ public class Main {
       static void viaProf() {
     	  if(!cèProf) {
     		  cèProf =true;
-    		  prof.entraInAula("Texture\\prof.png", "Texture\\prof_camminante.png");
+    		  prof.entraInAula("Texture/prof.png", "Texture/prof_camminante.png");
               mappaClasse.add(prof.icona);
               mappaClasse.setComponentZOrder(prof.icona, 0);
               mappaClasse.revalidate();
@@ -761,28 +774,28 @@ public class Main {
     	            // Animazione (priorità diagonale)
     	            if (movUp && movRight && nonToccaSu && nonToccaADestra) {
     	                facciata = Direzione.SU; // o crea texture diagonale
-    	                personaggioSelezionato.icona.setIcon(new ImageIcon("Texture\\personaggio_su.png"));
+    	                personaggioSelezionato.icona.setIcon(new ImageIcon("Texture/personaggio_su.png"));
     	            } else if (movUp && movLeft && nonToccaSu && nonToccaASinistra) {
     	                facciata = Direzione.SU;
-    	                personaggioSelezionato.icona.setIcon(new ImageIcon("Texture\\personaggio_su.png"));
+    	                personaggioSelezionato.icona.setIcon(new ImageIcon("Texture/personaggio_su.png"));
     	            } else if (movDown && movRight && nonToccaGiù && nonToccaADestra) {
     	                facciata = Direzione.GIU;
-    	                personaggioSelezionato.icona.setIcon(new ImageIcon("Texture\\personaggio.png"));
+    	                personaggioSelezionato.icona.setIcon(new ImageIcon("Texture/personaggio.png"));
     	            } else if (movDown && movLeft && nonToccaGiù && nonToccaASinistra) {
     	                facciata = Direzione.GIU;
-    	                personaggioSelezionato.icona.setIcon(new ImageIcon("Texture\\personaggio.png"));
+    	                personaggioSelezionato.icona.setIcon(new ImageIcon("Texture/personaggio.png"));
     	            } else if (movUp && nonToccaSu) {
     	                facciata = Direzione.SU;
-    	                personaggioSelezionato.icona.setIcon(new ImageIcon("Texture\\personaggio_su.png"));
+    	                personaggioSelezionato.icona.setIcon(new ImageIcon("Texture/personaggio_su.png"));
     	            } else if (movDown && nonToccaGiù) {
     	                facciata = Direzione.GIU;
-    	                personaggioSelezionato.icona.setIcon(new ImageIcon("Texture\\personaggio.png"));
+    	                personaggioSelezionato.icona.setIcon(new ImageIcon("Texture/personaggio. png"));
     	            } else if (movLeft && nonToccaASinistra) {
     	                facciata = Direzione.SINISTRA;
-    	                personaggioSelezionato.icona.setIcon(new ImageIcon("Texture\\personaggio_sinistra.png"));
+    	                personaggioSelezionato.icona.setIcon(new ImageIcon("Texture/personaggio_sinistra.png"));
     	            } else if (movRight && nonToccaADestra) {
     	                facciata = Direzione.DESTRA;
-    	                personaggioSelezionato.icona.setIcon(new ImageIcon("Texture\\personaggio_destra.png"));
+    	                personaggioSelezionato.icona.setIcon(new ImageIcon("Texture/personaggio_destra.png"));
     	            }
     	        } else {
     	            movementTimer.stop();

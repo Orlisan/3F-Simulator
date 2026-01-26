@@ -292,4 +292,37 @@ public class MetodiUtili {
 	    return new ImageIcon(imgTrasparente);
 	}
 	
+	static boolean seTocca(int posizioneX, int posizioneY) {
+		if(posizioneX < 530 && posizioneX > 444 && posizioneY < 533 && posizioneY> 56  ||
+    			posizioneX < 530 && posizioneX > 124 && posizioneY < 533 && posizioneY> 440 ||
+    			posizioneX < 210 && posizioneX > 124 && posizioneY < 533 && posizioneY> 56 ||
+    			posizioneX < 433 && posizioneX > 221 && posizioneY < 245 && posizioneY> 151 ||
+    			posizioneX < 434 && posizioneX > 220 && posizioneY < 388 && posizioneY> 296 ||
+    			posizioneX < 674 && posizioneX > 590 && posizioneY < 212 && posizioneY > 74 ||
+    			posizioneX < 802 && posizioneX > 590 && posizioneY < 212 && posizioneY > 104 ||
+    			posizioneX < 674 && posizioneX > 590 && posizioneY < 18 && posizioneY > -87 ||
+    			posizioneX < 800 && posizioneX > -73 && posizioneY < -13 && posizioneY > -87 ||
+    			posizioneX < 416 && posizioneX > 236 && posizioneY < 99 && posizioneY > 9 ||
+    			
+    			posizioneX > 782 || posizioneX < -73 || posizioneY < -87 || posizioneY > 543 ||
+    			
+    			(posizioneX < 626 && posizioneX > 590 && posizioneY < 101 && posizioneY> -7 && !Main.èAperta && !Main.portaRotta) ||
+    			(posizioneX < 626 && posizioneX > 590 && posizioneY < 550 && posizioneY> 457 && !Main.èAperta2)) {
+			return true;
+		}else {
+		    return false;
+		}
+	}
+	
+	public static JPanel getCurrentPanel() {
+	    if (Main.mappaClasse != null && Main.mappaClasse.isVisible()) {
+	        return Main.mappaClasse;
+	    }
+	    if (Prof1Lezione.panLezione != null && Prof1Lezione.panLezione.isVisible()) {
+	        return Prof1Lezione.panLezione;
+	    }
+	    
+	    return null;
+	}
+
 }
