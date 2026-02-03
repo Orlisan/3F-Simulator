@@ -29,7 +29,6 @@ public class FinestraNote {
 		
 		nota1.setBounds(0, 0, 480, 100); // ← QUESTI BOUNDS
 		nota1.setForeground(Color.BLACK);
-		nota1.setFont(new Font("Arial", Font.PLAIN, 14));
 		panelNote.add(nota1);
 		
 		finNote.add(panelNote);

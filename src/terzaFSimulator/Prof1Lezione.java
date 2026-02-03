@@ -7,9 +7,10 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 
-import terzaFSimulator.Prof1.UmoriProf;
+import static terzaFSimulator.Prof1.UmoriProf;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Random;
@@ -20,9 +21,10 @@ import java.util.ArrayList;
 import static terzaFSimulator.MetodiUtili.*;
 import static terzaFSimulator.Main.*;
 
+
 public class Prof1Lezione {
 
-	public static ImageIcon scappaCheÈMeglio = new ImageIcon("Texture\\prof_lavagna_malus.png");
+	public static ImageIcon scappaCheÈMeglio = new ImageIcon("Texture/prof_lavagna_malus.png");
 	
 	public static JButton manoAlzata;
 	public static JButton helpFrasi;
@@ -36,6 +38,7 @@ public class Prof1Lezione {
 	static JLabel maclaurin;
 	static JLabel cirGon;
 	public static JLabel labelIntervento;
+	static JLabel lavagna;
 	
 	static String intervento = null;
 	static String parCorrente = null;
@@ -47,6 +50,7 @@ public class Prof1Lezione {
 	static int indiceCasuale;
 	static int puntiInPiù = 0;
 	
+	static Timer timerBrill;
 	static Method metodoCorrente;
 	
 	static ArrayList<Method> metodiSpiegati = new ArrayList<Method>();
@@ -62,19 +66,18 @@ public class Prof1Lezione {
 	    sfondoLez.setBounds(0, 0, 880, 671);
 	    panLezione.add(sfondoLez);
 	    
-	    profAllaLavagna = new JLabel(new ImageIcon("Texture\\prof_lavagna.png"));
+	    profAllaLavagna = new JLabel(new ImageIcon("Texture/prof_lavagna.png"));
 	    profAllaLavagna.setBounds(200, 100, 200, 200);
 	    profAllaLavagna.setOpaque(false);
 	    panLezione.add(profAllaLavagna);
 	    
-	    JLabel lavagna = new JLabel(new ImageIcon("Texture\\lavagna.png"));
+	    lavagna = new JLabel(new ImageIcon("Texture/lavagna.png"));
 	    lavagna.setBounds(250, 50, 439, 345);
 	    lavagna.setOpaque(false);
 	    panLezione.add(lavagna);
 	    
 	    coseDette = new JLabel("");
 	    coseDette.setBounds(75, 70, 200, 200);
-	    coseDette.setFont(new Font("Serif", Font.BOLD, 20));
 	    coseDette.setForeground(MetodiUtili.qualeUmore(Prof1.umore));
 	    panLezione.add(coseDette);
 	    
@@ -88,7 +91,7 @@ public class Prof1Lezione {
 		cirGon.setVisible(false);
 		panLezione.add(cirGon);
 		
-	    ImageIcon labelMano = new ImageIcon("Texture\\alza_mano_grigia.png");
+	    ImageIcon labelMano = new ImageIcon("Texture/alza_mano_grigia.png");
 	    manoAlzata = new JButton(labelMano);
 	    manoAlzata.setBounds(90, 450, 200, 84);
 	    manoAlzata.setOpaque(false);
@@ -96,7 +99,7 @@ public class Prof1Lezione {
 	    manoAlzata.setBorderPainted(false); 
 	    panLezione.add(manoAlzata);
 	    
-	    helpFrasi = new JButton(new ImageIcon("Texture\\help_frasi_grigia.png"));
+	    helpFrasi = new JButton(new ImageIcon("Texture/help_frasi_grigia.png"));
 	    helpFrasi.setBounds(350, 450, 90, 90);
 	    helpFrasi.setOpaque(false);
 	    helpFrasi.setContentAreaFilled(false);  // RIMUOVE sfondo del bottone
@@ -105,19 +108,16 @@ public class Prof1Lezione {
 	    
 	    labelIntervento = new JLabel("");
 	    labelIntervento.setBounds(460, 420, 400, 200);
-	    labelIntervento.setFont(new Font("Serif", Font.ITALIC, 25));
 	    labelIntervento.setForeground(Color.WHITE);
 	    labelIntervento.setOpaque(false);
 	    panLezione.add(labelIntervento);
 	    
 	    titoloLav = new JLabel("");
 		titoloLav.setBounds(415, 110, 120, 40);
-		titoloLav.setFont(new Font("Serif", Font.BOLD, 40));
 		panLezione.add(titoloLav);
 		
 		scrittaLav = new JLabel("");
 		scrittaLav.setBounds(315, 100, 320, 240);//DISPONIBILI 29 CARATTERI PER RIGA!!!!!!!YAY
-		scrittaLav.setFont(new Font("Serif", Font.PLAIN, 20));
 		panLezione.add(scrittaLav);
 	     
 		panLezione.setComponentZOrder(helpFrasi, 0);
@@ -207,7 +207,7 @@ public class Prof1Lezione {
 				scrittaLav.setForeground(MetodiUtili.qualeUmore(Prof1.umore));
 				stampa("Esso si può calcolare usando una formula chiamata<br> Serie di Maclaurin, una sommatoria infinita:<br><br><br>", scrittaLav);
 				try {Thread.sleep(400);} catch (InterruptedException e) {e.printStackTrace();}
-				maclaurin.setIcon(new ImageIcon("Texture\\formula_sin().png"));
+				maclaurin.setIcon(new ImageIcon("Texture/formula_sin().png"));
 				maclaurin.setVisible(true);
 				permettiInterazione();	
 			}else if(paragrafo.equals("par3")) {
@@ -225,7 +225,7 @@ public class Prof1Lezione {
 				scrittaLav.setForeground(MetodiUtili.qualeUmore(Prof1.umore));
 				stampa("In realtà il<br> modo più corretto <br>per calcolare <br>queste formule sarebbe<br> tramite questa<br> circonferenza <br>goniometrica: ", scrittaLav);
 				try {Thread.sleep(400);} catch (InterruptedException e) {e.printStackTrace();}
-				cirGon.setIcon(new ImageIcon("Texture\\cir_sin().png"));
+				cirGon.setIcon(new ImageIcon("Texture/cir_sin().png"));
 				cirGon.setVisible(true);
 				stampa("È la stessa roba<br> di prima solo <br>che il triangolo<br> è \"incastrato\"<br> tra 2 raggi <br>di angolo x ", scrittaLav);
 				permettiInterazione();
@@ -263,7 +263,7 @@ public class Prof1Lezione {
 			scrittaLav.setForeground(MetodiUtili.qualeUmore(Prof1.umore));
 			stampa("Esso si può calcolare usando una formula chiamata<br> Serie di Maclaurin, una sommatoria infinita:<br><br><br>", scrittaLav);
 			try {Thread.sleep(400);} catch (InterruptedException e) {e.printStackTrace();}
-			maclaurin.setIcon(new ImageIcon("Texture\\formula_cos().png"));
+			maclaurin.setIcon(new ImageIcon("Texture/formula_cos().png"));
 			maclaurin.setVisible(true);
 			permettiInterazione();
 
@@ -282,7 +282,7 @@ public class Prof1Lezione {
 			scrittaLav.setForeground(MetodiUtili.qualeUmore(Prof1.umore));
 			stampa("In realtà il modo<br> più corretto per<br> calcolare queste<br> formule sarebbe<br> tramite questa <br>circonferenza <br>goniometrica: ", scrittaLav);
 			try {Thread.sleep(400);} catch (InterruptedException e) {e.printStackTrace();}
-			cirGon.setIcon(new ImageIcon("Texture\\cir_cos().png"));
+			cirGon.setIcon(new ImageIcon("Texture/cir_cos().png"));
 			cirGon.setVisible(true);
 			stampa("È la stessa roba<br> di prima solo <br>che il triangolo<br> è \"incastrato\"<br> tra 2 raggi <br>di angolo x ", scrittaLav);
 			permettiInterazione();
@@ -331,23 +331,43 @@ public class Prof1Lezione {
 		
 		
 		static void stampa(String messaggio, JLabel labelDaMod) {
-			
-			StringBuilder messaggioFinOra = new StringBuilder("<html>");
-			char[] messaggioDaDire = messaggio.toCharArray();
-			
-			for(char ilMessaggio: messaggioDaDire) {
-	            	
-					messaggioFinOra.append(ilMessaggio);
-	            	labelDaMod.setForeground(qualeUmore(Prof1.umore)); 
-					labelDaMod.setText(messaggioFinOra.toString() + "</html>");
-	            	 try {
-						Thread.sleep(50);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-	             }
+		    StringBuilder messaggioFinOra = new StringBuilder("<html>");
+		    char[] messaggioDaDire = messaggio.toCharArray();
+		    
+		    // Controlla se il font attuale è Wingdings
+		    // Nota: confrontiamo il "Family" o il "Font Name" per sicurezza
+		    String fontName = labelDaMod.getFont().getFamily();
+		    boolean isWingdings = fontName.equalsIgnoreCase("Wingdings");
+
+		    boolean inTag = false;
+
+		    for (char c : messaggioDaDire) {
+		        if (c == '<') inTag = true;
+		        
+		        if (inTag) {
+		            messaggioFinOra.append(c);
+		            if (c == '>') inTag = false;
+		        } else {
+		            // Applica l'offset SOLO se il font è Wingdings e non è uno spazio
+		            if (isWingdings && c > 32) {
+		                messaggioFinOra.append((char) (c + 0xF000));
+		            } else {
+		                messaggioFinOra.append(c);
+		            }
+		        }
+
+		        labelDaMod.setForeground(qualeUmore(Prof1.umore)); 
+		        labelDaMod.setText(messaggioFinOra.toString() + "</html>");
+
+		        try {
+		            Thread.sleep(50);
+		        } catch (InterruptedException e) {
+		            e.printStackTrace();
+		        }
+		    }
 		}
+
+
 		
 		static void muoviTitolo(JLabel titolo, boolean suOGiù) {
 			new Thread(() -> {
@@ -363,8 +383,8 @@ public class Prof1Lezione {
 		}
 		
 		static void permettiInterazione() {
-			manoAlzata.setIcon(new ImageIcon("Texture\\alza_mano.png"));
-			helpFrasi.setIcon(new ImageIcon("Texture\\help_frasi.png"));
+			manoAlzata.setIcon(new ImageIcon("Texture/alza_mano.png"));
+			helpFrasi.setIcon(new ImageIcon("Texture/help_frasi.png"));
 			
 			manoAlzata.addActionListener(e -> {
 				panLezione.setFocusable(true);
@@ -420,15 +440,15 @@ public class Prof1Lezione {
 				}
 				
 				if(frisk.equals("non ho capito")) {
-					if(!brill) {ImageIcon brill1 = new ImageIcon("Texture\\prof_lavagna_brillante1.png");
-					ImageIcon brill2 = new ImageIcon("Texture\\prof_lavagna_brillante2.png");
+					if(!brill) {ImageIcon brill1 = new ImageIcon("Texture/prof_lavagna_brillante1.png");
+					ImageIcon brill2 = new ImageIcon("Texture/prof_lavagna_brillante2.png");
 					
-					Timer timer = new Timer(300, e -> {
+					timerBrill = new Timer(300, e -> {
 						profAllaLavagna.setIcon(unoDue ? brill1 : brill2);
 						unoDue = !unoDue;
 					});
-					timer.setRepeats(true);
-					timer.start();
+					timerBrill.setRepeats(true);
+					timerBrill.start();
 					brill = true;}
 					cambiaUmore(60);
 					
@@ -470,7 +490,7 @@ public class Prof1Lezione {
 					Main.aggiornaOro();
 					try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
 					
-				}else if(!frisk.contains("a") && !frisk.contains("à") && !frisk.contains("e") && !frisk.contains("è") && !frisk.contains("é") && !frisk.contains("i")&&!frisk.contains("ì") && !frisk.contains("o")&& !frisk.contains("ò") && !frisk.contains("u") &&!frisk.contains("ù") ) {
+				}else if(!frisk.contains("a") && !frisk.contains("à") && !frisk.contains("e") && !frisk.contains("è") && !frisk.contains("é") && !frisk.contains("i")&&!frisk.contains("ì") && !frisk.contains("o")&& !frisk.contains("ò") && !frisk.contains("u") &&!frisk.contains("ù") && !frisk.contains("666") ) {
 					cambiaUmore(-10);
 					stampa("Parla in italiano <br> idiota!", coseDette);
 					try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
@@ -501,8 +521,11 @@ public class Prof1Lezione {
 				}else if(frisk.contains("sin") && frisk.contains("cos") && frisk.contains("tan") && frisk.contains("cot") && frisk.contains("sec") && frisk.contains("csc")) {
 					cambiaUmore(15);
 					stampa("Vedo che hai<br>studiato bene <br>la lezione, <br>avrai sicuramente<br> studiato 1500 ore,<br> se no non ce <br>l'avresti fatta", coseDette);
+				}else if(frisk.contains("666")) {
+						gaster();
 				}
 				debugEnter = false;
+				checkUmore();
 				if(!giàCon) {
 					conSpieg();
 				}
@@ -546,7 +569,7 @@ public class Prof1Lezione {
 		}
 		static void sconfiguraTasti() {
 	    	panLezione.setFocusable(false);
-	    	manoAlzata.setIcon(new ImageIcon("Texture\\alza_mano_grigia.png"));
+	    	manoAlzata.setIcon(new ImageIcon("Texture/alza_mano_grigia.png"));
 	    }
 		static void conSpieg() {
 			 if (spiegazioneInCorso || coseDette.getText().contains("Continuo a spiegare")) {
@@ -638,6 +661,7 @@ public class Prof1Lezione {
 				try {Thread.sleep(s(4));}catch(InterruptedException e) {e.printStackTrace();}
 				mappaClasse.remove(prof.icona);
 				mappaClasse.remove(prof.fraseProf);
+				audio("Sounds/fine_lezione.wav");
 				panLezione.setVisible(false);
 				mappaClasse.setVisible(true);
 				configuraTasti();
@@ -688,26 +712,26 @@ public class Prof1Lezione {
 				stampa("Li avete scrittti sul diario?, adesso controllo", coseDette);
 				try {Thread.sleep(s(2));} catch (InterruptedException e1) {e1.printStackTrace();}
 				cambiaUmore(-300);
+				checkUmore();
+				if(brill) {timerBrill.stop();}
 				profAllaLavagna.setIcon(scappaCheÈMeglio);
 				stampa("NNNNOOONN HHAII SSCCRITTTO II COMMPITTI!!", coseDette);
 				if(Prof1.umore != UmoriProf.OMICIDA) {
 					stampa("AADDESSSO...", coseDette);
 					try {Thread.sleep(s(2));} catch (InterruptedException e1) {e1.printStackTrace();}
-					coseDette.setFont(new Font("Serif", Font.BOLD, 30));
 					stampa("IO. . .", coseDette);
 					try {Thread.sleep(s(3));} catch (InterruptedException e1) {e1.printStackTrace();}
-					coseDette.setFont(new Font("Serif", Font.BOLD, 50));
 					stampa("TI. . . . . .", coseDette);
-					audio("Sounds\\campanella.wav");
+					audio("Sounds/campanella.wav");
 					Thread.sleep(500);
-					coseDette.setFont(new Font("Serif", Font.BOLD, 10));
+				
 					stampa("Maledizione", coseDette);
 					try {Thread.sleep(s(1));} catch (InterruptedException e1) {e1.printStackTrace();}
 					stampa("Sei salvo, la tua esistenza è meno importante che la 3E", coseDette);
 					try {Thread.sleep(s(1));} catch (InterruptedException e1) {e1.printStackTrace();}
 					stampa("Addio.", coseDette);
 					try {Thread.sleep(s(2));} catch (InterruptedException e1) {e1.printStackTrace();}
-					audio("Sounds\\fine_lezione.wav");
+					audio("Sounds/fine_lezione.wav");
 				}
 				
 				mappaClasse.remove(prof.icona);
@@ -721,31 +745,117 @@ public class Prof1Lezione {
 				}
 		static void checkUmore() {
 			if(Prof1.umore == UmoriProf.ESTASIATO) {
-				profAllaLavagna.setIcon(new ImageIcon("Texture\\prof_lavagna_estasiato.png"));
+				if(brill) {timerBrill.stop();}
+				profAllaLavagna.setIcon(new ImageIcon("Texture/prof_lavagna_estasiato.png"));
 				stampa("Oh", coseDette);		
-				try {Thread.sleep(s(1));} catch (InterruptedException e1) {e1.printStackTrace();}
+				try {Thread.sleep(s(2));} catch (InterruptedException e1) {e1.printStackTrace();}
 				stampa("Mi sento così. . . ", coseDette);
-				try {Thread.sleep(s(0.5));} catch (InterruptedException e1) {e1.printStackTrace();}
+				try {Thread.sleep(s(2));} catch (InterruptedException e1) {e1.printStackTrace();}
 				stampa("Non ho mai<br> provato questa <br>sensazione. . . ", coseDette);
-				try {Thread.sleep(s(0.5));} catch (InterruptedException e1) {e1.printStackTrace();}
+				try {Thread.sleep(s(2));} catch (InterruptedException e1) {e1.printStackTrace();}
 				stampa("Non so come<br> chiamarla. . . ", coseDette);
-				try {Thread.sleep(s(0.5));} catch (InterruptedException e1) {e1.printStackTrace();}
+				try {Thread.sleep(s(2));} catch (InterruptedException e1) {e1.printStackTrace();}
 				stampa("Guardiamo nel<br> vocabolario. . . ", coseDette);
-				try {Thread.sleep(s(0.5));} catch (InterruptedException e1) {e1.printStackTrace();}
+				try {Thread.sleep(s(2));} catch (InterruptedException e1) {e1.printStackTrace();}
 				stampa("Uhmm. . . ", coseDette);
-				try {Thread.sleep(s(0.5));} catch (InterruptedException e1) {e1.printStackTrace();}
+				try {Thread.sleep(s(2));} catch (InterruptedException e1) {e1.printStackTrace();}
 				stampa("Ecco: <br>“Voglia di non<br> torturare gli<br> alunni” è esattamente <br>come mi sento<br>", coseDette);
-				try {Thread.sleep(s(0.5));} catch (InterruptedException e1) {e1.printStackTrace();}
+				try {Thread.sleep(s(2));} catch (InterruptedException e1) {e1.printStackTrace();}
 				stampa("“Sinonimo di regalare 500 Oro a " + personaggioSelezionato.nome + " " + personaggioSelezionato.cognome+"”",coseDette );
-				try {Thread.sleep(s(0.5));} catch (InterruptedException e1) {e1.printStackTrace();}
+				try {Thread.sleep(s(2));} catch (InterruptedException e1) {e1.printStackTrace();}
 				stampa("Beh, allora non mi resta che una cosa da fare", coseDette);
-				try {Thread.sleep(s(0.5));} catch (InterruptedException e1) {e1.printStackTrace();}
+				try {Thread.sleep(s(2));} catch (InterruptedException e1) {e1.printStackTrace();}
 				personaggioSelezionato.setOro(personaggioSelezionato.getOro() + 500);
 				stampa("Fatto", coseDette);
-				try {Thread.sleep(s(0.5));} catch (InterruptedException e1) {e1.printStackTrace();}
+				try {Thread.sleep(s(2));} catch (InterruptedException e1) {e1.printStackTrace();}
 				stampa("Qua non ho più niente da fare, arrivederci, e grazie dei -500 Oro!", coseDette);
+				try {Thread.sleep(s(2));} catch (InterruptedException e1) {e1.printStackTrace();}
+				mappaClasse.remove(prof.icona);
+				mappaClasse.remove(prof.fraseProf);
+				audio("Sounds/fine_lezione.wav");
+				try {Thread.sleep(s(1));} catch (InterruptedException e1) {e1.printStackTrace();}
+				panLezione.setVisible(false);
+				mappaClasse.setVisible(true);
+				configuraTasti();
+				mappaClasse.setFocusable(true);
+				mappaClasse.requestFocus(true);
+				
+			}
+			else if(Prof1.umore == UmoriProf.OMICIDA) {
+				if(brill) {timerBrill.stop();}
+				profAllaLavagna.setIcon(scappaCheÈMeglio);
 			}
 		}
+		
+		static void gaster() {
+			audio("Sounds/her.wav");
+			JLabel gaster = new JLabel("Texture/misterious_man.png");
+			gaster.setBounds(220, 60, 130, 160);
+			gaster.setIcon(trasparenza("Texture/misterious_man.png", 0f));
+			panLezione.add(gaster);
+			panLezione.setComponentZOrder(gaster, 0);
+			new Thread(() -> {
+			for(float i = 0f; i <= 1.0f; i += 0.02f) {
+				float ci = i;
+				SwingUtilities.invokeLater(() -> {gaster.setIcon(trasparenza("Texture/misterious_man.png", ci));});
+				try {
+					Thread.sleep(200);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			}).start();
+			
+			try {Thread.sleep(s(5));}catch(InterruptedException e) {e.printStackTrace();}
+			scrittaLav.setFont(wingdingsFont);
+			stampa("\"Entry number 17<br> Dark Darker Yet Darker <br>The Darkness Keeps Growing<br> The Shadows Cutting Deeper<br> Photon Readings Negative<br>", scrittaLav);
+			try {Thread.sleep(s(2));}catch(InterruptedException e) {e.printStackTrace();}
+			stampa("This Next Experiment Seems Very Very Interesting ...<br> What Do You Two Think<br>, are you ready, to create,<br> the, first, original, DARK SCHOOL???\" <br>", scrittaLav);
+			try {Thread.sleep(s(2));}catch(InterruptedException e) {e.printStackTrace();}
+			stampa("This was the beginning of your reality,<br> of your agony, <br>of your Determination. . .<br> But now. . . I must do another experiment,<br> and I need my determination for it,<br>", scrittaLav); 
+			try {Thread.sleep(s(2));}catch(InterruptedException e) {e.printStackTrace();}
+			gaster.setBounds(200, 40, 150, 180);
+			gaster.setIcon(new ImageIcon("Texture/misterious_man_surprised.png"));
+			stampa("your time is up. . . <br>GOODBYE <br>        EXPERIMENT NUMBER 17", scrittaLav);
+			try {Thread.sleep(s(4));}catch(InterruptedException e) {e.printStackTrace();}
+			Random casuale = new Random();
+			String[] robeGasterose = {
+					"\u231B\u2609\u263C\u263E\u2641\u2644\u260C\u2643\u2299",
+					"\u2620\u2720\u2719\u2726\u271B\u271C\u2622\u2623\u267E",
+					"\u25A3\u25A9\u25C8\u25D0\u25D1\u25EB\u25EC\u25F0\u25F1",
+					"\u2611\u2612\u2610\u27A1\u2B05\u2B06\u2B07\u21AF\u2316",
+					"\u2744\u2745\u2746\u273D\u273B\u2749\u274B\u2724\u2722",
+					"\u25CF\u25D2\u25D3\u25D4\u25D5\u263D\u263E\u2298\u2609",
+					"\u2317\u2318\u231A\u231B\u2324\u2325\u2326\u2327\u2328",
+					"\u261C\u261E\u261D\u261F\u272A\u272B\u272C\u272D\u272E",
+					"\u221E\u2234\u2235\u2295\u2297\u224B\u224C\u2230\u2231",
+					"\u2620\u231B\u2720\u2609\u263E\u2644\u221E\u2744\u2622"
+			};
+			Timer timer = new Timer(30, e -> {
+			   finestra.setTitle(robeGasterose[casuale.nextInt(10)]);
+			    lavagna.setLocation(casuale.nextInt(880), casuale.nextInt(671));
+			    coseDette.setLocation(casuale.nextInt(880), casuale.nextInt(671));
+			    scrittaLav.setLocation(casuale.nextInt(880), casuale.nextInt(671));
+			    titoloLav.setLocation(casuale.nextInt(880), casuale.nextInt(671));
+			    maclaurin.setLocation(casuale.nextInt(880), casuale.nextInt(671));
+			    cirGon.setLocation(casuale.nextInt(880), casuale.nextInt(671));
+			    manoAlzata.setLocation(casuale.nextInt(880), casuale.nextInt(671));
+			    helpFrasi.setLocation(casuale.nextInt(880), casuale.nextInt(671));
+			    labelIntervento.setLocation(casuale.nextInt(880), casuale.nextInt(671));
+			    
+			});
+			timer.setRepeats(true);
+			timer.start();
+			try {Thread.sleep(s(4));}catch(InterruptedException e) {e.printStackTrace();}
+			System.err.println("Exception in thread \"main\" java.lang.GasterException: temporal lines corrupted");
+			System.err.println("\tat java.lang.gaster.╝_.µ¿○.♦◙");
+			
+			audio("Sounds/adios.wav");
+			try { Thread.sleep(s(2)); } catch(Exception e) {}
+			System.exit(1);
+		}
+		
 				
 }
 

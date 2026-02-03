@@ -28,7 +28,6 @@ public class Prof1 extends Professore{
 				fraseProf = new JLabel("BUONGIORNO...");
 				fraseProf.setBounds(374, 21, 120, 20);
 				fraseProf.setForeground(coloreLabel);
-				fraseProf.setFont(new Font("Verdana", Font.PLAIN, 14));
 				fraseProf.setBackground(Color.GRAY);
 				
 				Main.mappaClasse.add(fraseProf);
@@ -39,7 +38,6 @@ public class Prof1 extends Professore{
 			Timer timer = new Timer(2000, e -> {
 				fraseProf.setText("...RAGAZZI");
 				fraseProf.setBounds(460, 21, 150, 30);
-				fraseProf.setFont(new Font("Verdana", Font.PLAIN, 20));
 			});
 			timer.setRepeats(false);
 			timer.start();
@@ -51,7 +49,7 @@ public class Prof1 extends Professore{
 			            
 			            SwingUtilities.invokeLater(() -> {
 			                ImageIcon imageScalata = new ImageIcon(
-			                    new ImageIcon("Texture\\prof_seduto.png")
+			                    new ImageIcon("Texture/prof_seduto.png")
 			                        .getImage()
 			                        .getScaledInstance(ci, ci, Image.SCALE_SMOOTH)
 			                );
@@ -73,7 +71,7 @@ public class Prof1 extends Professore{
 		
 			Timer timerFinale = new Timer(5000, e -> {
 				new Thread (() -> {
-					JLabel inizioLez = new JLabel(new ImageIcon("Texture\\inizio.png"));
+					JLabel inizioLez = new JLabel(new ImageIcon("Texture/inizio.png"));
 					inizioLez.setBounds(0,0,880, 671);
 					SwingUtilities.invokeLater(() -> {
 						Main.mappaClasse.add(inizioLez);
@@ -170,7 +168,7 @@ public class Prof1 extends Professore{
 					e1.printStackTrace();
 				}
 				 SwingUtilities.invokeLater(() -> {
-                 	this.vaAllaCattedra("Texture\\prof.png", "Texture\\prof_camminante.png", "Texture\\prof_seduto.png");
+                 	this.vaAllaCattedra("Texture/prof.png", "Texture/prof_camminante.png", "Texture/prof_seduto.png");
                  });    
 			});
 			

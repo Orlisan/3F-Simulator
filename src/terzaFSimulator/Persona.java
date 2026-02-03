@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import static terzaFSimulator.MetodiUtili.*;
 import javax.swing.*;
 
 import terzaFSimulator.Main.Direzione;
@@ -54,21 +55,7 @@ public class Persona {
     }
     
     public void seTocca() {
-    	if(posizioneX < 530 && posizioneX > 444 && posizioneY < 533 && posizioneY> 56  ||
-    			posizioneX < 530 && posizioneX > 124 && posizioneY < 533 && posizioneY> 440 ||
-    			posizioneX < 210 && posizioneX > 124 && posizioneY < 533 && posizioneY> 56 ||
-    			posizioneX < 433 && posizioneX > 221 && posizioneY < 245 && posizioneY> 151 ||
-    			posizioneX < 434 && posizioneX > 220 && posizioneY < 388 && posizioneY> 296 ||
-    			posizioneX < 674 && posizioneX > 590 && posizioneY < 212 && posizioneY > 74 ||
-    			posizioneX < 802 && posizioneX > 590 && posizioneY < 212 && posizioneY > 104 ||
-    			posizioneX < 674 && posizioneX > 590 && posizioneY < 18 && posizioneY > -87 ||
-    			posizioneX < 800 && posizioneX > -73 && posizioneY < -13 && posizioneY > -87 ||
-    			posizioneX < 416 && posizioneX > 236 && posizioneY < 99 && posizioneY > 9 ||
-    			
-    			posizioneX > 782 || posizioneX < -73 || posizioneY < -87 || posizioneY > 543 ||
-    			
-    			(posizioneX < 626 && posizioneX > 590 && posizioneY < 101 && posizioneY> -7 && !Main.èAperta && !Main.portaRotta) ||
-    			(posizioneX < 626 && posizioneX > 590 && posizioneY < 550 && posizioneY> 457 && !Main.èAperta2)) {
+    	if(MetodiUtili.seTocca(posizioneX, posizioneY)) {
     			if(Main.facciata == Direzione.SU) {
     				Main.nonToccaSu = false;
     			}
