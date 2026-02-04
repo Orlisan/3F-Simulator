@@ -43,6 +43,14 @@ public class CombatPanel extends JPanel {
 	    areaTexture = new JPanel();
 	    areaTexture.setBounds(0, 0, 880, 268);
 	    areaTexture.setBackground(new Color(0, 0, 0, 0));
+	    areaTexture.setLayout(null);
+	    int numLabel = 0;
+	    for(JLabel label: e.sprites) {
+	    	label.setBounds(e.posSprites[numLabel][0], e.posSprites[numLabel][1], e.posSprites[numLabel][2], e.posSprites[numLabel][3]);
+	    	areaTexture.add(label);
+	    	numLabel++;
+	    }
+	    
 	    boxAnima = new Rectangle(xInizio, yInizio, sizeX, sizeY);
 	    areAnima = new JPanel() {
 	        @Override
