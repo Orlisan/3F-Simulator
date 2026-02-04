@@ -186,7 +186,9 @@ public class Prof1 extends Professore{
 	    Timer checkTimer = new Timer(100, e -> {
 	        if (allaCattedra) {
 	            ((Timer)e.getSource()).stop();
+	            if(!CombatPanel.combat) {
 	            iniziaLezione();
+	            }
 	        }
 	    });
 	    checkTimer.start();

@@ -404,7 +404,7 @@ public class Main {
                 if (personaggioSelezionato == null) return;
                 
                 switch(e.getKeyCode()) {
-                    case KeyEvent.VK_UP: movUp = true; if(nonToccaSu) { muoviPersonaggio(0, -vel); facciata = Direzione.SU; personaggioSelezionato.icona.setIcon(new ImageIcon("Texture/personaggio_su.png")); if (movementTimer != null) {
+                    case KeyEvent.VK_UP: movUp = true; if(nonToccaSu) { muoviPersonaggio(0, -vel); facciata = Direzione.SU; if(!Enemy.attaccato) {personaggioSelezionato.icona.setIcon(new ImageIcon("Texture/personaggio_su.png")); }if (movementTimer != null) {
                         movementTimer.stop();
                     }
                     avviaMovementTimer(); 
@@ -413,19 +413,20 @@ public class Main {
                     	mappaClasse.addMouseMotionListener(listener);
                     	break;
                     case KeyEvent.VK_D: 
-                    	Enemy bidello = new Enemy("Bidello", 0, 0, 0, null,false, null, false, null, new ImageIcon("Texture/bidello.png"), 740, 60, null, null, null, 0, null, (byte) 2 );
+                    	Enemy bidello = new Enemy("Bidello", 0, 0, 0, null,false, null, false, null, new ImageIcon("Texture/bidello.png"), 158, 68, null, null, null, 0, null, (byte) 2 );
                     	break;
-                    case KeyEvent.VK_DOWN: movDown = true;if(nonToccaGiù) {muoviPersonaggio(0, vel); facciata = Direzione.GIU;personaggioSelezionato.icona.setIcon(new ImageIcon("Texture/personaggio.png"));  if (movementTimer != null) {
+                    case KeyEvent.VK_DOWN: movDown = true;if(nonToccaGiù) {muoviPersonaggio(0, vel); facciata = Direzione.GIU; if(!Enemy.attaccato) { personaggioSelezionato.icona.setIcon(new ImageIcon("Texture/personaggio.png"));}  if (movementTimer != null) {
                         movementTimer.stop();
                     }
                     avviaMovementTimer(); }break;
                    
-                    case KeyEvent.VK_LEFT: movLeft = true; if(nonToccaASinistra) { muoviPersonaggio(-vel, 0); facciata = Direzione.SINISTRA; personaggioSelezionato.icona.setIcon(new ImageIcon("Texture/personaggio_sinistra.png"));  if (movementTimer != null) {
+                    case KeyEvent.VK_LEFT: movLeft = true; if(nonToccaASinistra) { muoviPersonaggio(-vel, 0); facciata = Direzione.SINISTRA;  if(!Enemy.attaccato) {personaggioSelezionato.icona.setIcon(new ImageIcon("Texture/personaggio_sinistra.png"));}  if (movementTimer != null) {
                         movementTimer.stop();
                     }
                     avviaMovementTimer(); }break;
                     
-                    case KeyEvent.VK_RIGHT: movRight = true; if(nonToccaADestra) { muoviPersonaggio(vel, 0); facciata = Direzione.DESTRA; personaggioSelezionato.icona.setIcon(new ImageIcon("Texture/personaggio_destra.png")); if (movementTimer != null) {
+                    case KeyEvent.VK_RIGHT: movRight = true; if(nonToccaADestra) { muoviPersonaggio(vel, 0); facciata = Direzione.DESTRA; if(!Enemy.attaccato) { personaggioSelezionato.icona.setIcon(new ImageIcon("Texture/personaggio_destra.png")); }
+                    if (movementTimer != null) {
                         movementTimer.stop();
                     }
                     avviaMovementTimer(); }break;

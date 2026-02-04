@@ -9,6 +9,8 @@ import java.util.*;
 import java.util.function.*;
 
 public class Enemy extends JLabel{
+	static boolean attaccato = false;
+	
 	String nome;
 	
 	int danno;
@@ -57,6 +59,9 @@ public class Enemy extends JLabel{
 		this.movOver = movOver;
 		
 		this.spawn();
+	      
+		
+		
 		if(movOver == 0) {
 			this.muoviInOrizzontale();
 		}else if(movOver == 1) {
@@ -92,6 +97,14 @@ public class Enemy extends JLabel{
 			this.setLocation(this.xOver -1, this.yOver);
 			this.xOver--;
 		}
+			if (checkArrivato()) {
+	            System.out.println("Raggiunto durante movimento!");
+	            attaccato = true;
+	            Main.personaggioSelezionato.icona.setIcon(
+	                new ImageIcon("Texture/personaggio_attaccato.png")
+	            );
+	            ((Timer)e.getSource()).stop(); // Ferma movimento
+	        }
 		});
 		timer.setRepeats(true);
 		timer.start();
@@ -112,6 +125,14 @@ public class Enemy extends JLabel{
 			this.setLocation(this.xOver, this.yOver -1);
 			this.yOver--;
 		}
+			if (checkArrivato()) {
+	            System.out.println("Raggiunto durante movimento!");
+	            attaccato = true;
+	            Main.personaggioSelezionato.icona.setIcon(
+	                new ImageIcon("Texture/personaggio_attaccato.png")
+	            );
+	            ((Timer)e.getSource()).stop(); // Ferma movimento
+	        }
 		});
 		timer.setRepeats(true);
 		timer.start();
@@ -185,10 +206,41 @@ public class Enemy extends JLabel{
 	                this.setLocation(this.xOver, this.yOver);
 	            }
 	        }
+	        if (checkArrivato()) {
+	            System.out.println("Raggiunto durante movimento!");
+	            attaccato = true;
+	            Main.personaggioSelezionato.icona.setIcon(
+	                new ImageIcon("Texture/personaggio_attaccato.png")
+	            );
+	            ((Timer)e.getSource()).stop(); // Ferma movimento
+	            CombatPanel panel = new CombatPanel(this);
+	            
+	        }
+	  
 	    });
 	    
 	    timer.setRepeats(true);
 	    timer.start();
+	}
+	
+	boolean checkArrivato() {
+		boolean x = false;
+		boolean y = false;
+
+        int difX = Math.abs(Main.personaggioSelezionato.posizioneX - this.xOver);
+        int difY = Math.abs(Main.personaggioSelezionato.posizioneY - this.yOver);
+		 
+        if(difX < 50) {
+        	x = true;
+        }
+        if(difY < 50) {
+        	y = true;
+        }
+		if(x && y) {
+			return true;
+		}else {
+			return false;
+		}
 	}
 	
 }
