@@ -5,12 +5,14 @@ import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 
 public class CombatPanel extends JPanel {
-    JPanel areAnima, areaTexture, areaScelte, areaVita, areAttacco;
+    JPanel areAnima, areaTexture, areaScelte, areaVita, areAttacco, areInv;
     JButton fightButton, actButton, itemButton, mercyButton;
     static boolean combat = false;
-    
+    JLabel vita;
+    JLabel numeriVita;
     // Riferimenti per gli occhi
     Sprite occhioSu, occhioGiù, occhioDestra, occhioSinistra;
     Sprite occhioSu2, occhioGiù2, occhioDestra2, occhioSinistra2;
@@ -34,7 +36,9 @@ public class CombatPanel extends JPanel {
     }
 
     void creaAmbiente() {
-        this.setLayout(null);
+    	
+    	
+    	this.setLayout(null);
         this.setOpaque(true);
         this.setBackground(Color.BLACK);
 
@@ -58,34 +62,18 @@ public class CombatPanel extends JPanel {
             numLabel++;
         }
 
-        boxAnima = new Rectangle(xInizio, yInizio, sizeX, sizeY);
-        areAnima = new JPanel() {
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                Graphics2D g2 = (Graphics2D) g;
-                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                g2.setColor(Color.WHITE);
-                g2.setStroke(new BasicStroke(5));
-                if (boxAnima != null) g2.draw(boxAnima);
-            }
-        };
-        configuraTasti();
-        areAnima.setFocusable(true);
-        areAnima.requestFocusInWindow();
-        areAnima.setLayout(null);
-        areAnima.setBounds(0, 268, 880, 201);
-        areAnima.setOpaque(false);
-        anima = new Anima(Main.personaggioSelezionato);
-        areAnima.add(anima);
-        anima.setLocation(440, 45);
-        areAnima.setComponentZOrder(anima, 0);
-        anima.setVisible(true);
+        creaAnima();
+        Item gessetto = new Item("Gessetto", "Prova" ,new int[] {3, 5, 2, 4}, Main.bidello);
+    	Item grissino = new Item("Grissino", "Altra prova", new int[] {-2}, Main.bidello);
+    	Item verifica = new Item("Verifica", "Ennesima prova", new int[] {-2, 3}, Main.bidello);
+       Main.personaggioSelezionato.inventario.add(gessetto); //TEMPORANEOOO
+       Main.personaggioSelezionato.inventario.add(grissino);
+       Main.personaggioSelezionato.inventario.add(verifica);
+        inventario();
         
         areaScelte = new JPanel(null);
         areaScelte.setBounds(0, 469, 880, 134);
         areaScelte.setOpaque(false);
-
         fightButton = new JButton(new ImageIcon("Texture/fight_button.png"));
         actButton   = new JButton(new ImageIcon("Texture/act_button.png"));
         itemButton  = new JButton(new ImageIcon("Texture/item_button.png"));
@@ -100,13 +88,65 @@ public class CombatPanel extends JPanel {
             areaScelte.add(b);
             bx += 195;
         }
+        areaVita = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                Graphics2D g2 = (Graphics2D) g;
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                g2.setColor(Color.WHITE);
+                g2.setStroke(new BasicStroke(1));
+                
+                // Disegna il box vita a coordinate relative al pannello
+                g2.drawRect(390, 10, 100, 30);
+            }
+        };
+
+        areaVita.setOpaque(false);
+        areaVita.setLayout(null);
+        areaVita.setBounds(0, 580, 880, 67); 
+
+        // Nome personaggio
+        JLabel nome = new JLabel(Main.personaggioSelezionato.nome);
+        nome.setForeground(Color.WHITE);
+        nome.setFont(nome.getFont().deriveFont(Font.BOLD, 16f)); 
+        nome.setBounds(200, 10, 200, 30);
+
+        // Barra vita (rettangolo rosso)
+        vita = new JLabel();
+        vita.setOpaque(true);
+        vita.setBackground(Color.RED);
+        vita.setBounds(390, 10, (int) checkVita(), 30); 
+
+
+        // Etichetta testo vita
+        JLabel testoVita = new JLabel("LV 1");
+        testoVita.setForeground(Color.WHITE);
+        testoVita.setBounds(300, 10, 50, 30);
+
+        // Etichetta HP
+        JLabel hpText = new JLabel("HP");
+        hpText.setForeground(Color.WHITE);
+        hpText.setBounds(370, 10, 30, 30);
+
+        // Numeri vita
+        numeriVita = new JLabel(checkVita() + " / " + 100);
+        numeriVita.setForeground(Color.WHITE);
+        numeriVita.setBounds(500, 10, 100, 30);
+
+        // Aggiungi componenti al pannello vita
+        areaVita.add(nome);
+        areaVita.add(testoVita);
+        areaVita.add(hpText);
+        areaVita.add(vita); // Barra rossa
+        areaVita.add(numeriVita); // Numeri
 
         JLabel sfondo = new JLabel(new ImageIcon("Texture/inizio.png"));
         sfondo.setBounds(0, 0, 880, 671);
 
         this.add(areaTexture);
         this.add(areaScelte);
-        this.add(areAnima);
+        this.add(areaVita);
         this.add(sfondo);
 
         this.setComponentZOrder(sfondo, this.getComponentCount() - 1);
@@ -294,5 +334,83 @@ public class CombatPanel extends JPanel {
         movementTimer.setInitialDelay(0);
         movementTimer.setCoalesce(true);
         movementTimer.start();
+    }
+    
+    void creaAnima() {
+    	boxAnima = new Rectangle(xInizio, yInizio, sizeX, sizeY);
+        areAnima = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                Graphics2D g2 = (Graphics2D) g;
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                g2.setColor(Color.WHITE);
+                g2.setStroke(new BasicStroke(5));
+                if (boxAnima != null) g2.draw(boxAnima);
+            }
+        };
+        configuraTasti();
+        areAnima.setFocusable(true);
+        areAnima.requestFocusInWindow();
+        areAnima.setLayout(null);
+        areAnima.setBounds(0, 268, 880, 201);
+        areAnima.setOpaque(false);
+        anima = new Anima(Main.personaggioSelezionato);
+        areAnima.add(anima);
+        anima.setLocation(440, 45);
+        areAnima.setComponentZOrder(anima, 0);
+        anima.setVisible(true);
+        this.add(areAnima);
+    }
+    
+    double checkVita() {
+        double vitaAttuale = Main.personaggioSelezionato.vita;
+        if (this.vita != null) {
+            this.vita.setBounds(390, 10, (int) vitaAttuale, 30);
+            this.revalidate();
+            this.repaint();
+        }
+        if(this.numeriVita != null) {
+        	numeriVita.setText((int) (Main.personaggioSelezionato.vita) + " / " + 100);
+            numeriVita.setForeground(Color.WHITE);
+            numeriVita.setBounds(500, 10, 100, 30);
+            this.revalidate();
+            this.repaint();
+        }
+        return vitaAttuale;
+    }
+    
+    void inventario() {
+    	areInv = new JPanel();
+    	areInv.setBounds(0, 268, 880, 201);
+    	areInv.setLayout(null);
+    	areInv.setBackground(Color.BLACK);
+    	int spazioX = 30;
+    	int spazioY = 30;
+    	
+    	int countItems = 0;
+    	for(Item item: Main.personaggioSelezionato.inventario) {
+    		if(countItems >= 8) break; //Per adesso, poi ci sarà qualcos'altro
+    		item.setBounds(spazioX, spazioY, 200, 40);
+    		item.setFont(item.getFont().deriveFont(Font.BOLD, 20f));
+    		item.setForeground(Color.WHITE);
+    		item.setBackground(Color.BLACK);
+    		areInv.add(item);
+    		countItems++;
+    		if((countItems % 2) != 0) {
+    			spazioY += 100;
+    		}else if((countItems % 2) == 0) {
+    			spazioY -= 100;
+    			spazioX += 250;
+    		}
+    		
+    	}
+    	if(areAnima != null && areAnima.getParent() == this) {
+    		this.remove(areAnima);
+    	}
+    	if(areAttacco != null && areAttacco.getParent() == this) {
+    		this.remove(areAttacco);
+    	}
+    	this.add(areInv);
     }
 }

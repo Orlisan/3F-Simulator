@@ -27,7 +27,7 @@ public class Main {
 	        System.out.println("Pos Pannello: " + xRelativo + ", " + yRelativo);
 	    }
 	});
-    
+    public static Enemy bidello;
     static ArrayList<Persona> personaggi = new ArrayList<>();
     static ArrayList<String> righeCript = new ArrayList<>();
     
@@ -323,17 +323,12 @@ public class Main {
 			e.printStackTrace();
 		}
         
-        Persona orlando = new Persona(righeCript.get(0), righeCript.get(1), Integer.parseInt(righeCript.get(2)), orlandoLabel,  Integer.parseInt(righeCript.get(3)),  Integer.parseInt(righeCript.get(4)), Integer.parseInt(righeCript.get(5)) + oroInPiù, Integer.parseInt(righeCript.get(6))
+        Persona orlando = new Persona(righeCript.get(0), righeCript.get(1), Integer.parseInt(righeCript.get(2)), orlandoLabel,  Integer.parseInt(righeCript.get(3)),  Integer.parseInt(righeCript.get(4)), Integer.parseInt(righeCript.get(5)) + oroInPiù, Double.parseDouble(righeCript.get(6))
         		);
         
         prof = new Prof1("Mario", "Arenga", profLabel, 728, 44, 200 );
         
         personaggi.add(orlando);
-        
-        
-        
-        
-        // ✅ Aggiungi direttamente alla mappa
         mappaClasse.add(orlandoLabel);
         ;
         personaggioSelezionato = orlando;
@@ -412,8 +407,9 @@ public class Main {
                     case KeyEvent.VK_M:
                     	mappaClasse.addMouseMotionListener(listener);
                     	break;
+                    case KeyEvent.VK_E: System.out.println(personaggioSelezionato.vita);
                     case KeyEvent.VK_D: 
-                    	Enemy bidello = new Enemy(
+                    	bidello = new Enemy(
                     		    "Bidello", 
                     		    0, 0, 0, 
                     		    null, false, 
@@ -437,15 +433,15 @@ public class Main {
                     		        new Sprite(new ImageIcon("Texture/mocio_2.png"), "inverti_mocio")  
                     		    },
                     		    new int[][] {
-                    		        {440, 124, 40, 20},  
-                    		        {440, 124, 40, 20},  
-                    		        {440, 124, 40, 20},  
-                    		        {440, 124, 40, 20},  
+                    		        {400, 100, 40, 20},  
+                    		        {400, 100, 40, 20},  
+                    		        {400, 100, 40, 20},  
+                    		        {400, 100, 40, 20},  
                     		        
-                    		        {400, 124, 40, 20},  
-                    		        {400, 124, 40, 20},  
-                    		        {400, 124, 40, 20},  
-                    		        {400, 124, 40, 20},
+                    		        {360, 100, 40, 20},  
+                    		        {360, 100, 40, 20},  
+                    		        {360, 100, 40, 20},  
+                    		        {360, 100, 40, 20},
                     		        
                     		        {390, 140, 100, 100},
                     		        {390, 140, 100, 100}
@@ -639,11 +635,6 @@ public class Main {
 	    	sfondoDestro.setBounds(672, 0, 208, 671); 
 	    	
 	    	
-	    	 // Rimuovi tutto
-	       // Riaggiungi sinistra
-	       
-	    	
-	        mappaClasse.revalidate();
 	    	mappaClasse.repaint();
 	    	Timer timer = new Timer(500, e -> {
 	            sfondoDestro.setIcon(new ImageIcon(icon2));
@@ -657,7 +648,6 @@ public class Main {
     }
     
     static void apriPorta2(String icon1, String icon2, String icon3, String icon4) {
-        // ✅ AGGIUNGI CONTROLLO ALL'INIZIO
         if (prof == null) {
             System.out.println("ATTENZIONE: prof non è stato inizializzato!");
             // Fallback senza gestione ordine Z
@@ -689,11 +679,8 @@ public class Main {
         
         Timer timer = new Timer(1000, e -> {
             sfondoSinistro.setIcon(new ImageIcon(icon3));
-            
-            // ✅ GARANTISCI che prof sia in PRIMO piano
-            
             if (personaggioSelezionato != null && personaggioSelezionato.icona.getParent() == mappaClasse) {
-                mappaClasse.setComponentZOrder(personaggioSelezionato.icona, 1); // 1 = secondo piano
+                mappaClasse.setComponentZOrder(personaggioSelezionato.icona, 1); 
             }
             
             mappaClasse.revalidate();

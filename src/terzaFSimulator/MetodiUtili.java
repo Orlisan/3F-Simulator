@@ -147,6 +147,9 @@ public class MetodiUtili {
 		cript.put('8', '1');
 		cript.put('9', '7');
 		
+		cript.put('.','.');
+		cript.put(',', ',');
+		
 		for(Character lettera: fraseOrigin.toCharArray()) {
 			Character letteraCript = cript.get(lettera);
 			
@@ -227,6 +230,9 @@ public class MetodiUtili {
 		decript.put('0', '7');
 		decript.put('1', '8');
 		decript.put('7', '9');
+		
+		decript.put('.','.');
+		decript.put(',', ',');
 		
 		for(Character lettera: parCript.toCharArray()) {
 			Character letteradeCript = decript.get(lettera);

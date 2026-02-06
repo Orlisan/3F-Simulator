@@ -12,8 +12,13 @@ import javax.swing.*;
 
 import terzaFSimulator.Main.Direzione;
 
+import java.util.ArrayList;
 public class Persona { 
-	 String nome;
+	
+	ArrayList<Item> inventario = new ArrayList<Item>();
+	
+	
+	String nome;
 	
 	String cognome;
 	int età;
@@ -21,13 +26,16 @@ public class Persona {
 	public int posizioneX;
 	public int posizioneY;
 	public int oro;
-	public int vita;
+	public double vita;
 	
+	double danno = 10;
+	double difesa = 1.5;
 	
 	public String contenuto;
 	
 	
-	Persona(String nome, String cognome, int età, JLabel icona, int posizioneX, int posizioneY, int oro, int vita) {
+	Persona(String nome, String cognome, int età, JLabel icona, int posizioneX, int posizioneY, int oro, double vita) {
+		
 		this.nome = nome;
 		this.cognome = cognome;
 		this.età = età;
@@ -92,5 +100,40 @@ public class Persona {
     		this.oro = newOro;
     	}
     }
+    
+    public double getDanno() {
+    	return danno;
+    }
+    
+    public void setDanno(int newDanno) {
+    	danno = newDanno;
+    }
+    
+    public double getDifesa() {
+    	return this.difesa;
+    }
+    
+    public void setDifesa(double d) {
+    	this.difesa -= d;
+    }
+    public void alteraVita(double vitaDaAlterare) {
+	    if(!Anima.isCooldown) {
+	        double d = (this.difesa < 0.1) ? 0.1 : this.difesa;
+	        double veraVita = vitaDaAlterare / d;
+	        this.vita += veraVita;
+	        if (this.vita > 100) this.vita = 100;
+	        if (this.vita < 0) this.vita = 0;
+	        if(Main.bidello.panel != null) {
+	        Main.bidello.panel.checkVita();
+	        }else {
+	        	System.out.println("Errore, pannello null!");
+	        }
+	        if(vitaDaAlterare < 0) {
+	            Anima.cooldown();
+	        }
+	        
+	        System.out.println(veraVita);
+	    }
+	}
 
 }
