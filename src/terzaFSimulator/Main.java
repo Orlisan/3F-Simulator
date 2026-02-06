@@ -407,7 +407,7 @@ public class Main {
                     case KeyEvent.VK_M:
                     	mappaClasse.addMouseMotionListener(listener);
                     	break;
-                    case KeyEvent.VK_E: System.out.println(personaggioSelezionato.vita);
+                   
                     case KeyEvent.VK_D: 
                     	bidello = new Enemy(
                     		    "Bidello", 
@@ -443,8 +443,8 @@ public class Main {
                     		        {360, 100, 40, 20},  
                     		        {360, 100, 40, 20},
                     		        
-                    		        {390, 140, 100, 100},
-                    		        {390, 140, 100, 100}
+                    		        {390, 100, 100, 100},
+                    		        {390, 100, 100, 100}
                     		    },
                     		    10,
                     		    null, 

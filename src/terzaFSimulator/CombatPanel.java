@@ -70,6 +70,12 @@ public class CombatPanel extends JPanel {
        Main.personaggioSelezionato.inventario.add(grissino);
        Main.personaggioSelezionato.inventario.add(verifica);
         inventario();
+        if (areAnima != null) {
+            areAnima.setVisible(false);
+        }
+        if (areInv != null) {
+            areInv.setVisible(false);
+        }
         
         areaScelte = new JPanel(null);
         areaScelte.setBounds(0, 469, 880, 134);
@@ -159,6 +165,13 @@ public class CombatPanel extends JPanel {
             Main.finestra.revalidate();
             Main.finestra.repaint();
         });
+        fightButton.addActionListener(h -> {
+            mostraAnima();
+        });
+
+        itemButton.addActionListener(h -> {
+            mostraInventario();
+        });
     }
 
     void invertiSprites(Sprite inv1, Sprite inv2, int numLabel) {
@@ -238,7 +251,9 @@ public class CombatPanel extends JPanel {
     
     
     void configuraTasti() {
-        KeyListener[] listeners = areAnima.getKeyListeners();
+        
+    	
+    	KeyListener[] listeners = areAnima.getKeyListeners();
         for (KeyListener kl : listeners) {
             areAnima.removeKeyListener(kl);
         }
@@ -337,32 +352,52 @@ public class CombatPanel extends JPanel {
     }
     
     void creaAnima() {
-    	boxAnima = new Rectangle(xInizio, yInizio, sizeX, sizeY);
-        areAnima = new JPanel() {
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                Graphics2D g2 = (Graphics2D) g;
-                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                g2.setColor(Color.WHITE);
-                g2.setStroke(new BasicStroke(5));
-                if (boxAnima != null) g2.draw(boxAnima);
-            }
-        };
-        configuraTasti();
-        areAnima.setFocusable(true);
-        areAnima.requestFocusInWindow();
-        areAnima.setLayout(null);
-        areAnima.setBounds(0, 268, 880, 201);
-        areAnima.setOpaque(false);
-        anima = new Anima(Main.personaggioSelezionato);
-        areAnima.add(anima);
-        anima.setLocation(440, 45);
-        areAnima.setComponentZOrder(anima, 0);
-        anima.setVisible(true);
-        this.add(areAnima);
+        if (areAnima == null) {
+            boxAnima = new Rectangle(xInizio, yInizio, sizeX, sizeY);
+            areAnima = new JPanel() {
+                @Override
+                protected void paintComponent(Graphics g) {
+                    super.paintComponent(g);
+                    Graphics2D g2 = (Graphics2D) g;
+                    g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                    g2.setColor(Color.WHITE);
+                    g2.setStroke(new BasicStroke(5));
+                    if (boxAnima != null) g2.draw(boxAnima);
+                }
+            };
+            
+            areAnima.setFocusable(true);
+            areAnima.setLayout(null);
+            areAnima.setBounds(0, 268, 880, 201);
+            areAnima.setOpaque(false);
+            
+            anima = new Anima(Main.personaggioSelezionato);
+            areAnima.add(anima);
+            anima.setLocation(440, 45);
+            areAnima.setComponentZOrder(anima, 0);
+            
+            configuraTasti();
+            this.add(areAnima);
+        }
     }
-    
+
+    void mostraAnima() {
+        if (areAnima == null) {
+            creaAnima();
+        }
+        
+        // NASCONDI inventario
+        if (areInv != null) {
+            areInv.setVisible(false);
+        }
+        
+        // MOSTRA anima
+        areAnima.setVisible(true);
+        areAnima.requestFocusInWindow();
+        
+        this.revalidate();
+        this.repaint();
+    }
     double checkVita() {
         double vitaAttuale = Main.personaggioSelezionato.vita;
         if (this.vita != null) {
@@ -381,36 +416,54 @@ public class CombatPanel extends JPanel {
     }
     
     void inventario() {
-    	areInv = new JPanel();
-    	areInv.setBounds(0, 268, 880, 201);
-    	areInv.setLayout(null);
-    	areInv.setBackground(Color.BLACK);
-    	int spazioX = 30;
-    	int spazioY = 30;
-    	
-    	int countItems = 0;
-    	for(Item item: Main.personaggioSelezionato.inventario) {
-    		if(countItems >= 8) break; //Per adesso, poi ci sarà qualcos'altro
-    		item.setBounds(spazioX, spazioY, 200, 40);
-    		item.setFont(item.getFont().deriveFont(Font.BOLD, 20f));
-    		item.setForeground(Color.WHITE);
-    		item.setBackground(Color.BLACK);
-    		areInv.add(item);
-    		countItems++;
-    		if((countItems % 2) != 0) {
-    			spazioY += 100;
-    		}else if((countItems % 2) == 0) {
-    			spazioY -= 100;
-    			spazioX += 250;
-    		}
-    		
-    	}
-    	if(areAnima != null && areAnima.getParent() == this) {
-    		this.remove(areAnima);
-    	}
-    	if(areAttacco != null && areAttacco.getParent() == this) {
-    		this.remove(areAttacco);
-    	}
-    	this.add(areInv);
+        // ⚠️ Crea solo se non esiste già
+        if (areInv == null) {
+            areInv = new JPanel();
+            areInv.setBounds(0, 268, 880, 201);
+            areInv.setLayout(null);
+            areInv.setBackground(Color.BLACK);
+            
+            // ⚠️ AGGIUNGI AL COMBATPANEL UNA VOLTA SOLA
+            this.add(areInv);
+        }
+        
+        // ⚠️ RIMUOVI tutti gli item vecchi
+        areInv.removeAll();
+        
+        int spazioX = 30;
+        int spazioY = 30;
+        int countItems = 0;
+        
+        for(Item item: Main.personaggioSelezionato.inventario) {
+            if(countItems >= 8) break;
+            item.setBounds(spazioX, spazioY, 200, 40);
+            item.setFont(item.getFont().deriveFont(Font.BOLD, 20f));
+            item.setForeground(Color.WHITE);
+            item.setBackground(Color.BLACK);
+            areInv.add(item);
+            countItems++;
+            
+            if((countItems % 2) != 0) {
+                spazioY += 100;
+            } else {
+                spazioY -= 100;
+                spazioX += 250;
+            }
+        }
+    }
+
+    void mostraInventario() {
+        if (areInv == null) {
+            inventario();
+        }
+        if (areAnima != null) {
+            areAnima.setVisible(false);
+        }
+        
+        // MOSTRA inventario
+        areInv.setVisible(true);
+        
+        this.revalidate();
+        this.repaint();
     }
 }
