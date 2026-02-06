@@ -149,7 +149,7 @@ public class Prof1Lezione {
 		Thread threadScrivProf = new Thread(() -> {
 			//
 		 
-      /*  stampa("Oggi Faremo <br> lezione di <br> Trigonometria, <br> il nuovo <br> semplicissimo <br> argomento", coseDette);
+        stampa("Oggi Faremo <br> lezione di <br> Trigonometria, <br> il nuovo <br> semplicissimo <br> argomento", coseDette);
 		
 		try {Thread.sleep(500);} catch (InterruptedException e) {e.printStackTrace();}
 		
@@ -166,7 +166,7 @@ public class Prof1Lezione {
 		try {Thread.sleep(500);} catch (InterruptedException e) {e.printStackTrace();}
 		
 		stampa( "Adesso inizio<br> a spiegare,<br> vi prometto che<br> userò un <br>linguaggio molto <br>complicato, <br>come volete voi", coseDette);
-		*/try {
+		try {
 			spiegaQualcosa(metodiSpiegati, false);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block

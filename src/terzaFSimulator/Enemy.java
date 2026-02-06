@@ -29,7 +29,7 @@ public class Enemy extends JLabel{
 	int xOver;
 	int yOver;
 	String metodoDiInit;
-	JLabel[] sprites;
+	Sprite[] sprites;
 	int[][] posSprites;
 	int numSprites;// X, Y HEIGHT, WITHGT (o inveriti), X, Y Height, ecc...
 	
@@ -37,7 +37,7 @@ public class Enemy extends JLabel{
 	
 	HashMap<String , ActionListener> azioni; //Cose fattibili nel Menù ACT
 	
-	Enemy(String nome, int danno, int salute, int difesa, String[] frasi, boolean ordineFrasi, List<Consumer<Persona>> attacchi, boolean ordineAttacchi, List<Consumer<Persona>> metodiSpeciali, ImageIcon spriteOverworld, int xOver, int yOver, String metodoDiInit, JLabel[] sprites, int[][] posSprites, int numSprites, HashMap<String, ActionListener> azioni, byte movOver) {
+	Enemy(String nome, int danno, int salute, int difesa, String[] frasi, boolean ordineFrasi, List<Consumer<Persona>> attacchi, boolean ordineAttacchi, List<Consumer<Persona>> metodiSpeciali, ImageIcon spriteOverworld, int xOver, int yOver, String metodoDiInit, Sprite[] sprites, int[][] posSprites, int numSprites, HashMap<String, ActionListener> azioni, byte movOver) {
 		this.nome = nome;
 		this.danno = danno;
 		this.salute = salute;

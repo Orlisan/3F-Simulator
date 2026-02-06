@@ -413,7 +413,47 @@ public class Main {
                     	mappaClasse.addMouseMotionListener(listener);
                     	break;
                     case KeyEvent.VK_D: 
-                    	Enemy bidello = new Enemy("Bidello", 0, 0, 0, null,false, null, false, null, new ImageIcon("Texture/bidello.png"), 158, 68, null, null, null, 0, null, (byte) 2 );
+                    	Enemy bidello = new Enemy(
+                    		    "Bidello", 
+                    		    0, 0, 0, 
+                    		    null, false, 
+                    		    null, false, 
+                    		    null, 
+                    		    new ImageIcon("Texture/bidello.png"), 
+                    		    158, 68, 
+                    		    null, 
+                    		    new Sprite[] {
+                    		        new Sprite(new ImageIcon("Texture/occhio_bidello_su.png"), "occhio_su"),
+                    		        new Sprite(new ImageIcon("Texture/occhio_bidello_giù.png"), "occhio_giù"),
+                    		        new Sprite(new ImageIcon("Texture/occhio_bidello_destra.png"), "occhio_destra"),
+                    		        new Sprite(new ImageIcon("Texture/occhio_bidello_sinistra.png"), "occhio_sinistra"),
+                    		        new Sprite(new ImageIcon("Texture/occhio_bidello_su.png"), "occhio_su"),
+                    		        new Sprite(new ImageIcon("Texture/occhio_bidello_giù.png"), "occhio_giù"),
+                    		        new Sprite(new ImageIcon("Texture/occhio_bidello_destra.png"), "occhio_destra"),
+                    		        new Sprite(new ImageIcon("Texture/occhio_bidello_sinistra.png"), "occhio_sinistra"),
+                    		       
+                    		        
+                    		        new Sprite(new ImageIcon("Texture/mocio_1.png"), "inverti_mocio"), 
+                    		        new Sprite(new ImageIcon("Texture/mocio_2.png"), "inverti_mocio")  
+                    		    },
+                    		    new int[][] {
+                    		        {440, 124, 40, 20},  
+                    		        {440, 124, 40, 20},  
+                    		        {440, 124, 40, 20},  
+                    		        {440, 124, 40, 20},  
+                    		        
+                    		        {400, 124, 40, 20},  
+                    		        {400, 124, 40, 20},  
+                    		        {400, 124, 40, 20},  
+                    		        {400, 124, 40, 20},
+                    		        
+                    		        {390, 140, 100, 100},
+                    		        {390, 140, 100, 100}
+                    		    },
+                    		    10,
+                    		    null, 
+                    		    (byte)2
+                    		);
                     	break;
                     case KeyEvent.VK_DOWN: movDown = true;if(nonToccaGiù) {muoviPersonaggio(0, vel); facciata = Direzione.GIU; if(!Enemy.attaccato) { personaggioSelezionato.icona.setIcon(new ImageIcon("Texture/personaggio.png"));}  if (movementTimer != null) {
                         movementTimer.stop();
