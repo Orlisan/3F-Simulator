@@ -11,6 +11,7 @@ public class CombatPanel extends JPanel {
     JPanel areAnima, areaTexture, areaScelte, areaVita, areAttacco, areInv;
     JButton fightButton, actButton, itemButton, mercyButton;
     static boolean combat = false;
+    public static CombatPanel panel;
     JLabel vita;
     JLabel numeriVita;
     // Riferimenti per gli occhi
@@ -31,6 +32,7 @@ public class CombatPanel extends JPanel {
     private int animaSpeed = 2;
     CombatPanel(Enemy e) {
         this.e = e;
+        panel = this;
         combat = true;
         creaAmbiente();
     }
@@ -63,12 +65,17 @@ public class CombatPanel extends JPanel {
         }
 
         creaAnima();
-        Item gessetto = new Item("Gessetto", "Prova" ,new int[] {3, 5, 2, 4}, Main.bidello);
-    	Item grissino = new Item("Grissino", "Altra prova", new int[] {-2}, Main.bidello);
-    	Item verifica = new Item("Verifica", "Ennesima prova", new int[] {-2, 3}, Main.bidello);
-       Main.personaggioSelezionato.inventario.add(gessetto); //TEMPORANEOOO
-       Main.personaggioSelezionato.inventario.add(grissino);
-       Main.personaggioSelezionato.inventario.add(verifica);
+        Item gessetto = new Item("Gessetto", "Non ha un buon sapore,<br> ma è il migliore in edilizia" ,new double[] {3, 5, 2, 0.3}, Main.bidello);
+        Item gessetto1 = new Item("Gessetto", "Non ha un buon sapore,<br> ma è il migliore in edilizia" ,new double[] {3, 5, 2, 0.3}, Main.bidello);
+        Item gessetto2 = new Item("Gessetto", "Non ha un buon sapore,<br> ma è il migliore in edilizia" ,new double[] {3, 5, 2, 0.3}, Main.bidello);
+    	Item grissino = new Item("Grissino", "Altra prova", new double[] {3}, Main.bidello);
+    	Item verifica = new Item("Verifica", "Ennesima prova", new double[] {-35, 3}, Main.bidello);
+    	 Item gessetto3 = new Item("Gessetto", "Non ha un buon sapore,<br> ma è il migliore in edilizia" ,new double[] {3, 5, 2, 0.3}, Main.bidello);
+    	Item[] items = {gessetto, gessetto1, gessetto2, grissino, verifica, gessetto3};
+      for(Item item: items) {
+    	  Main.personaggioSelezionato.inventario.add(item);
+      }
+       
         inventario();
         if (areAnima != null) {
             areAnima.setVisible(false);

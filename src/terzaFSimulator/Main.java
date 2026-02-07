@@ -411,7 +411,7 @@ public class Main {
                     case KeyEvent.VK_D: 
                     	bidello = new Enemy(
                     		    "Bidello", 
-                    		    0, 0, 0, 
+                    		    5, 100, 1.3, 
                     		    null, false, 
                     		    null, false, 
                     		    null, 

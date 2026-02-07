@@ -10,12 +10,12 @@ import java.awt.*;
 
 public class Item extends JButton{
 	String nome;
-	int[] effetti; //Se un effetto: solo alterazione vita, Se 2 effetti, modificamento cooldown, se 3 effetti, attacco player alterato
+	double[] effetti; //Se un effetto: solo alterazione vita, Se 2 effetti, modificamento cooldown, se 3 effetti, attacco player alterato
 					//Se 4 effetti: difesa player aumentata (danno enemy diminuito
 	Enemy e;
 	String description;
 	
-	public Item(String nome, String description, int[] effetti, Enemy enemy) {
+	public Item(String nome, String description, double[] effetti, Enemy enemy) {
 		super(nome);
 		this.nome = nome;
 		this.effetti = effetti;

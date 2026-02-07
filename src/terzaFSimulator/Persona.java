@@ -105,7 +105,7 @@ public class Persona {
     	return danno;
     }
     
-    public void setDanno(int newDanno) {
+    public void setDanno(double newDanno) {
     	danno = newDanno;
     }
     
@@ -114,17 +114,22 @@ public class Persona {
     }
     
     public void setDifesa(double d) {
-    	this.difesa -= d;
+    	this.difesa += d;
     }
     public void alteraVita(double vitaDaAlterare) {
 	    if(!Anima.isCooldown) {
 	        double d = (this.difesa < 0.1) ? 0.1 : this.difesa;
-	        double veraVita = vitaDaAlterare / d;
-	        this.vita += veraVita;
+	        if((0 - vitaDaAlterare) > 0) {
+	        	double veraVita = vitaDaAlterare / d;
+	        	this.vita += veraVita;
+	        }else {
+	        	this.vita += vitaDaAlterare;
+	        }
+	        
 	        if (this.vita > 100) this.vita = 100;
 	        if (this.vita < 0) this.vita = 0;
 	        if(Main.bidello.panel != null) {
-	        Main.bidello.panel.checkVita();
+	        CombatPanel.panel.checkVita();
 	        }else {
 	        	System.out.println("Errore, pannello null!");
 	        }
@@ -132,7 +137,6 @@ public class Persona {
 	            Anima.cooldown();
 	        }
 	        
-	        System.out.println(veraVita);
 	    }
 	}
 

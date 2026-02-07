@@ -63,7 +63,7 @@ public class Anima extends JLabel {
 		return this.tCoolDown;
 	}
 	
-	void setCoolDown(int newCoolDown) {
-		this.tCoolDown = newCoolDown;
+	void setCoolDown(double newCoolDown) {
+		this.tCoolDown = (int) newCoolDown;
 	}
 }

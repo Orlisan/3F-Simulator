@@ -15,8 +15,8 @@ public class Enemy extends JLabel{
 	
 	String nome;
 	
-	int danno;
-	int salute;
+	double danno;
+	double salute;
 	double difesa;
 	
 	String[] frasi;
@@ -39,7 +39,7 @@ public class Enemy extends JLabel{
 	
 	HashMap<String , ActionListener> azioni; //Cose fattibili nel Menù ACT
 	Enemy() {} //Costruttore inutile per debug altre cose
-	Enemy(String nome, int danno, int salute, int difesa, String[] frasi, boolean ordineFrasi, List<Consumer<Persona>> attacchi, boolean ordineAttacchi, List<Consumer<Persona>> metodiSpeciali, ImageIcon spriteOverworld, int xOver, int yOver, String metodoDiInit, Sprite[] sprites, int[][] posSprites, int numSprites, HashMap<String, ActionListener> azioni, byte movOver) {
+	Enemy(String nome, double danno, double salute, double difesa, String[] frasi, boolean ordineFrasi, List<Consumer<Persona>> attacchi, boolean ordineAttacchi, List<Consumer<Persona>> metodiSpeciali, ImageIcon spriteOverworld, int xOver, int yOver, String metodoDiInit, Sprite[] sprites, int[][] posSprites, int numSprites, HashMap<String, ActionListener> azioni, byte movOver) {
 		this.nome = nome;
 		this.danno = danno;
 		this.salute = salute;
