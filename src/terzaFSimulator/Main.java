@@ -429,8 +429,8 @@ public class Main {
                     		        new Sprite(new ImageIcon("Texture/occhio_bidello_sinistra.png"), "occhio_sinistra"),
                     		       
                     		        
-                    		        new Sprite(new ImageIcon("Texture/mocio_1.png"), "inverti_mocio"), 
-                    		        new Sprite(new ImageIcon("Texture/mocio_2.png"), "inverti_mocio")  
+                    		      //  new Sprite(new ImageIcon("Texture/mocio_1.png"), "inverti_mocio"), 
+                    		       // new Sprite(new ImageIcon("Texture/mocio_2.png"), "inverti_mocio")  
                     		    },
                     		    new int[][] {
                     		        {400, 100, 40, 20},  
@@ -443,8 +443,8 @@ public class Main {
                     		        {360, 100, 40, 20},  
                     		        {360, 100, 40, 20},
                     		        
-                    		        {390, 100, 100, 100},
-                    		        {390, 100, 100, 100}
+                    		      //  {390, 100, 100, 100},
+                    		      //  {390, 100, 100, 100}
                     		    },
                     		    10,
                     		    null, 

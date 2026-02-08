@@ -8,7 +8,8 @@ import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 public class CombatPanel extends JPanel {
-    JPanel areAnima, areaTexture, areaScelte, areaVita, areAttacco, areInv;
+    JPanel areAnima, areaTexture, areaScelte, areaVita, areInv;
+    JPanel areAttacco;
     JButton fightButton, actButton, itemButton, mercyButton;
     static boolean combat = false;
     public static CombatPanel panel;
@@ -26,6 +27,8 @@ public class CombatPanel extends JPanel {
     int xInizio = 140, yInizio = 10, sizeX = 600, sizeY = 180;
     Enemy e;
     Anima anima;
+    
+    private volatile boolean mousePremuto = false;
     
     private Timer movementTimer;
     private boolean movUp = false, movDown = false, movLeft = false, movRight = false;
@@ -173,7 +176,10 @@ public class CombatPanel extends JPanel {
             Main.finestra.repaint();
         });
         fightButton.addActionListener(h -> {
-            mostraAnima();
+            mostraAttacco();
+        });
+        actButton.addActionListener(h -> {
+        	mostraAnima();
         });
 
         itemButton.addActionListener(h -> {
@@ -423,18 +429,15 @@ public class CombatPanel extends JPanel {
     }
     
     void inventario() {
-        // ⚠️ Crea solo se non esiste già
         if (areInv == null) {
             areInv = new JPanel();
             areInv.setBounds(0, 268, 880, 201);
             areInv.setLayout(null);
             areInv.setBackground(Color.BLACK);
             
-            // ⚠️ AGGIUNGI AL COMBATPANEL UNA VOLTA SOLA
             this.add(areInv);
         }
         
-        // ⚠️ RIMUOVI tutti gli item vecchi
         areInv.removeAll();
         
         int spazioX = 30;
@@ -472,5 +475,95 @@ public class CombatPanel extends JPanel {
         
         this.revalidate();
         this.repaint();
+    }
+    void mostraAttacco() {
+    	if(areAttacco == null) {
+    		attacco();
+    	}
+    	if (areAnima != null) {
+            areAnima.setVisible(false);
+        }
+        
+        areAttacco.setVisible(true);
+        
+        this.revalidate();
+        this.repaint();
+    }
+    
+    void attacco() {
+    	final double time_to_thread = 1;
+    	final double x = 880;
+    	final double time_bar = time_to_thread * x;
+    	final double half_time = time_bar / 2;
+    	areAttacco = new JPanel();
+    	areAttacco.setBounds(0, 268, 880, 201);
+    	areAttacco.setLayout(null);
+    	mousePremuto = false;
+    	JLabel target = new JLabel(new ImageIcon("Texture/target.png"));
+    	target.setBounds(0, 0, 880, 201);
+    	target.setOpaque(false);
+    	target.setBackground(new Color(0,0,0,0));
+    	areAttacco.add(target);
+    	JLabel targetBar = new JLabel();
+    	targetBar.setBounds(0, 0, 30, 201);
+    	targetBar.setForeground(Color.RED);
+    	targetBar.setBackground(Color.RED);
+    	targetBar.setOpaque(true);
+    	areAttacco.add(targetBar);
+    	areAttacco.setComponentZOrder(targetBar, 0 );
+    	areAttacco.setComponentZOrder(target, areAttacco.getComponentCount() -1);
+    	double now = System.currentTimeMillis();
+    	this.add(areAttacco);
+    	 areAttacco.addMouseListener(new java.awt.event.MouseAdapter() {
+    	        public void mousePressed(java.awt.event.MouseEvent e) {
+    	            mousePremuto = true;
+    	        }
+    	    });
+    	new Thread(() -> {
+    		for(int i = 0; i < x; i++) {	
+    			double percentuale = 0;
+    			SwingUtilities.invokeLater(() -> {
+	    			targetBar.setLocation(targetBar.getX() + 1, targetBar.getY());
+	        		areAttacco.repaint();
+	        	});
+	        		if(checkPremuto()) {
+	        			double realNow = System.currentTimeMillis();
+	        			double time = realNow - now;
+	        			if(time >= time_bar) {
+	        				break;
+	        			}
+	        			
+	        			if(time <= half_time) {
+	        				percentuale = time / half_time;
+	        			}else if(time > half_time && time < time_bar) {
+	        				percentuale = (time_bar - time) / half_time;
+	        			}
+	        			double danno = Main.personaggioSelezionato.getDanno() * percentuale;
+	        			System.out.println(Main.personaggioSelezionato.getDanno());
+	        			System.out.println(percentuale);
+	        			
+	        			System.out.println(danno);
+	        			System.out.println(e.difesa);
+	        			System.out.println(e.salute);
+	        			e.alteraVita(-danno);
+	    
+	        			break;
+	        		}
+	        	
+        		try {
+					Thread.sleep((int) time_to_thread);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+        	}
+    	}).start();
+    	
+    	
+    	
+    }
+    
+    boolean checkPremuto() {
+    	return mousePremuto;
     }
 }

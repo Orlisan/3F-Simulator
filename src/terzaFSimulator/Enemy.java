@@ -259,5 +259,6 @@ public class Enemy extends JLabel{
 	void alteraVita(double newVita) {
 		double veraVita = newVita / difesa;
 		this.salute += veraVita;
+		System.out.println(this.salute);
 	}
 }
