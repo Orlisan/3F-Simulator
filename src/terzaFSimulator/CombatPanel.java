@@ -71,8 +71,8 @@ public class CombatPanel extends JPanel {
         Item gessetto = new Item("Gessetto", "Non ha un buon sapore,<br> ma è il migliore in edilizia" ,new double[] {3, 5, 2, 0.3}, Main.bidello);
         Item gessetto1 = new Item("Gessetto", "Non ha un buon sapore,<br> ma è il migliore in edilizia" ,new double[] {3, 5, 2, 0.3}, Main.bidello);
         Item gessetto2 = new Item("Gessetto", "Non ha un buon sapore,<br> ma è il migliore in edilizia" ,new double[] {3, 5, 2, 0.3}, Main.bidello);
-    	Item grissino = new Item("Grissino", "Altra prova", new double[] {3}, Main.bidello);
-    	Item verifica = new Item("Verifica", "Ennesima prova", new double[] {-35, 3}, Main.bidello);
+    	Item grissino = new Item("Grissino", "Il cibo più gettonato della classe", new double[] {3}, Main.bidello);
+    	Item verifica = new Item("Verifica", "Un innocente foglio di carta su cui hanno scritto parolacce sopra", new double[] {-35, 3}, Main.bidello);
     	 Item gessetto3 = new Item("Gessetto", "Non ha un buon sapore,<br> ma è il migliore in edilizia" ,new double[] {3, 5, 2, 0.3}, Main.bidello);
     	Item[] items = {gessetto, gessetto1, gessetto2, grissino, verifica, gessetto3};
       for(Item item: items) {
