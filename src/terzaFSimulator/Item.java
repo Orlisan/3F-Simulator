@@ -21,6 +21,19 @@ public class Item extends JButton{
 		this.effetti = effetti;
 		this.e = enemy;
 		this.description = description;
+		this.setFocusPainted(false);	
+		this.setBorderPainted(false);
+		
+		this.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent e) {
+            	setForeground(Color.YELLOW);
+            	repaint();
+            }
+            public void mouseExited(java.awt.event.MouseEvent e) {
+            	setForeground(Color.WHITE);
+            	repaint();
+            }
+        });
 		
 		this.addActionListener(g -> {
 			if(effetti.length == 1) {

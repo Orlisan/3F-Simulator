@@ -121,7 +121,6 @@ public class CombatPanel extends JPanel {
         areaVita.setOpaque(false);
         areaVita.setLayout(null);
         areaVita.setBounds(0, 580, 880, 67); 
-
         // Nome personaggio
         JLabel nome = new JLabel(Main.personaggioSelezionato.nome);
         nome.setForeground(Color.WHITE);
